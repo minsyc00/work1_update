@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "usv-swarm-coverage"
+version = "0.1.0"
+description = "Python framework for multi-USV full-coverage planning and control"
+requires-python = ">=3.10"
+dependencies = [
+  "casadi>=3.7",
+  "matplotlib>=3.8",
+  "numpy>=2.0",
+  "pillow>=10.0",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

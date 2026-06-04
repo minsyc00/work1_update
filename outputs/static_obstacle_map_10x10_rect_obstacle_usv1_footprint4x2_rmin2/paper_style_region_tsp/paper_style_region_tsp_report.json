@@ -1,0 +1,83 @@
+{
+  "generated_at": "2026-06-01T16:02:22",
+  "map_id": "static_obstacle_map_10x10_rect_obstacle",
+  "algorithm": "paper_style_region_tsp",
+  "elapsed_sec": 1.399086500001431,
+  "region_count": 3,
+  "base_region_count": 8,
+  "feasible_region_count": 2,
+  "infeasible_regions": [
+    {
+      "region_id": "paper_col_1",
+      "reasons": [
+        "paper_col_1_pattern_y_pocket_0p0:cover_invalid:obstacle_collision",
+        "paper_col_1_pattern_y_pocket_0p0_rev:cover_invalid:obstacle_collision",
+        "paper_col_1_pattern_y_pocket_0p5:cover_invalid:obstacle_collision",
+        "paper_col_1_pattern_y_pocket_0p5_rev:cover_invalid:obstacle_collision"
+      ]
+    }
+  ],
+  "infeasible_edges": [
+    {
+      "agent_id": 0,
+      "from": [
+        0.75,
+        0.5,
+        1.571
+      ],
+      "to_region": "paper_col_2",
+      "pattern_id": "paper_col_2_pattern_y_pocket_0p0_rev",
+      "reason": "no_curvature_feasible_connector"
+    }
+  ],
+  "tsp_node_count": 2,
+  "coverage_endpoint_count": 8,
+  "agent_tsp_records": {
+    "0": {
+      "assigned_regions": [
+        "paper_col_0",
+        "paper_col_2"
+      ],
+      "initial_order": [
+        "paper_col_0",
+        "paper_col_2"
+      ],
+      "final_order": [
+        "paper_col_0"
+      ],
+      "skipped_regions": [
+        "paper_col_2"
+      ],
+      "tsp_node_count": 2,
+      "coverage_endpoint_count": 8,
+      "infeasible_edges": [
+        {
+          "agent_id": 0,
+          "from": [
+            0.75,
+            0.5,
+            1.571
+          ],
+          "to_region": "paper_col_2",
+          "pattern_id": "paper_col_2_pattern_y_pocket_0p0_rev",
+          "reason": "no_curvature_feasible_connector"
+        }
+      ]
+    }
+  },
+  "coverage_fraction": 0.74,
+  "residual_count": 2,
+  "residual_backfill_count": 0,
+  "metrics": {
+    "total_length": 12.983642511788075,
+    "coverage_length": 2.0,
+    "transition_length": 10.983642511788075,
+    "total_turn_angle": 3.141592653589793,
+    "turn_count": 1.0,
+    "invalid_path_length": 0.0,
+    "out_of_bounds_segment_count": 0.0,
+    "obstacle_collision_segment_count": 0.0,
+    "kinematic_infeasible_segment_count": 0.0,
+    "max_curvature": 2.1118489042090063e-12
+  }
+}

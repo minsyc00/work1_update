@@ -1,0 +1,42 @@
+{
+  "map_id": "static_obstacle_map_20x20_two_obstacles",
+  "description": "Initial 20m x 20m static-obstacle map. Contains only mission boundary and two static obstacles, with no USV initial states and no paths.",
+  "units": "m",
+  "mission_area": {
+    "type": "rectangle",
+    "origin": [0.0, 0.0],
+    "length_x": 20.0,
+    "length_y": 20.0
+  },
+  "coverage_footprint": {
+    "length_lf": 4.0,
+    "width_wf": 2.0
+  },
+  "motion_constraints": {
+    "model": "3-DOF",
+    "min_turn_radius": 2.0
+  },
+  "static_obstacles": [
+    {
+      "obstacle_id": "rect_dock_01",
+      "type": "rectangle",
+      "center": [7.0, 7.0],
+      "size": [2.0, 2.5],
+      "yaw_deg": 0.0
+    },
+    {
+      "obstacle_id": "elliptic_reef_01",
+      "type": "ellipse",
+      "center": [14.0, 13.0],
+      "radii": [1.4, 0.8],
+      "yaw_deg": -25.0
+    }
+  ],
+  "notes": {
+    "contains_usv_initial_states": false,
+    "contains_paths": false,
+    "recommended_usv_count": 2,
+    "recommended_overlap_ratio": 0.2,
+    "recommended_d_safe": 0.5
+  }
+}

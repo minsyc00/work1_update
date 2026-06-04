@@ -1,0 +1,20 @@
+﻿{
+    "backup_time":  "2026-06-02T22:22:41",
+    "source_dir":  "D:\\code\\work1_update",
+    "target_dir":  "D:\\code\\work1_update\\backups\\code_snapshot_20260602_222241_before_50x50_planner_optimization",
+    "included_items":  [
+                           "src",
+                           "tests",
+                           "examples",
+                           "plans",
+                           "maps",
+                           "pyproject.toml"
+                       ],
+    "excluded_items":  [
+                           "outputs",
+                           "backups",
+                           "__pycache__",
+                           "*.pyc"
+                       ],
+    "purpose":  "before_50x50_planner_optimization"
+}

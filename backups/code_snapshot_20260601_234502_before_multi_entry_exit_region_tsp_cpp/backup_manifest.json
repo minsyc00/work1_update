@@ -1,0 +1,20 @@
+﻿{
+    "created_at":  "2026-06-01T23:45:02",
+    "purpose":  "Backup before multi-entry/multi-exit region TSP-CPP enhancement",
+    "source_root":  "D:\\code\\work1_update",
+    "backup_dir":  "D:\\code\\work1_update\\backups\\code_snapshot_20260601_234502_before_multi_entry_exit_region_tsp_cpp",
+    "included":  [
+                     "src/",
+                     "tests/",
+                     "examples/",
+                     "plans/",
+                     "maps/",
+                     "pyproject.toml"
+                 ],
+    "excluded":  [
+                     "outputs/",
+                     "backups/",
+                     "__pycache__/",
+                     "*.pyc"
+                 ]
+}

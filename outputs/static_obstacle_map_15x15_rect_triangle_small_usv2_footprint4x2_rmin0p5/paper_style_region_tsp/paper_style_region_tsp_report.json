@@ -1,0 +1,289 @@
+{
+  "generated_at": "2026-06-02T23:08:32",
+  "map_id": "static_obstacle_map_15x15_rect_triangle_small",
+  "algorithm": "paper_style_region_tsp",
+  "requested_tsp_solver": "deterministic",
+  "effective_tsp_solvers": {
+    "0": "deterministic",
+    "1": "deterministic"
+  },
+  "aco_best_objective": 0.0,
+  "aco_initial_objective": 0.0,
+  "aco_iteration_count": 0,
+  "aco_accepted_3opt_count": 0,
+  "elapsed_sec": 154.61334440000064,
+  "stage_timing_sec": {
+    "obstacle_normalization": 0.000166,
+    "free_space_decomposition": 0.002308,
+    "region_coarsen_merge": 0.000108,
+    "coverage_pattern_generation": 0.114791,
+    "build_sweep_paths": 99.028074,
+    "region_graph_building": 0.000186,
+    "load_balancing_assignment": 8.6e-05,
+    "coverage_ownership_map": 0.002725,
+    "agent_0_region_tsp": 2.217487,
+    "agent_1_region_tsp": 52.099744
+  },
+  "stage_monitor": {
+    "obstacle_normalization": {
+      "static_obstacle_count": 2,
+      "inflated_obstacle_count": 2
+    },
+    "free_space_decomposition": {
+      "base_region_count": 17
+    },
+    "region_coarsen_merge": {
+      "coarsened_region_count": 5,
+      "merged_region_count": 3
+    },
+    "coverage_pattern_generation": {
+      "region_count": 3,
+      "raw_pattern_count": 18
+    },
+    "build_sweep_paths": {
+      "feasible_region_count": 3,
+      "infeasible_region_count": 0,
+      "prefiltered_pattern_count": 0,
+      "uturn_cache_hit_count": 23,
+      "uturn_cache_miss_count": 192
+    },
+    "region_graph_building": {
+      "feasible_region_count": 3,
+      "edge_count": 1
+    },
+    "load_balancing_assignment": {
+      "agent_count": 2
+    },
+    "coverage_ownership_map": {
+      "owned_region_count": 3
+    },
+    "agent_0_region_tsp": {
+      "assigned_region_count": 1,
+      "final_region_count": 1,
+      "segment_count": 10,
+      "infeasible_edge_count": 0
+    },
+    "agent_1_region_tsp": {
+      "assigned_region_count": 2,
+      "final_region_count": 2,
+      "segment_count": 16,
+      "infeasible_edge_count": 0
+    }
+  },
+  "large_map_mode_enabled": false,
+  "prefiltered_pattern_count": 0,
+  "prefiltered_variant_count": 0,
+  "uturn_cache_hit_count": 23,
+  "uturn_cache_miss_count": 192,
+  "region_repair_count": 0,
+  "heading_repair_count": 4,
+  "region_count": 3,
+  "base_region_count": 17,
+  "performance_merge_fallback": false,
+  "feasible_region_count": 3,
+  "infeasible_regions": [],
+  "infeasible_edges": [],
+  "tsp_node_count": 3,
+  "coverage_endpoint_count": 26,
+  "agent_tsp_records": {
+    "0": {
+      "assigned_regions": [
+        "perf_region_0"
+      ],
+      "initial_order": [
+        "perf_region_0"
+      ],
+      "final_order": [
+        "perf_region_0"
+      ],
+      "skipped_regions": [],
+      "tsp_node_count": 1,
+      "tsp_solver_metadata": {
+        "requested_tsp_solver": "deterministic",
+        "effective_tsp_solver": "deterministic",
+        "tsp_solver_status": "success",
+        "aco_best_objective": null,
+        "aco_initial_objective": null,
+        "aco_iteration_count": 0,
+        "aco_convergence_trace": [],
+        "aco_accepted_3opt_count": 0
+      },
+      "requested_tsp_solver": "deterministic",
+      "effective_tsp_solver": "deterministic",
+      "tsp_solver_status": "success",
+      "aco_best_objective": null,
+      "aco_initial_objective": null,
+      "aco_iteration_count": 0,
+      "aco_convergence_trace": [],
+      "aco_accepted_3opt_count": 0,
+      "candidate_pattern_counts": {
+        "perf_region_0": 3
+      },
+      "candidate_attempt_count": 3,
+      "rejected_candidate_count": 0,
+      "selected_pattern_ids": {
+        "perf_region_0": "perf_region_0_pattern_x_pocket_1p0_high_to_low_min_to_max"
+      },
+      "main_repeat_overlap_length": 0.0,
+      "main_repeat_penalty_total": 98.846326,
+      "cross_agent_overlap_length": 0.0,
+      "cross_agent_penalty_total": 0.0,
+      "unavoidable_cross_agent_overlap_count": 0,
+      "coverage_endpoint_count": 10,
+      "infeasible_edges": []
+    },
+    "1": {
+      "assigned_regions": [
+        "perf_region_1",
+        "perf_region_2"
+      ],
+      "initial_order": [
+        "perf_region_2",
+        "perf_region_1"
+      ],
+      "final_order": [
+        "perf_region_2",
+        "perf_region_1"
+      ],
+      "skipped_regions": [],
+      "tsp_node_count": 2,
+      "tsp_solver_metadata": {
+        "requested_tsp_solver": "deterministic",
+        "effective_tsp_solver": "deterministic",
+        "tsp_solver_status": "success",
+        "aco_best_objective": null,
+        "aco_initial_objective": null,
+        "aco_iteration_count": 0,
+        "aco_convergence_trace": [],
+        "aco_accepted_3opt_count": 0
+      },
+      "requested_tsp_solver": "deterministic",
+      "effective_tsp_solver": "deterministic",
+      "tsp_solver_status": "success",
+      "aco_best_objective": null,
+      "aco_initial_objective": null,
+      "aco_iteration_count": 0,
+      "aco_convergence_trace": [],
+      "aco_accepted_3opt_count": 0,
+      "candidate_pattern_counts": {
+        "perf_region_1": 1,
+        "perf_region_2": 11
+      },
+      "candidate_attempt_count": 18,
+      "rejected_candidate_count": 7,
+      "selected_pattern_ids": {
+        "perf_region_2": "perf_region_2_pattern_y_pocket_0p0_low_to_high_min_to_max",
+        "perf_region_1": "perf_region_1_pattern_y_pocket_1p0_low_to_high_min_to_max"
+      },
+      "main_repeat_overlap_length": 6.826032421531226,
+      "main_repeat_penalty_total": 438.06683405837475,
+      "cross_agent_overlap_length": 12.987901732580081,
+      "cross_agent_penalty_total": 129.87901732580082,
+      "unavoidable_cross_agent_overlap_count": 1,
+      "coverage_endpoint_count": 16,
+      "infeasible_edges": []
+    }
+  },
+  "coverage_fraction": 1.0,
+  "residual_count": 0,
+  "residual_backfill_count": 1,
+  "residual_local_tsp_enabled": true,
+  "residual_local_tsp_status": "success",
+  "residual_backfill_diagnostics": [
+    {
+      "status": "success",
+      "repeat_path_penalty_total": "13.235828"
+    }
+  ],
+  "repeat_path_penalty_total": 13.235827608106344,
+  "shared_resource_count": 1,
+  "shared_resource_conflict_count": 0,
+  "spatial_overlap_reuse_count": 1,
+  "true_time_conflict_count": 0,
+  "mapf_conflicts_resolved_after_residual": 0,
+  "resource_separation_time": 0.5,
+  "count_transit_coverage": true,
+  "enable_short_region_compression": true,
+  "short_region_turn_ratio_threshold": 6.0,
+  "main_repeat_path_penalty_enabled": true,
+  "main_repeat_overlap_length": 63.88390217120369,
+  "main_repeat_penalty_total": 766.6068260544441,
+  "agent_repeat_overlap": {
+    "0": 5.577614401002756,
+    "1": 58.30628777020093
+  },
+  "agent_repeat_penalty": {
+    "0": 66.93137281203306,
+    "1": 699.6754532424111
+  },
+  "cross_agent_penalty_enabled": true,
+  "cross_agent_overlap_length": 21.527790747406744,
+  "cross_agent_overlap_by_agent": {
+    "1": 8.539889014826663,
+    "0": 12.987901732580081
+  },
+  "cross_agent_overlap_by_kind": {
+    "transit": 18.958011569723386,
+    "cover": 1.0,
+    "turn": 1.5697791776833567
+  },
+  "cross_agent_penalty_total": 221.2779074740674,
+  "unavoidable_cross_agent_overlap_count": 1,
+  "coverage_ownership": {
+    "cell_count": 200,
+    "region_count": 3,
+    "conflict_count": 0,
+    "region_owner": {
+      "perf_region_0": 0,
+      "perf_region_1": 1,
+      "perf_region_2": 1
+    }
+  },
+  "metrics": {
+    "total_length": 229.67613370269896,
+    "coverage_length": 59.864947115999996,
+    "transition_length": 169.81118658669897,
+    "total_turn_angle": 162.3458852806558,
+    "turn_count": 11.0,
+    "invalid_path_length": 0.0,
+    "out_of_bounds_segment_count": 0.0,
+    "obstacle_collision_segment_count": 0.0,
+    "kinematic_infeasible_segment_count": 0.0,
+    "dynamic_infeasible_segment_count": 0.0,
+    "nmpc_untrackable_count": 0.0,
+    "max_curvature": 2.0,
+    "max_heading_jump": 0.658879374655621,
+    "max_heading_error": 0.3920216847917759,
+    "max_yaw_rate": 1.1111111111116339,
+    "max_yaw_acceleration": 11.09081920762287,
+    "max_speed": 1.2,
+    "max_acceleration": 0.0,
+    "max_thrust_required": 0.96,
+    "max_yaw_moment_required": 12.08899293630897
+  },
+  "performance_summary": {
+    "performance_profile": "balanced",
+    "target_coverage_fraction": 0.99,
+    "count_transit_coverage": true,
+    "coverage_ratio": 1.0,
+    "target_coverage_met": true,
+    "total_length": 229.67613370269896,
+    "coverage_length": 59.864947115999996,
+    "transition_length": 169.81118658669897,
+    "coverage_length_ratio": 0.2606494029261714,
+    "transition_length_ratio": 0.7393505970738286,
+    "repeat_overlap_length": 63.88390217120369,
+    "repeat_overlap_ratio": 0.2781477602452909,
+    "repeat_transition_ratio": 0.37620549891503796,
+    "residual_count": 0.0,
+    "residual_area_ratio": 0.0,
+    "turn_density": 0.047893526517817454,
+    "agent_load_imbalance": 0.7351670348386278,
+    "agent_total_lengths": {
+      "0": 72.62548630449614,
+      "1": 157.05064739820284
+    },
+    "constraint_ok": true,
+    "performance_objective": 1166.094146343842
+  }
+}

@@ -1,0 +1,19 @@
+﻿{
+    "backup_time":  "2026-06-02T12:11:46",
+    "source_dir":  "D:\\code\\work1_update",
+    "target_dir":  "D:\\code\\work1_update\\backups\\code_snapshot_20260602_121146_before_residual_tsp_mapf_timeline_fix",
+    "included":  [
+                     "src",
+                     "tests",
+                     "examples",
+                     "plans",
+                     "maps",
+                     "pyproject.toml"
+                 ],
+    "excluded":  [
+                     "outputs",
+                     "backups",
+                     "__pycache__",
+                     "*.pyc"
+                 ]
+}

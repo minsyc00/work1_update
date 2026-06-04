@@ -1,0 +1,1836 @@
+{
+  "generated_at": "2026-06-01T12:37:42",
+  "map_id": "static_obstacle_map_20x20_two_obstacles",
+  "output_dir": "D:\\code\\work1_update\\outputs\\static_obstacle_map_20x20_two_obstacles_usv2_footprint4x2_rmin2",
+  "path_plan_metadata": {
+    "status": "paper_fusion_algorithm_experiment",
+    "region_count": "20",
+    "load_imbalance_ratio": "1.251924",
+    "coverage_fraction": "0.447500",
+    "residual_count": "2",
+    "residual_backfill_count": "0",
+    "planning_time": "3.997554",
+    "assignment_objective": "30.232265",
+    "static_obstacle_count": "2",
+    "static_obstacle_aware": "true",
+    "mapf_scheduler": "resource_window_cbs_hook",
+    "mapf_conflicts_resolved": "0",
+    "invalid_path_length": "0.000000",
+    "out_of_bounds_segment_count": "0",
+    "obstacle_collision_segment_count": "0",
+    "invalid_segment_count": "0",
+    "kinematic_infeasible_segment_count": "0"
+  },
+  "stage_metrics": {
+    "map_loaded": {
+      "elapsed_sec": 2.7999998565064743e-05,
+      "area_length_x": 20.0,
+      "area_length_y": 20.0,
+      "usv_count": 2,
+      "static_obstacle_count": 2,
+      "footprint_length": 4.0,
+      "footprint_width": 2.0,
+      "min_turn_radius": 2.0
+    },
+    "obstacle_inflation": {
+      "elapsed_sec": 0.00010230000043520704,
+      "inflated_obstacle_count": 2,
+      "safety_margin": 0.5,
+      "footprint_margin": 2.0,
+      "inflation": 2.5
+    },
+    "free_space_decomposition": {
+      "elapsed_sec": 0.014900500000294414,
+      "region_count": 34,
+      "total_cell_area": 289.22610147200004,
+      "min_cell_area": 2.590266104292549,
+      "max_cell_area": 16.625
+    },
+    "coverage_pattern_generation": {
+      "elapsed_sec": 0.35196709999945597,
+      "region_count": 20,
+      "candidate_pattern_count": 24,
+      "coverage_pass_count": 25,
+      "strip_spacing": 1.6
+    },
+    "region_graph_building": {
+      "elapsed_sec": 0.007195600001068669,
+      "node_count": 20,
+      "edge_count": 29,
+      "mean_node_weight": 1.78235036580425
+    },
+    "load_balancing_assignment": {
+      "elapsed_sec": 0.00026419999994686805,
+      "agent_count": 2,
+      "objective": 30.23226476102157,
+      "imbalance_ratio": 1.251924111603224,
+      "max_load": 28.980340649418345,
+      "min_load": 6.666666666666668
+    },
+    "single_usv_tsp_initial_solution": {
+      "elapsed_sec": 3.376849800000855,
+      "agent_count": 2,
+      "total_initial_objective": 392.03254426237675
+    },
+    "single_usv_tsp_2opt_optimization": {
+      "elapsed_sec": 3.3768589999999676,
+      "total_improvement_count": 8,
+      "total_rejected_count": 608,
+      "total_final_objective": 155.03185223328774
+    },
+    "pattern_selection": {
+      "elapsed_sec": 3.376861099999587,
+      "selected_pattern_count": 20
+    },
+    "obstacle_aware_connection": {
+      "elapsed_sec": 3.3768645000000106,
+      "astar_corridor_count": 2,
+      "total_segment_count": 23
+    },
+    "final_tsp_cpp_tour": {
+      "elapsed_sec": 0.285958300000857,
+      "residual_backfill_count": 0,
+      "coverage_fraction": 0.4475,
+      "residual_count": 2,
+      "mapf_conflicts_resolved": 0,
+      "invalid_path_length": 0.0,
+      "invalid_segment_count": 0,
+      "out_of_bounds_segment_count": 0,
+      "obstacle_collision_segment_count": 0,
+      "kinematic_infeasible_segment_count": 0
+    }
+  },
+  "tsp_records": {
+    "0": {
+      "agent_id": 0,
+      "assigned_regions": [
+        "free_cell_1",
+        "free_cell_2",
+        "free_cell_3",
+        "free_cell_5"
+      ],
+      "initial_order": [
+        "free_cell_1",
+        "free_cell_2",
+        "free_cell_3",
+        "free_cell_5"
+      ],
+      "initial_metrics": {
+        "length": 38.061671575020654,
+        "turn_angle": 14.961701869620315,
+        "estimated_time": 40.03692460790742,
+        "objective": 83.33519183729518
+      },
+      "two_opt_improvements": [],
+      "two_opt_rejected_count": 5,
+      "three_opt_improvements": [],
+      "planned_final_order": [
+        "free_cell_1",
+        "free_cell_2",
+        "free_cell_3",
+        "free_cell_5"
+      ],
+      "final_order": [
+        "free_cell_1",
+        "free_cell_2",
+        "free_cell_3"
+      ],
+      "skipped_regions": [
+        "free_cell_5"
+      ],
+      "final_metrics": {
+        "length": 8.583835204950828,
+        "turn_angle": 0.7232249901228371,
+        "estimated_time": 4.79235890801285,
+        "objective": 13.629322859506672
+      },
+      "pattern_selection": [
+        {
+          "region_id": "free_cell_1",
+          "sequence_index": 0,
+          "selected": {
+            "pattern_id": "free_cell_1_pattern_y",
+            "scan_axis": "y",
+            "inside_cost": 0.4166666666666667,
+            "connect_cost": 1.7709159035128499,
+            "collision_penalty": 0.0,
+            "lookahead_cost": 1.3339430045,
+            "infeasible_penalty": 0.0,
+            "total_cost": 3.5215255746795164,
+            "pass_count": 1,
+            "entry": [
+              1.0,
+              5.375,
+              1.5707963267948966
+            ],
+            "exit": [
+              1.0,
+              5.875,
+              1.5707963267948966
+            ]
+          },
+          "candidates": [
+            {
+              "pattern_id": "free_cell_1_pattern_y",
+              "scan_axis": "y",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 1.7709159035128499,
+              "collision_penalty": 0.0,
+              "lookahead_cost": 1.3339430045,
+              "infeasible_penalty": 0.0,
+              "total_cost": 3.5215255746795164,
+              "pass_count": 1,
+              "entry": [
+                1.0,
+                5.375,
+                1.5707963267948966
+              ],
+              "exit": [
+                1.0,
+                5.875,
+                1.5707963267948966
+              ]
+            }
+          ]
+        },
+        {
+          "region_id": "free_cell_2",
+          "sequence_index": 1,
+          "selected": {
+            "pattern_id": "free_cell_2_pattern_y",
+            "scan_axis": "y",
+            "inside_cost": 0.4166666666666667,
+            "connect_cost": 1.3339430045,
+            "collision_penalty": 0.0,
+            "lookahead_cost": 0.4375,
+            "infeasible_penalty": 0.0,
+            "total_cost": 2.188109671166667,
+            "pass_count": 1,
+            "entry": [
+              1.0,
+              8.542886009,
+              1.5707963267948966
+            ],
+            "exit": [
+              1.0,
+              9.042886009,
+              1.5707963267948966
+            ]
+          },
+          "candidates": [
+            {
+              "pattern_id": "free_cell_2_pattern_x",
+              "scan_axis": "x",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 7.518377495065923,
+              "collision_penalty": 0.0,
+              "lookahead_cost": 6.3674776082446485,
+              "infeasible_penalty": 0.0,
+              "total_cost": 14.302521769977238,
+              "pass_count": 1,
+              "entry": [
+                1.5,
+                8.792886009,
+                0.0
+              ],
+              "exit": [
+                2.0,
+                8.792886009,
+                0.0
+              ]
+            },
+            {
+              "pattern_id": "free_cell_2_pattern_y",
+              "scan_axis": "y",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 1.3339430045,
+              "collision_penalty": 0.0,
+              "lookahead_cost": 0.4375,
+              "infeasible_penalty": 0.0,
+              "total_cost": 2.188109671166667,
+              "pass_count": 1,
+              "entry": [
+                1.0,
+                8.542886009,
+                1.5707963267948966
+              ],
+              "exit": [
+                1.0,
+                9.042886009,
+                1.5707963267948966
+              ]
+            }
+          ]
+        },
+        {
+          "region_id": "free_cell_3",
+          "sequence_index": 2,
+          "selected": {
+            "pattern_id": "free_cell_3_pattern_y",
+            "scan_axis": "y",
+            "inside_cost": 0.4166666666666667,
+            "connect_cost": 0.4375,
+            "collision_penalty": 0.0,
+            "lookahead_cost": 7.514225050476226,
+            "infeasible_penalty": 0.0,
+            "total_cost": 8.368391717142892,
+            "pass_count": 1,
+            "entry": [
+              1.0,
+              9.917886009,
+              1.5707963267948966
+            ],
+            "exit": [
+              1.0,
+              10.417886009,
+              1.5707963267948966
+            ]
+          },
+          "candidates": [
+            {
+              "pattern_id": "free_cell_3_pattern_x",
+              "scan_axis": "x",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 6.978736362431997,
+              "collision_penalty": 0.0,
+              "lookahead_cost": 8.215483009399534,
+              "infeasible_penalty": 0.0,
+              "total_cost": 15.610886038498197,
+              "pass_count": 1,
+              "entry": [
+                1.5,
+                10.167886009,
+                0.0
+              ],
+              "exit": [
+                2.0,
+                10.167886009,
+                0.0
+              ]
+            },
+            {
+              "pattern_id": "free_cell_3_pattern_y",
+              "scan_axis": "y",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 0.4375,
+              "collision_penalty": 0.0,
+              "lookahead_cost": 7.514225050476226,
+              "infeasible_penalty": 0.0,
+              "total_cost": 8.368391717142892,
+              "pass_count": 1,
+              "entry": [
+                1.0,
+                9.917886009,
+                1.5707963267948966
+              ],
+              "exit": [
+                1.0,
+                10.417886009,
+                1.5707963267948966
+              ]
+            }
+          ]
+        },
+        {
+          "region_id": "free_cell_5",
+          "sequence_index": 3,
+          "selected": {
+            "pattern_id": "free_cell_5_pattern_x",
+            "scan_axis": "x",
+            "inside_cost": 27.730340649418345,
+            "connect_cost": 7.514225050476226,
+            "collision_penalty": 0.0,
+            "lookahead_cost": 0.0,
+            "infeasible_penalty": 0.0,
+            "total_cost": 35.24456569989457,
+            "pass_count": 2,
+            "entry": [
+              1.5,
+              14.0,
+              0.0
+            ],
+            "exit": [
+              1.5,
+              15.0,
+              3.141592653589793
+            ]
+          },
+          "candidates": [
+            {
+              "pattern_id": "free_cell_5_pattern_x",
+              "scan_axis": "x",
+              "inside_cost": 27.730340649418345,
+              "connect_cost": 7.514225050476226,
+              "collision_penalty": 0.0,
+              "lookahead_cost": 0.0,
+              "infeasible_penalty": 0.0,
+              "total_cost": 35.24456569989457,
+              "pass_count": 2,
+              "entry": [
+                1.5,
+                14.0,
+                0.0
+              ],
+              "exit": [
+                1.5,
+                15.0,
+                3.141592653589793
+              ]
+            }
+          ]
+        }
+      ],
+      "connection_summary": {
+        "segment_count": 6,
+        "by_kind": {
+          "transit": 3,
+          "cover": 3
+        },
+        "by_connector": {
+          "dubins_fallback": 3,
+          "straight": 3
+        }
+      }
+    },
+    "1": {
+      "agent_id": 1,
+      "assigned_regions": [
+        "free_cell_7",
+        "free_cell_8",
+        "free_cell_11",
+        "free_cell_12",
+        "free_cell_16",
+        "free_cell_17",
+        "free_cell_19",
+        "free_cell_20",
+        "free_cell_21",
+        "free_cell_22",
+        "free_cell_23",
+        "free_cell_24",
+        "free_cell_25",
+        "free_cell_26",
+        "free_cell_29",
+        "free_cell_30"
+      ],
+      "initial_order": [
+        "free_cell_8",
+        "free_cell_12",
+        "free_cell_11",
+        "free_cell_7",
+        "free_cell_16",
+        "free_cell_20",
+        "free_cell_21",
+        "free_cell_25",
+        "free_cell_29",
+        "free_cell_30",
+        "free_cell_17",
+        "free_cell_19",
+        "free_cell_24",
+        "free_cell_23",
+        "free_cell_22",
+        "free_cell_26"
+      ],
+      "initial_metrics": {
+        "length": 190.49899522780507,
+        "turn_angle": 57.949122619163774,
+        "estimated_time": 97.91616428056922,
+        "objective": 308.6973524250816
+      },
+      "two_opt_improvements": [
+        {
+          "iteration": 1,
+          "i": 2,
+          "j": 4,
+          "before_order": [
+            "free_cell_8",
+            "free_cell_12",
+            "free_cell_11",
+            "free_cell_7",
+            "free_cell_16",
+            "free_cell_20",
+            "free_cell_21",
+            "free_cell_25",
+            "free_cell_29",
+            "free_cell_30",
+            "free_cell_17",
+            "free_cell_19",
+            "free_cell_24",
+            "free_cell_23",
+            "free_cell_22",
+            "free_cell_26"
+          ],
+          "after_order": [
+            "free_cell_8",
+            "free_cell_12",
+            "free_cell_7",
+            "free_cell_11",
+            "free_cell_16",
+            "free_cell_20",
+            "free_cell_21",
+            "free_cell_25",
+            "free_cell_29",
+            "free_cell_30",
+            "free_cell_17",
+            "free_cell_19",
+            "free_cell_24",
+            "free_cell_23",
+            "free_cell_22",
+            "free_cell_26"
+          ],
+          "before_objective": 308.6973524250816,
+          "after_objective": 286.2544827415139,
+          "delta_objective": -22.442869683567665,
+          "after_metrics": {
+            "length": 176.8396438164776,
+            "turn_angle": 52.36671528608805,
+            "estimated_time": 91.08648857490549,
+            "objective": 286.2544827415139
+          }
+        },
+        {
+          "iteration": 2,
+          "i": 6,
+          "j": 14,
+          "before_order": [
+            "free_cell_8",
+            "free_cell_12",
+            "free_cell_7",
+            "free_cell_11",
+            "free_cell_16",
+            "free_cell_20",
+            "free_cell_21",
+            "free_cell_25",
+            "free_cell_29",
+            "free_cell_30",
+            "free_cell_17",
+            "free_cell_19",
+            "free_cell_24",
+            "free_cell_23",
+            "free_cell_22",
+            "free_cell_26"
+          ],
+          "after_order": [
+            "free_cell_8",
+            "free_cell_12",
+            "free_cell_7",
+            "free_cell_11",
+            "free_cell_16",
+            "free_cell_20",
+            "free_cell_23",
+            "free_cell_24",
+            "free_cell_19",
+            "free_cell_17",
+            "free_cell_30",
+            "free_cell_29",
+            "free_cell_25",
+            "free_cell_21",
+            "free_cell_22",
+            "free_cell_26"
+          ],
+          "before_objective": 286.2544827415139,
+          "after_objective": 283.2253680914031,
+          "delta_objective": -3.0291146501108415,
+          "after_metrics": {
+            "length": 174.55189053097732,
+            "turn_angle": 53.516758937915554,
+            "estimated_time": 89.94261193215533,
+            "objective": 283.2253680914031
+          }
+        },
+        {
+          "iteration": 3,
+          "i": 4,
+          "j": 9,
+          "before_order": [
+            "free_cell_8",
+            "free_cell_12",
+            "free_cell_7",
+            "free_cell_11",
+            "free_cell_16",
+            "free_cell_20",
+            "free_cell_23",
+            "free_cell_24",
+            "free_cell_19",
+            "free_cell_17",
+            "free_cell_30",
+            "free_cell_29",
+            "free_cell_25",
+            "free_cell_21",
+            "free_cell_22",
+            "free_cell_26"
+          ],
+          "after_order": [
+            "free_cell_8",
+            "free_cell_12",
+            "free_cell_7",
+            "free_cell_11",
+            "free_cell_19",
+            "free_cell_24",
+            "free_cell_23",
+            "free_cell_20",
+            "free_cell_16",
+            "free_cell_17",
+            "free_cell_30",
+            "free_cell_29",
+            "free_cell_25",
+            "free_cell_21",
+            "free_cell_22",
+            "free_cell_26"
+          ],
+          "before_objective": 283.2253680914031,
+          "after_objective": 258.04039711573444,
+          "delta_objective": -25.184970975668648,
+          "after_metrics": {
+            "length": 158.33641481275956,
+            "turn_angle": 51.05459494265261,
+            "estimated_time": 81.83487407304646,
+            "objective": 258.04039711573444
+          }
+        },
+        {
+          "iteration": 4,
+          "i": 4,
+          "j": 7,
+          "before_order": [
+            "free_cell_8",
+            "free_cell_12",
+            "free_cell_7",
+            "free_cell_11",
+            "free_cell_19",
+            "free_cell_24",
+            "free_cell_23",
+            "free_cell_20",
+            "free_cell_16",
+            "free_cell_17",
+            "free_cell_30",
+            "free_cell_29",
+            "free_cell_25",
+            "free_cell_21",
+            "free_cell_22",
+            "free_cell_26"
+          ],
+          "after_order": [
+            "free_cell_8",
+            "free_cell_12",
+            "free_cell_7",
+            "free_cell_11",
+            "free_cell_23",
+            "free_cell_24",
+            "free_cell_19",
+            "free_cell_20",
+            "free_cell_16",
+            "free_cell_17",
+            "free_cell_30",
+            "free_cell_29",
+            "free_cell_25",
+            "free_cell_21",
+            "free_cell_22",
+            "free_cell_26"
+          ],
+          "before_objective": 258.04039711573444,
+          "after_objective": 257.9781322881497,
+          "delta_objective": -0.062264827584726845,
+          "after_metrics": {
+            "length": 159.18602328599468,
+            "turn_angle": 47.23551626425991,
+            "estimated_time": 82.25967830966404,
+            "objective": 257.9781322881497
+          }
+        },
+        {
+          "iteration": 5,
+          "i": 9,
+          "j": 13,
+          "before_order": [
+            "free_cell_8",
+            "free_cell_12",
+            "free_cell_7",
+            "free_cell_11",
+            "free_cell_23",
+            "free_cell_24",
+            "free_cell_19",
+            "free_cell_20",
+            "free_cell_16",
+            "free_cell_17",
+            "free_cell_30",
+            "free_cell_29",
+            "free_cell_25",
+            "free_cell_21",
+            "free_cell_22",
+            "free_cell_26"
+          ],
+          "after_order": [
+            "free_cell_8",
+            "free_cell_12",
+            "free_cell_7",
+            "free_cell_11",
+            "free_cell_23",
+            "free_cell_24",
+            "free_cell_19",
+            "free_cell_20",
+            "free_cell_16",
+            "free_cell_25",
+            "free_cell_29",
+            "free_cell_30",
+            "free_cell_17",
+            "free_cell_21",
+            "free_cell_22",
+            "free_cell_26"
+          ],
+          "before_objective": 257.9781322881497,
+          "after_objective": 256.9634861680546,
+          "delta_objective": -1.014646120095108,
+          "after_metrics": {
+            "length": 158.63874561153352,
+            "turn_angle": 46.68200309739317,
+            "estimated_time": 81.98603947243345,
+            "objective": 256.9634861680546
+          }
+        },
+        {
+          "iteration": 6,
+          "i": 11,
+          "j": 13,
+          "before_order": [
+            "free_cell_8",
+            "free_cell_12",
+            "free_cell_7",
+            "free_cell_11",
+            "free_cell_23",
+            "free_cell_24",
+            "free_cell_19",
+            "free_cell_20",
+            "free_cell_16",
+            "free_cell_25",
+            "free_cell_29",
+            "free_cell_30",
+            "free_cell_17",
+            "free_cell_21",
+            "free_cell_22",
+            "free_cell_26"
+          ],
+          "after_order": [
+            "free_cell_8",
+            "free_cell_12",
+            "free_cell_7",
+            "free_cell_11",
+            "free_cell_23",
+            "free_cell_24",
+            "free_cell_19",
+            "free_cell_20",
+            "free_cell_16",
+            "free_cell_25",
+            "free_cell_29",
+            "free_cell_17",
+            "free_cell_30",
+            "free_cell_21",
+            "free_cell_22",
+            "free_cell_26"
+          ],
+          "before_objective": 256.9634861680546,
+          "after_objective": 240.212204535309,
+          "delta_objective": -16.751281632745588,
+          "after_metrics": {
+            "length": 148.80814802244282,
+            "turn_angle": 40.95233095708032,
+            "estimated_time": 77.07074067788808,
+            "objective": 240.212204535309
+          }
+        },
+        {
+          "iteration": 7,
+          "i": 8,
+          "j": 11,
+          "before_order": [
+            "free_cell_8",
+            "free_cell_12",
+            "free_cell_7",
+            "free_cell_11",
+            "free_cell_23",
+            "free_cell_24",
+            "free_cell_19",
+            "free_cell_20",
+            "free_cell_16",
+            "free_cell_25",
+            "free_cell_29",
+            "free_cell_17",
+            "free_cell_30",
+            "free_cell_21",
+            "free_cell_22",
+            "free_cell_26"
+          ],
+          "after_order": [
+            "free_cell_8",
+            "free_cell_12",
+            "free_cell_7",
+            "free_cell_11",
+            "free_cell_23",
+            "free_cell_24",
+            "free_cell_19",
+            "free_cell_20",
+            "free_cell_29",
+            "free_cell_25",
+            "free_cell_16",
+            "free_cell_17",
+            "free_cell_30",
+            "free_cell_21",
+            "free_cell_22",
+            "free_cell_26"
+          ],
+          "before_objective": 240.212204535309,
+          "after_objective": 239.73066231843805,
+          "delta_objective": -0.4815422168709631,
+          "after_metrics": {
+            "length": 148.48711987786217,
+            "turn_angle": 40.95233095708032,
+            "estimated_time": 76.91022660559776,
+            "objective": 239.73066231843805
+          }
+        },
+        {
+          "iteration": 8,
+          "i": 6,
+          "j": 10,
+          "before_order": [
+            "free_cell_8",
+            "free_cell_12",
+            "free_cell_7",
+            "free_cell_11",
+            "free_cell_23",
+            "free_cell_24",
+            "free_cell_19",
+            "free_cell_20",
+            "free_cell_29",
+            "free_cell_25",
+            "free_cell_16",
+            "free_cell_17",
+            "free_cell_30",
+            "free_cell_21",
+            "free_cell_22",
+            "free_cell_26"
+          ],
+          "after_order": [
+            "free_cell_8",
+            "free_cell_12",
+            "free_cell_7",
+            "free_cell_11",
+            "free_cell_23",
+            "free_cell_24",
+            "free_cell_25",
+            "free_cell_29",
+            "free_cell_20",
+            "free_cell_19",
+            "free_cell_16",
+            "free_cell_17",
+            "free_cell_30",
+            "free_cell_21",
+            "free_cell_22",
+            "free_cell_26"
+          ],
+          "before_objective": 239.73066231843805,
+          "after_objective": 234.19619565713725,
+          "delta_objective": -5.534466661300797,
+          "after_metrics": {
+            "length": 144.90950993081722,
+            "turn_angle": 40.47218312641352,
+            "estimated_time": 75.1214216320753,
+            "objective": 234.19619565713725
+          }
+        }
+      ],
+      "two_opt_rejected_count": 603,
+      "three_opt_improvements": [],
+      "planned_final_order": [
+        "free_cell_8",
+        "free_cell_12",
+        "free_cell_7",
+        "free_cell_11",
+        "free_cell_23",
+        "free_cell_24",
+        "free_cell_25",
+        "free_cell_29",
+        "free_cell_20",
+        "free_cell_19",
+        "free_cell_16",
+        "free_cell_17",
+        "free_cell_30",
+        "free_cell_21",
+        "free_cell_22",
+        "free_cell_26"
+      ],
+      "final_order": [
+        "free_cell_8",
+        "free_cell_12",
+        "free_cell_24",
+        "free_cell_23",
+        "free_cell_25",
+        "free_cell_7",
+        "free_cell_11",
+        "free_cell_29"
+      ],
+      "skipped_regions": [
+        "free_cell_20",
+        "free_cell_19",
+        "free_cell_16",
+        "free_cell_17",
+        "free_cell_30",
+        "free_cell_21",
+        "free_cell_22",
+        "free_cell_26"
+      ],
+      "final_metrics": {
+        "length": 87.80526499753971,
+        "turn_angle": 23.71581700061928,
+        "estimated_time": 45.29672842602463,
+        "objective": 141.40252937378108
+      },
+      "pattern_selection": [
+        {
+          "region_id": "free_cell_8",
+          "sequence_index": 0,
+          "selected": {
+            "pattern_id": "free_cell_8_pattern_x",
+            "scan_axis": "x",
+            "inside_cost": 0.4166666666666667,
+            "connect_cost": 3.7067972631242787,
+            "collision_penalty": 0.0,
+            "lookahead_cost": 1.4312196890000006,
+            "infeasible_penalty": 0.0,
+            "total_cost": 5.554683618790946,
+            "pass_count": 1,
+            "entry": [
+              5.5,
+              12.0,
+              0.0
+            ],
+            "exit": [
+              6.0,
+              12.0,
+              0.0
+            ]
+          },
+          "candidates": [
+            {
+              "pattern_id": "free_cell_8_pattern_x",
+              "scan_axis": "x",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 3.7067972631242787,
+              "collision_penalty": 0.0,
+              "lookahead_cost": 1.4312196890000006,
+              "infeasible_penalty": 0.0,
+              "total_cost": 5.554683618790946,
+              "pass_count": 1,
+              "entry": [
+                5.5,
+                12.0,
+                0.0
+              ],
+              "exit": [
+                6.0,
+                12.0,
+                0.0
+              ]
+            }
+          ]
+        },
+        {
+          "region_id": "free_cell_12",
+          "sequence_index": 1,
+          "selected": {
+            "pattern_id": "free_cell_12_pattern_x",
+            "scan_axis": "x",
+            "inside_cost": 0.4166666666666667,
+            "connect_cost": 1.4312196890000006,
+            "collision_penalty": 0.0,
+            "lookahead_cost": 8.659097069087075,
+            "infeasible_penalty": 0.0,
+            "total_cost": 10.506983424753741,
+            "pass_count": 1,
+            "entry": [
+              8.862439378000001,
+              12.0,
+              0.0
+            ],
+            "exit": [
+              9.362439378000001,
+              12.0,
+              0.0
+            ]
+          },
+          "candidates": [
+            {
+              "pattern_id": "free_cell_12_pattern_x",
+              "scan_axis": "x",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 1.4312196890000006,
+              "collision_penalty": 0.0,
+              "lookahead_cost": 8.659097069087075,
+              "infeasible_penalty": 0.0,
+              "total_cost": 10.506983424753741,
+              "pass_count": 1,
+              "entry": [
+                8.862439378000001,
+                12.0,
+                0.0
+              ],
+              "exit": [
+                9.362439378000001,
+                12.0,
+                0.0
+              ]
+            }
+          ]
+        },
+        {
+          "region_id": "free_cell_7",
+          "sequence_index": 2,
+          "selected": {
+            "pattern_id": "free_cell_7_pattern_x",
+            "scan_axis": "x",
+            "inside_cost": 0.4166666666666667,
+            "connect_cost": 8.659097069087075,
+            "collision_penalty": 1000000.0,
+            "lookahead_cost": 1.4312196890000006,
+            "infeasible_penalty": 0.0,
+            "total_cost": 1000010.5069834248,
+            "pass_count": 1,
+            "entry": [
+              5.5,
+              1.0,
+              0.0
+            ],
+            "exit": [
+              6.0,
+              1.0,
+              0.0
+            ]
+          },
+          "candidates": [
+            {
+              "pattern_id": "free_cell_7_pattern_x",
+              "scan_axis": "x",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 8.659097069087075,
+              "collision_penalty": 1000000.0,
+              "lookahead_cost": 1.4312196890000006,
+              "infeasible_penalty": 0.0,
+              "total_cost": 1000010.5069834248,
+              "pass_count": 1,
+              "entry": [
+                5.5,
+                1.0,
+                0.0
+              ],
+              "exit": [
+                6.0,
+                1.0,
+                0.0
+              ]
+            }
+          ]
+        },
+        {
+          "region_id": "free_cell_11",
+          "sequence_index": 3,
+          "selected": {
+            "pattern_id": "free_cell_11_pattern_x",
+            "scan_axis": "x",
+            "inside_cost": 0.4166666666666667,
+            "connect_cost": 1.4312196890000006,
+            "collision_penalty": 0.0,
+            "lookahead_cost": 4.459572091072442,
+            "infeasible_penalty": 0.0,
+            "total_cost": 6.307458446739109,
+            "pass_count": 1,
+            "entry": [
+              8.862439378000001,
+              1.0,
+              0.0
+            ],
+            "exit": [
+              9.362439378000001,
+              1.0,
+              0.0
+            ]
+          },
+          "candidates": [
+            {
+              "pattern_id": "free_cell_11_pattern_x",
+              "scan_axis": "x",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 1.4312196890000006,
+              "collision_penalty": 0.0,
+              "lookahead_cost": 4.459572091072442,
+              "infeasible_penalty": 0.0,
+              "total_cost": 6.307458446739109,
+              "pass_count": 1,
+              "entry": [
+                8.862439378000001,
+                1.0,
+                0.0
+              ],
+              "exit": [
+                9.362439378000001,
+                1.0,
+                0.0
+              ]
+            }
+          ]
+        },
+        {
+          "region_id": "free_cell_23",
+          "sequence_index": 4,
+          "selected": {
+            "pattern_id": "free_cell_23_pattern_y",
+            "scan_axis": "y",
+            "inside_cost": 0.4166666666666667,
+            "connect_cost": 4.459572091072442,
+            "collision_penalty": 0.0,
+            "lookahead_cost": 1.75,
+            "infeasible_penalty": 0.0,
+            "total_cost": 6.626238757739109,
+            "pass_count": 1,
+            "entry": [
+              16.887560622000002,
+              1.375,
+              1.5707963267948966
+            ],
+            "exit": [
+              16.887560622000002,
+              1.875,
+              1.5707963267948966
+            ]
+          },
+          "candidates": [
+            {
+              "pattern_id": "free_cell_23_pattern_y",
+              "scan_axis": "y",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 4.459572091072442,
+              "collision_penalty": 0.0,
+              "lookahead_cost": 1.75,
+              "infeasible_penalty": 0.0,
+              "total_cost": 6.626238757739109,
+              "pass_count": 1,
+              "entry": [
+                16.887560622000002,
+                1.375,
+                1.5707963267948966
+              ],
+              "exit": [
+                16.887560622000002,
+                1.875,
+                1.5707963267948966
+              ]
+            }
+          ]
+        },
+        {
+          "region_id": "free_cell_24",
+          "sequence_index": 5,
+          "selected": {
+            "pattern_id": "free_cell_24_pattern_y",
+            "scan_axis": "y",
+            "inside_cost": 0.4166666666666667,
+            "connect_cost": 1.75,
+            "collision_penalty": 0.0,
+            "lookahead_cost": 1.3339430045,
+            "infeasible_penalty": 0.0,
+            "total_cost": 3.5006096711666665,
+            "pass_count": 1,
+            "entry": [
+              16.887560622000002,
+              5.375,
+              1.5707963267948966
+            ],
+            "exit": [
+              16.887560622000002,
+              5.875,
+              1.5707963267948966
+            ]
+          },
+          "candidates": [
+            {
+              "pattern_id": "free_cell_24_pattern_y",
+              "scan_axis": "y",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 1.75,
+              "collision_penalty": 0.0,
+              "lookahead_cost": 1.3339430045,
+              "infeasible_penalty": 0.0,
+              "total_cost": 3.5006096711666665,
+              "pass_count": 1,
+              "entry": [
+                16.887560622000002,
+                5.375,
+                1.5707963267948966
+              ],
+              "exit": [
+                16.887560622000002,
+                5.875,
+                1.5707963267948966
+              ]
+            }
+          ]
+        },
+        {
+          "region_id": "free_cell_25",
+          "sequence_index": 6,
+          "selected": {
+            "pattern_id": "free_cell_25_pattern_x",
+            "scan_axis": "x",
+            "inside_cost": 0.4166666666666667,
+            "connect_cost": 7.3391405345585525,
+            "collision_penalty": 0.0,
+            "lookahead_cost": 0.75,
+            "infeasible_penalty": 0.0,
+            "total_cost": 8.50580720122522,
+            "pass_count": 1,
+            "entry": [
+              16.637560622000002,
+              8.792886009,
+              0.0
+            ],
+            "exit": [
+              17.137560622000002,
+              8.792886009,
+              0.0
+            ]
+          },
+          "candidates": [
+            {
+              "pattern_id": "free_cell_25_pattern_x",
+              "scan_axis": "x",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 7.3391405345585525,
+              "collision_penalty": 0.0,
+              "lookahead_cost": 0.75,
+              "infeasible_penalty": 0.0,
+              "total_cost": 8.50580720122522,
+              "pass_count": 1,
+              "entry": [
+                16.637560622000002,
+                8.792886009,
+                0.0
+              ],
+              "exit": [
+                17.137560622000002,
+                8.792886009,
+                0.0
+              ]
+            },
+            {
+              "pattern_id": "free_cell_25_pattern_y",
+              "scan_axis": "y",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 1.3339430045,
+              "collision_penalty": 0.0,
+              "lookahead_cost": 6.8247611079769275,
+              "infeasible_penalty": 0.0,
+              "total_cost": 8.575370779143594,
+              "pass_count": 1,
+              "entry": [
+                16.887560622000002,
+                8.542886009,
+                1.5707963267948966
+              ],
+              "exit": [
+                16.887560622000002,
+                9.042886009,
+                1.5707963267948966
+              ]
+            }
+          ]
+        },
+        {
+          "region_id": "free_cell_29",
+          "sequence_index": 7,
+          "selected": {
+            "pattern_id": "free_cell_29_pattern_x",
+            "scan_axis": "x",
+            "inside_cost": 0.4166666666666667,
+            "connect_cost": 0.75,
+            "collision_penalty": 0.0,
+            "lookahead_cost": 5.994922230172291,
+            "infeasible_penalty": 0.0,
+            "total_cost": 7.161588896838958,
+            "pass_count": 1,
+            "entry": [
+              18.637560622000002,
+              8.792886009,
+              0.0
+            ],
+            "exit": [
+              19.137560622000002,
+              8.792886009,
+              0.0
+            ]
+          },
+          "candidates": [
+            {
+              "pattern_id": "free_cell_29_pattern_x",
+              "scan_axis": "x",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 0.75,
+              "collision_penalty": 0.0,
+              "lookahead_cost": 5.994922230172291,
+              "infeasible_penalty": 0.0,
+              "total_cost": 7.161588896838958,
+              "pass_count": 1,
+              "entry": [
+                18.637560622000002,
+                8.792886009,
+                0.0
+              ],
+              "exit": [
+                19.137560622000002,
+                8.792886009,
+                0.0
+              ]
+            }
+          ]
+        },
+        {
+          "region_id": "free_cell_20",
+          "sequence_index": 8,
+          "selected": {
+            "pattern_id": "free_cell_20_pattern_y",
+            "scan_axis": "y",
+            "inside_cost": 0.4166666666666667,
+            "connect_cost": 5.994922230172291,
+            "collision_penalty": 0.0,
+            "lookahead_cost": 8.533185307179586,
+            "infeasible_penalty": 0.0,
+            "total_cost": 14.944774204018543,
+            "pass_count": 1,
+            "entry": [
+              15.0,
+              5.375,
+              1.5707963267948966
+            ],
+            "exit": [
+              15.0,
+              5.875,
+              1.5707963267948966
+            ]
+          },
+          "candidates": [
+            {
+              "pattern_id": "free_cell_20_pattern_y",
+              "scan_axis": "y",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 5.994922230172291,
+              "collision_penalty": 0.0,
+              "lookahead_cost": 8.533185307179586,
+              "infeasible_penalty": 0.0,
+              "total_cost": 14.944774204018543,
+              "pass_count": 1,
+              "entry": [
+                15.0,
+                5.375,
+                1.5707963267948966
+              ],
+              "exit": [
+                15.0,
+                5.875,
+                1.5707963267948966
+              ]
+            }
+          ]
+        },
+        {
+          "region_id": "free_cell_19",
+          "sequence_index": 9,
+          "selected": {
+            "pattern_id": "free_cell_19_pattern_y",
+            "scan_axis": "y",
+            "inside_cost": 0.4166666666666667,
+            "connect_cost": 8.533185307179586,
+            "collision_penalty": 0.0,
+            "lookahead_cost": 2.1045904360032237,
+            "infeasible_penalty": 0.0,
+            "total_cost": 11.054442409849475,
+            "pass_count": 1,
+            "entry": [
+              15.0,
+              1.375,
+              1.5707963267948966
+            ],
+            "exit": [
+              15.0,
+              1.875,
+              1.5707963267948966
+            ]
+          },
+          "candidates": [
+            {
+              "pattern_id": "free_cell_19_pattern_y",
+              "scan_axis": "y",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 8.533185307179586,
+              "collision_penalty": 0.0,
+              "lookahead_cost": 2.1045904360032237,
+              "infeasible_penalty": 0.0,
+              "total_cost": 11.054442409849475,
+              "pass_count": 1,
+              "entry": [
+                15.0,
+                1.375,
+                1.5707963267948966
+              ],
+              "exit": [
+                15.0,
+                1.875,
+                1.5707963267948966
+              ]
+            }
+          ]
+        },
+        {
+          "region_id": "free_cell_16",
+          "sequence_index": 10,
+          "selected": {
+            "pattern_id": "free_cell_16_pattern_y",
+            "scan_axis": "y",
+            "inside_cost": 0.4166666666666667,
+            "connect_cost": 2.1045904360032237,
+            "collision_penalty": 0.0,
+            "lookahead_cost": 1.3339430045,
+            "infeasible_penalty": 0.0,
+            "total_cost": 3.8552001071698903,
+            "pass_count": 1,
+            "entry": [
+              13.0,
+              5.375,
+              1.5707963267948966
+            ],
+            "exit": [
+              13.0,
+              5.875,
+              1.5707963267948966
+            ]
+          },
+          "candidates": [
+            {
+              "pattern_id": "free_cell_16_pattern_y",
+              "scan_axis": "y",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 2.1045904360032237,
+              "collision_penalty": 0.0,
+              "lookahead_cost": 1.3339430045,
+              "infeasible_penalty": 0.0,
+              "total_cost": 3.8552001071698903,
+              "pass_count": 1,
+              "entry": [
+                13.0,
+                5.375,
+                1.5707963267948966
+              ],
+              "exit": [
+                13.0,
+                5.875,
+                1.5707963267948966
+              ]
+            }
+          ]
+        },
+        {
+          "region_id": "free_cell_17",
+          "sequence_index": 11,
+          "selected": {
+            "pattern_id": "free_cell_17_pattern_y",
+            "scan_axis": "y",
+            "inside_cost": 0.4166666666666667,
+            "connect_cost": 1.3339430045,
+            "collision_penalty": 0.0,
+            "lookahead_cost": 3.4469462804180178,
+            "infeasible_penalty": 0.0,
+            "total_cost": 5.197555951584684,
+            "pass_count": 1,
+            "entry": [
+              13.0,
+              8.542886009,
+              1.5707963267948966
+            ],
+            "exit": [
+              13.0,
+              9.042886009,
+              1.5707963267948966
+            ]
+          },
+          "candidates": [
+            {
+              "pattern_id": "free_cell_17_pattern_x",
+              "scan_axis": "x",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 7.224720803038389,
+              "collision_penalty": 0.0,
+              "lookahead_cost": 3.14884167986092,
+              "infeasible_penalty": 0.0,
+              "total_cost": 10.790229149565976,
+              "pass_count": 1,
+              "entry": [
+                12.0,
+                8.792886009,
+                0.0
+              ],
+              "exit": [
+                12.5,
+                8.792886009,
+                0.0
+              ]
+            },
+            {
+              "pattern_id": "free_cell_17_pattern_y",
+              "scan_axis": "y",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 1.3339430045,
+              "collision_penalty": 0.0,
+              "lookahead_cost": 3.4469462804180178,
+              "infeasible_penalty": 0.0,
+              "total_cost": 5.197555951584684,
+              "pass_count": 1,
+              "entry": [
+                13.0,
+                8.542886009,
+                1.5707963267948966
+              ],
+              "exit": [
+                13.0,
+                9.042886009,
+                1.5707963267948966
+              ]
+            }
+          ]
+        },
+        {
+          "region_id": "free_cell_30",
+          "sequence_index": 12,
+          "selected": {
+            "pattern_id": "free_cell_30_pattern_x",
+            "scan_axis": "x",
+            "inside_cost": 0.4166666666666667,
+            "connect_cost": 3.4469462804180178,
+            "collision_penalty": 0.0,
+            "lookahead_cost": 5.797491557646977,
+            "infeasible_penalty": 0.0,
+            "total_cost": 9.66110450473166,
+            "pass_count": 1,
+            "entry": [
+              18.637560622000002,
+              10.167886009,
+              0.0
+            ],
+            "exit": [
+              19.137560622000002,
+              10.167886009,
+              0.0
+            ]
+          },
+          "candidates": [
+            {
+              "pattern_id": "free_cell_30_pattern_x",
+              "scan_axis": "x",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 3.4469462804180178,
+              "collision_penalty": 0.0,
+              "lookahead_cost": 5.797491557646977,
+              "infeasible_penalty": 0.0,
+              "total_cost": 9.66110450473166,
+              "pass_count": 1,
+              "entry": [
+                18.637560622000002,
+                10.167886009,
+                0.0
+              ],
+              "exit": [
+                19.137560622000002,
+                10.167886009,
+                0.0
+              ]
+            }
+          ]
+        },
+        {
+          "region_id": "free_cell_21",
+          "sequence_index": 13,
+          "selected": {
+            "pattern_id": "free_cell_21_pattern_y",
+            "scan_axis": "y",
+            "inside_cost": 0.4166666666666667,
+            "connect_cost": 5.797491557646977,
+            "collision_penalty": 0.0,
+            "lookahead_cost": 4.457113991,
+            "infeasible_penalty": 0.0,
+            "total_cost": 10.671272215313644,
+            "pass_count": 1,
+            "entry": [
+              15.0,
+              8.542886009,
+              1.5707963267948966
+            ],
+            "exit": [
+              15.0,
+              9.042886009,
+              1.5707963267948966
+            ]
+          },
+          "candidates": [
+            {
+              "pattern_id": "free_cell_21_pattern_y",
+              "scan_axis": "y",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 5.797491557646977,
+              "collision_penalty": 0.0,
+              "lookahead_cost": 4.457113991,
+              "infeasible_penalty": 0.0,
+              "total_cost": 10.671272215313644,
+              "pass_count": 1,
+              "entry": [
+                15.0,
+                8.542886009,
+                1.5707963267948966
+              ],
+              "exit": [
+                15.0,
+                9.042886009,
+                1.5707963267948966
+              ]
+            }
+          ]
+        },
+        {
+          "region_id": "free_cell_22",
+          "sequence_index": 14,
+          "selected": {
+            "pattern_id": "free_cell_22_pattern_y",
+            "scan_axis": "y",
+            "inside_cost": 0.4166666666666667,
+            "connect_cost": 4.457113991,
+            "collision_penalty": 1000000.0,
+            "lookahead_cost": 7.259515822646177,
+            "infeasible_penalty": 0.0,
+            "total_cost": 1000012.1332964803,
+            "pass_count": 1,
+            "entry": [
+              15.0,
+              17.957113991,
+              1.5707963267948966
+            ],
+            "exit": [
+              15.0,
+              18.457113991,
+              1.5707963267948966
+            ]
+          },
+          "candidates": [
+            {
+              "pattern_id": "free_cell_22_pattern_y",
+              "scan_axis": "y",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 4.457113991,
+              "collision_penalty": 1000000.0,
+              "lookahead_cost": 7.259515822646177,
+              "infeasible_penalty": 0.0,
+              "total_cost": 1000012.1332964803,
+              "pass_count": 1,
+              "entry": [
+                15.0,
+                17.957113991,
+                1.5707963267948966
+              ],
+              "exit": [
+                15.0,
+                18.457113991,
+                1.5707963267948966
+              ]
+            }
+          ]
+        },
+        {
+          "region_id": "free_cell_26",
+          "sequence_index": 15,
+          "selected": {
+            "pattern_id": "free_cell_26_pattern_y",
+            "scan_axis": "y",
+            "inside_cost": 0.4166666666666667,
+            "connect_cost": 7.259515822646177,
+            "collision_penalty": 0.0,
+            "lookahead_cost": 0.0,
+            "infeasible_penalty": 0.0,
+            "total_cost": 7.676182489312844,
+            "pass_count": 1,
+            "entry": [
+              16.887560622000002,
+              17.957113991,
+              1.5707963267948966
+            ],
+            "exit": [
+              16.887560622000002,
+              18.457113991,
+              1.5707963267948966
+            ]
+          },
+          "candidates": [
+            {
+              "pattern_id": "free_cell_26_pattern_y",
+              "scan_axis": "y",
+              "inside_cost": 0.4166666666666667,
+              "connect_cost": 7.259515822646177,
+              "collision_penalty": 0.0,
+              "lookahead_cost": 0.0,
+              "infeasible_penalty": 0.0,
+              "total_cost": 7.676182489312844,
+              "pass_count": 1,
+              "entry": [
+                16.887560622000002,
+                17.957113991,
+                1.5707963267948966
+              ],
+              "exit": [
+                16.887560622000002,
+                18.457113991,
+                1.5707963267948966
+              ]
+            }
+          ]
+        }
+      ],
+      "connection_summary": {
+        "segment_count": 17,
+        "by_kind": {
+          "transit": 9,
+          "cover": 8
+        },
+        "by_connector": {
+          "dubins_fallback": 5,
+          "straight": 8,
+          "bezier": 2,
+          "astar_corridor": 2
+        }
+      }
+    }
+  },
+  "agents": {
+    "0": {
+      "segment_count": 6,
+      "metrics": {
+        "total_length": 8.583835204950828,
+        "total_turn_angle": 0.7232249901228371,
+        "estimated_time": 4.79235890801285,
+        "objective": 13.629322859506672,
+        "max_curvature": 0.5,
+        "region_count": 3.0,
+        "segment_count": 6.0,
+        "invalid_path_length": 0.0,
+        "invalid_segment_count": 0.0,
+        "out_of_bounds_segment_count": 0.0,
+        "obstacle_collision_segment_count": 0.0,
+        "kinematic_infeasible_segment_count": 0.0,
+        "mapf_conflicts_resolved": 0.0,
+        "scheduled_estimated_time": 4.79235890801285
+      }
+    },
+    "1": {
+      "segment_count": 17,
+      "metrics": {
+        "total_length": 87.80526499753971,
+        "total_turn_angle": 23.71581700061928,
+        "estimated_time": 45.29672842602463,
+        "objective": 141.40252937378108,
+        "max_curvature": 0.5,
+        "region_count": 8.0,
+        "segment_count": 17.0,
+        "invalid_path_length": 0.0,
+        "invalid_segment_count": 0.0,
+        "out_of_bounds_segment_count": 0.0,
+        "obstacle_collision_segment_count": 0.0,
+        "kinematic_infeasible_segment_count": 0.0,
+        "mapf_conflicts_resolved": 0.0,
+        "scheduled_estimated_time": 45.29672842602463
+      }
+    }
+  },
+  "artifacts": [
+    {
+      "stage": "map_loaded",
+      "file": "00_map_and_static_obstacles.png",
+      "bytes": 68261
+    },
+    {
+      "stage": "obstacle_inflation",
+      "file": "01_obstacle_inflation.png",
+      "bytes": 77350
+    },
+    {
+      "stage": "free_space_decomposition",
+      "file": "02_sweep_lines_and_free_cells.png",
+      "bytes": 87899
+    },
+    {
+      "stage": "decomposition_valid_cells",
+      "file": "03_decomposition_valid_cells.png",
+      "bytes": 98643
+    },
+    {
+      "stage": "coverage_pattern_generation",
+      "file": "04_candidate_coverage_patterns.png",
+      "bytes": 82134
+    },
+    {
+      "stage": "region_graph_building",
+      "file": "05_region_graph_weights.png",
+      "bytes": 103042
+    },
+    {
+      "stage": "load_balancing_assignment",
+      "file": "06_balanced_assignment.png",
+      "bytes": 84695
+    },
+    {
+      "stage": "agent_0_tsp_initial_order",
+      "file": "07_agent_0_tsp_initial_order.png",
+      "bytes": 74325
+    },
+    {
+      "stage": "agent_1_tsp_initial_order",
+      "file": "07_agent_1_tsp_initial_order.png",
+      "bytes": 99742
+    },
+    {
+      "stage": "agent_0_pattern_selection",
+      "file": "08_agent_0_pattern_selection.png",
+      "bytes": 71667
+    },
+    {
+      "stage": "agent_1_pattern_selection",
+      "file": "08_agent_1_pattern_selection.png",
+      "bytes": 81932
+    },
+    {
+      "stage": "agent_0_2opt_iterations",
+      "file": "09_agent_0_2opt_iterations.png",
+      "bytes": 85917
+    },
+    {
+      "stage": "agent_1_2opt_iterations",
+      "file": "09_agent_1_2opt_iterations.png",
+      "bytes": 124989
+    },
+    {
+      "stage": "obstacle_aware_connection",
+      "file": "10_obstacle_aware_connections.png",
+      "bytes": 104278
+    },
+    {
+      "stage": "final_tsp_cpp_tour",
+      "file": "11_final_single_usv_tsp_cpp_tours.png",
+      "bytes": 108645
+    },
+    {
+      "stage": "algorithm_process",
+      "file": "12_algorithm_process.gif",
+      "bytes": 298640
+    }
+  ]
+}
