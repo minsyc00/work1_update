@@ -1,0 +1,35 @@
+{
+  "map_id": "static_obstacle_map_10x10_rect_obstacle",
+  "description": "Initial 10m x 10m static-obstacle map. Contains only mission boundary and one rectangular static obstacle, with no USV initial states and no paths.",
+  "units": "m",
+  "mission_area": {
+    "type": "rectangle",
+    "origin": [0.0, 0.0],
+    "length_x": 10.0,
+    "length_y": 10.0
+  },
+  "coverage_footprint": {
+    "length_lf": 4.0,
+    "width_wf": 2.0
+  },
+  "motion_constraints": {
+    "model": "3-DOF",
+    "min_turn_radius": 2.0
+  },
+  "static_obstacles": [
+    {
+      "obstacle_id": "rect_obstacle_01",
+      "type": "rectangle",
+      "center": [5.0, 5.0],
+      "size": [2.0, 2.0],
+      "yaw_deg": 0.0
+    }
+  ],
+  "notes": {
+    "contains_usv_initial_states": false,
+    "contains_paths": false,
+    "recommended_usv_count": 1,
+    "recommended_overlap_ratio": 0.2,
+    "recommended_d_safe": 0.5
+  }
+}

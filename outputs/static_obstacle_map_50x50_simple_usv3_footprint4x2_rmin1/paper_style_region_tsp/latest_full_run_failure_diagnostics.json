@@ -1,0 +1,172 @@
+{
+  "generated_at": "2026-06-22T20:57:07",
+  "map_id": "static_obstacle_map_50x50_simple",
+  "usv_count": 3,
+  "footprint": {
+    "length_lf": 4.0,
+    "width_wf": 2.0
+  },
+  "rmin": 1.0,
+  "runs": [
+    {
+      "name": "FA3ACO render run",
+      "status": "timeout_before_render",
+      "timeout_sec": 1801.3,
+      "stages": [
+        {
+          "stage": "obstacle_normalization",
+          "dt_sec": 0.0
+        },
+        {
+          "stage": "free_space_decomposition",
+          "dt_sec": 0.185,
+          "base_region_count": 177,
+          "composite_region_count": 87
+        },
+        {
+          "stage": "region_coarsen_merge",
+          "dt_sec": 0.0,
+          "merged_region_count": 87
+        },
+        {
+          "stage": "coverage_pattern_generation",
+          "dt_sec": 6.941,
+          "raw_pattern_count": 501
+        },
+        {
+          "stage": "build_sweep_paths",
+          "dt_sec": 851.972,
+          "feasible_region_count": 87,
+          "open_chain_region_count": 209,
+          "open_chain_count": 1248,
+          "open_chain_break_count": 846,
+          "open_chain_connected_count": 0
+        },
+        {
+          "stage": "region_graph_building",
+          "dt_sec": 0.062,
+          "edge_count": 144
+        },
+        {
+          "stage": "load_balancing_assignment",
+          "dt_sec": 0.004,
+          "agent_count": 3
+        },
+        {
+          "stage": "coverage_ownership_map",
+          "dt_sec": 0.074,
+          "owned_region_count": 87
+        },
+        {
+          "stage": "agent_0_region_tsp",
+          "dt_sec": 402.749,
+          "assigned_region_count": 13,
+          "final_region_count": 3,
+          "segment_count": 55,
+          "infeasible_edge_count": 8
+        },
+        {
+          "stage": "agent_1_region_tsp",
+          "dt_sec": 40.452,
+          "assigned_region_count": 25,
+          "final_region_count": 0,
+          "segment_count": 0,
+          "infeasible_edge_count": 8
+        }
+      ]
+    },
+    {
+      "name": "Deterministic render run",
+      "status": "timeout_before_render",
+      "timeout_sec": 8877.2,
+      "stages": [
+        {
+          "stage": "obstacle_normalization",
+          "dt_sec": 0.0
+        },
+        {
+          "stage": "free_space_decomposition",
+          "dt_sec": 0.161,
+          "base_region_count": 177,
+          "composite_region_count": 87
+        },
+        {
+          "stage": "region_coarsen_merge",
+          "dt_sec": 0.0,
+          "merged_region_count": 87
+        },
+        {
+          "stage": "coverage_pattern_generation",
+          "dt_sec": 8.362,
+          "raw_pattern_count": 501
+        },
+        {
+          "stage": "build_sweep_paths",
+          "dt_sec": 839.457,
+          "feasible_region_count": 87,
+          "open_chain_region_count": 209,
+          "open_chain_count": 1248,
+          "open_chain_break_count": 846,
+          "open_chain_connected_count": 0
+        },
+        {
+          "stage": "region_graph_building",
+          "dt_sec": 0.05,
+          "edge_count": 144
+        },
+        {
+          "stage": "load_balancing_assignment",
+          "dt_sec": 0.004,
+          "agent_count": 3
+        },
+        {
+          "stage": "coverage_ownership_map",
+          "dt_sec": 0.072,
+          "owned_region_count": 87
+        },
+        {
+          "stage": "agent_0_region_tsp",
+          "dt_sec": 574.442,
+          "assigned_region_count": 13,
+          "final_region_count": 3,
+          "segment_count": 55,
+          "infeasible_edge_count": 8
+        },
+        {
+          "stage": "agent_1_region_tsp",
+          "dt_sec": 41.544,
+          "assigned_region_count": 25,
+          "final_region_count": 0,
+          "segment_count": 0,
+          "infeasible_edge_count": 8
+        },
+        {
+          "stage": "agent_2_region_tsp",
+          "dt_sec": 7236.023,
+          "assigned_region_count": 49,
+          "final_region_count": 1,
+          "segment_count": 28,
+          "infeasible_edge_count": 8
+        }
+      ]
+    }
+  ],
+  "diagnosis": {
+    "completed_full_algorithm": false,
+    "rendered_final_result_images": false,
+    "primary_bottleneck": "region TSP/open-chain connection combinatorial explosion",
+    "secondary_bottleneck": "build_sweep_paths heavy U-turn validation",
+    "key_evidence": [
+      "build_sweep_paths ~= 839-852 s",
+      "open_chain_connected_count = 0 despite open_chain_count = 1248",
+      "deterministic agent_2_region_tsp = 7236.023 s",
+      "agent_1 final_region_count = 0"
+    ],
+    "recommended_next_fix": [
+      "Implement chain-level connector pruning and reachability graph before agent TSP",
+      "Cap per-agent TSP candidates by spatial cluster and nearest feasible chain edge",
+      "Make open_chain_connected_count nonzero by actually reconnecting split chains before region-level TSP",
+      "Render partial diagnostics before expensive TSP to always leave updated images"
+    ]
+  }
+}

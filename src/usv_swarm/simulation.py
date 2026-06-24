@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import math
 import pathlib
+import time
 from dataclasses import dataclass, field
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
@@ -47,6 +48,7 @@ class SimulationLog:
     plan: PlanningResult
     obstacle_tracks: List[DynamicObstacleTrack]
     frames: List[SimulationFrame] = field(default_factory=list)
+    runtime_profile: Dict[str, object] = field(default_factory=dict)
 
     def trajectory(self, agent_id: int) -> List[Tuple[float, float]]:
         return [(frame.agent_states[agent_id].x, frame.agent_states[agent_id].y) for frame in self.frames if agent_id in frame.agent_states]
@@ -101,6 +103,21 @@ def simulate_swarm_closed_loop(
     previous_controls = {idx: ControlInput.zero() for idx in states3}
     predictions_cache: Dict[int, Sequence] = {}
     log = SimulationLog(config=config, plan=plan, obstacle_tracks=list(obstacle_tracks))
+    log.runtime_profile = {
+        "control_mode": runtime.control_mode,
+        "dynamics_integration_method": runtime.integration_method,
+        "nmpc_integration_method": runtime.nmpc_integration_method,
+        "plant_nmpc_integration_mismatch": runtime.integration_method != runtime.nmpc_integration_method,
+        "nmpc_parallel_backend": runtime.nmpc_parallel_backend,
+        "nmpc_parallel_backend_effective": runtime.nmpc_parallel_backend_effective,
+        "nmpc_solver_backend_requested": runtime.nmpc_solver_backend_requested,
+        "nmpc_solver_backend_effective": runtime.nmpc_solver_backend_effective,
+        "acados_available": runtime.acados_available,
+        "acados_fallback_reason": runtime.acados_fallback_reason,
+        "horizon_steps": runtime.horizon_steps,
+        "dt": dt,
+        "steps": [],
+    }
 
     runtime.coverage.state.covered[:] = False
     runtime.coverage.state.coverage_ratio[:] = 0.0
@@ -111,24 +128,48 @@ def simulate_swarm_closed_loop(
     log.frames.append(_build_frame(0.0, states3, previous_controls, {idx: SafetyStatus("init", float("inf")) for idx in states3}, obstacle_tracks, runtime))
 
     steps = int(math.ceil(total_time / dt))
+    residual_interval_steps = max(1, int(config.mission.coverage_residual_interval_steps))
     for step in range(steps):
+        step_wall_started = time.perf_counter()
         current_time = step * dt
         current_predictions = dict(predictions_cache)
         step_results = {}
         step_safety: Dict[int, SafetyStatus] = {}
-        for agent_id in sorted(states3):
-            runtime_state = AgentRuntimeState(
-                agent_id=agent_id,
-                time=current_time,
-                state3=states3[agent_id],
-                state6=states6.get(agent_id),
-                previous_control=previous_controls[agent_id],
-            )
-            result = runtime.control_step(runtime_state, current_predictions if current_predictions else None, obstacle_tracks)
-            step_results[agent_id] = result
-            step_safety[agent_id] = result.safety_status
-            current_predictions[agent_id] = result.predicted_samples
-
+        nmpc_calls_before = runtime.profiler.nmpc_called_count
+        fallback_before = runtime.profiler.fallback_count
+        timeout_before = runtime.profiler.timeout_count
+        coverage_time_before = runtime.coverage.total_update_time_ms
+        coverage_cells_before = runtime.coverage.updated_cell_count
+        residual_count_before = runtime.coverage.residual_detection_count
+        residual_time_before = runtime.coverage.total_residual_detection_time_ms
+        if runtime.nmpc_parallel_backend in {"thread", "process"}:
+            runtime_states = {
+                agent_id: AgentRuntimeState(
+                    agent_id=agent_id,
+                    time=current_time,
+                    state3=states3[agent_id],
+                    state6=states6.get(agent_id),
+                    previous_control=previous_controls[agent_id],
+                )
+                for agent_id in sorted(states3)
+            }
+            step_results = runtime.control_steps(runtime_states, current_predictions if current_predictions else None, obstacle_tracks)
+            for agent_id, result in step_results.items():
+                step_safety[agent_id] = result.safety_status
+                current_predictions[agent_id] = result.predicted_samples
+        else:
+            for agent_id in sorted(states3):
+                runtime_state = AgentRuntimeState(
+                    agent_id=agent_id,
+                    time=current_time,
+                    state3=states3[agent_id],
+                    state6=states6.get(agent_id),
+                    previous_control=previous_controls[agent_id],
+                )
+                result = runtime.control_step(runtime_state, current_predictions if current_predictions else None, obstacle_tracks)
+                step_results[agent_id] = result
+                step_safety[agent_id] = result.safety_status
+                current_predictions[agent_id] = result.predicted_samples
         next_states3: Dict[int, State3DOF] = {}
         next_states6: Dict[int, State6DOF] = {}
         for agent_id in sorted(states3):
@@ -140,7 +181,13 @@ def simulate_swarm_closed_loop(
                 previous_control=previous_controls[agent_id],
             )
             mismatch, _ = runtime.estimator.estimate(runtime_state)
-            next_state3 = runtime.model.step(states3[agent_id], step_results[agent_id].cmd, dt, mismatch)
+            next_state3 = runtime.model.step(
+                states3[agent_id],
+                step_results[agent_id].cmd,
+                dt,
+                mismatch,
+                integration_method=runtime.integration_method,
+            )
             next_state3.psi = wrap_angle(next_state3.psi)
             next_state6 = _propagate_state6_surrogate(states6.get(agent_id), next_state3, current_time + dt, agent_id)
             next_states3[agent_id] = next_state3
@@ -148,7 +195,7 @@ def simulate_swarm_closed_loop(
             previous_controls[agent_id] = step_results[agent_id].cmd
             runtime.coverage.update(next_state3.pose())
 
-        if config.mission.residual_enable:
+        if config.mission.residual_enable and ((step + 1) % residual_interval_steps == 0):
             runtime.coverage.detect_residuals()
 
         states3 = next_states3
@@ -156,9 +203,45 @@ def simulate_swarm_closed_loop(
         predictions_cache = {agent_id: step_results[agent_id].predicted_samples for agent_id in step_results}
         frame_time = current_time + dt
         log.frames.append(_build_frame(frame_time, states3, previous_controls, step_safety, obstacle_tracks, runtime))
+        step_wall_time = time.perf_counter() - step_wall_started
+        log.runtime_profile["steps"].append(
+            {
+                "step": step,
+                "time": current_time,
+                "wall_time_ms": step_wall_time * 1000.0,
+                "real_time_factor": dt / max(step_wall_time, 1e-9),
+                "nmpc_called_count": runtime.profiler.nmpc_called_count - nmpc_calls_before,
+                "fallback_count": runtime.profiler.fallback_count - fallback_before,
+                "timeout_count": runtime.profiler.timeout_count - timeout_before,
+                "coverage_update_time_ms": runtime.coverage.total_update_time_ms - coverage_time_before,
+                "coverage_updated_cell_count": runtime.coverage.updated_cell_count - coverage_cells_before,
+                "residual_detection_count": runtime.coverage.residual_detection_count - residual_count_before,
+                "residual_detection_time_ms": runtime.coverage.total_residual_detection_time_ms - residual_time_before,
+            }
+        )
 
         if runtime.coverage.state.coverage_fraction >= 0.995 and all(frame_time >= plan.refs[agent].horizon_time for agent in plan.refs):
             break
+    step_profiles = list(log.runtime_profile.get("steps", []))
+    avg_step_ms = float(np.mean([item["wall_time_ms"] for item in step_profiles])) if step_profiles else 0.0
+    avg_rtf = float(np.mean([item["real_time_factor"] for item in step_profiles])) if step_profiles else 0.0
+    log.runtime_profile["summary"] = {
+        **runtime.profiler.summary(),
+        **runtime.coverage.profiler_summary(),
+        "dynamics_integration_method": runtime.integration_method,
+        "nmpc_integration_method": runtime.nmpc_integration_method,
+        "plant_nmpc_integration_mismatch": runtime.integration_method != runtime.nmpc_integration_method,
+        "nmpc_parallel_backend": runtime.nmpc_parallel_backend,
+        "nmpc_parallel_backend_effective": runtime.nmpc_parallel_backend_effective,
+        "nmpc_solver_backend_requested": runtime.nmpc_solver_backend_requested,
+        "nmpc_solver_backend_effective": runtime.nmpc_solver_backend_effective,
+        "acados_available": runtime.acados_available,
+        "acados_fallback_reason": runtime.acados_fallback_reason,
+        "avg_step_wall_time_ms": avg_step_ms,
+        "avg_real_time_factor": avg_rtf,
+        "step_count": len(step_profiles),
+    }
+    runtime.close()
     return log
 
 

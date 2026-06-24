@@ -1,13 +1,17 @@
 from __future__ import annotations
 
 import math
+import time
 from dataclasses import dataclass
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
 
-from .geometry import connected_components, rotated_rectangle_mask, unit_heading, wrap_angle
-from .nmpc import CasadiNMPCController
+from .geometry import connected_components, rotated_rectangle_local_mask, unit_heading, wrap_angle
+from .nmpc_backend import NMPCBackendSolveResult, NMPCSolveRequest, ProcessNMPCBackend
+from .nmpc import CasadiNMPCController, create_nmpc_controller
+from .safety_filter import SafetyFilterResult, filter_control_cbf_qp
 from .schema import (
     AgentRuntimeState,
     ControlInput,
@@ -35,6 +39,78 @@ class _SimResult:
     min_margin: float
 
 
+@dataclass
+class _ControlContext:
+    agent_state: AgentRuntimeState
+    ref_window: List[TrajectorySample]
+    predictions: Dict[int, List[TrajectorySample]]
+    obstacles: List[DynamicObstacleTrack]
+    mismatch: np.ndarray
+    delta_safe: float
+    preferred_velocity: np.ndarray
+    tracker: _SimResult
+    step_index: int
+    should_call_nmpc: bool
+
+
+@dataclass
+class _NmpcSolveOutcome:
+    result: _SimResult
+    solve_time_ms: float
+    hard_timeout: bool = False
+    error: str = ""
+
+
+@dataclass
+class ControlProfiler:
+    control_step_count: int = 0
+    nmpc_called_count: int = 0
+    timeout_count: int = 0
+    fallback_count: int = 0
+    total_control_time_ms: float = 0.0
+    total_nmpc_time_ms: float = 0.0
+    max_control_time_ms: float = 0.0
+    max_nmpc_time_ms: float = 0.0
+    cbf_filter_called_count: int = 0
+    cbf_filter_failed_count: int = 0
+    cbf_slack_used_count: int = 0
+    total_cbf_filter_time_ms: float = 0.0
+    max_cbf_filter_time_ms: float = 0.0
+    safety_min_margin: float = float("inf")
+    nmpc_hard_timeout_count: int = 0
+    nmpc_worker_restart_count: int = 0
+    nmpc_solver_backend_requested: str = ""
+    nmpc_solver_backend_effective: str = ""
+    acados_available: bool = False
+    acados_fallback_reason: str = ""
+
+    def summary(self) -> Dict[str, float]:
+        steps = max(self.control_step_count, 1)
+        calls = max(self.nmpc_called_count, 1)
+        return {
+            "control_step_count": float(self.control_step_count),
+            "nmpc_called_count": float(self.nmpc_called_count),
+            "timeout_count": float(self.timeout_count),
+            "fallback_count": float(self.fallback_count),
+            "avg_control_time_ms": self.total_control_time_ms / steps,
+            "avg_nmpc_solve_time_ms": self.total_nmpc_time_ms / calls if self.nmpc_called_count else 0.0,
+            "max_control_time_ms": self.max_control_time_ms,
+            "max_nmpc_solve_time_ms": self.max_nmpc_time_ms,
+            "cbf_filter_called_count": float(self.cbf_filter_called_count),
+            "cbf_filter_failed_count": float(self.cbf_filter_failed_count),
+            "cbf_slack_used_count": float(self.cbf_slack_used_count),
+            "avg_cbf_filter_time_ms": self.total_cbf_filter_time_ms / max(self.cbf_filter_called_count, 1) if self.cbf_filter_called_count else 0.0,
+            "max_cbf_filter_time_ms": self.max_cbf_filter_time_ms,
+            "safety_min_margin": self.safety_min_margin if self.safety_min_margin != float("inf") else float("inf"),
+            "nmpc_hard_timeout_count": float(self.nmpc_hard_timeout_count),
+            "nmpc_worker_restart_count": float(self.nmpc_worker_restart_count),
+            "nmpc_solver_backend_requested": self.nmpc_solver_backend_requested,
+            "nmpc_solver_backend_effective": self.nmpc_solver_backend_effective,
+            "acados_available": self.acados_available,
+            "acados_fallback_reason": self.acados_fallback_reason,
+        }
+
+
 class USV3DOFModel:
     def __init__(
         self,
@@ -54,20 +130,51 @@ class USV3DOFModel:
         self.damp_r = damp_r
         self.cross_coupling = cross_coupling
 
-    def step(self, state: State3DOF, control: ControlInput, dt: float, mismatch: np.ndarray) -> State3DOF:
+    def derivatives(self, state: State3DOF, control: ControlInput, mismatch: np.ndarray) -> np.ndarray:
         u_dot = (control.thrust - self.damp_u * state.u) / self.mass_u + mismatch[0]
         v_dot = (-self.damp_v * state.v + self.cross_coupling * state.r) / self.mass_v + mismatch[1]
         r_dot = (control.yaw_moment - self.damp_r * state.r) / self.mass_r + mismatch[2]
+        x_dot = state.u * math.cos(state.psi) - state.v * math.sin(state.psi)
+        y_dot = state.u * math.sin(state.psi) + state.v * math.cos(state.psi)
+        return np.array([x_dot, y_dot, state.r, u_dot, v_dot, r_dot], dtype=float)
 
-        u = state.u + dt * u_dot
-        v = state.v + dt * v_dot
-        r = state.r + dt * r_dot
+    def step(
+        self,
+        state: State3DOF,
+        control: ControlInput,
+        dt: float,
+        mismatch: np.ndarray,
+        integration_method: str = "rk4",
+    ) -> State3DOF:
+        method = _normalized_integration_method(integration_method)
+        if method == "explicit_euler":
+            return self._step_explicit_euler(state, control, dt, mismatch)
+        if method == "semi_implicit_euler":
+            return self._step_semi_implicit_euler(state, control, dt, mismatch)
+        return self._step_rk4(state, control, dt, mismatch)
+
+    def _step_explicit_euler(self, state: State3DOF, control: ControlInput, dt: float, mismatch: np.ndarray) -> State3DOF:
+        derivative = self.derivatives(state, control, mismatch)
+        vector = state.as_vector() + dt * derivative
+        return _state_from_vector(vector)
+
+    def _step_semi_implicit_euler(self, state: State3DOF, control: ControlInput, dt: float, mismatch: np.ndarray) -> State3DOF:
+        derivative = self.derivatives(state, control, mismatch)
+        u = state.u + dt * derivative[3]
+        v = state.v + dt * derivative[4]
+        r = state.r + dt * derivative[5]
         psi = wrap_angle(state.psi + dt * r)
         x_dot = u * math.cos(psi) - v * math.sin(psi)
         y_dot = u * math.sin(psi) + v * math.cos(psi)
-        x = state.x + dt * x_dot
-        y = state.y + dt * y_dot
-        return State3DOF(x=x, y=y, psi=psi, u=u, v=v, r=r)
+        return State3DOF(x=state.x + dt * x_dot, y=state.y + dt * y_dot, psi=psi, u=u, v=v, r=r)
+
+    def _step_rk4(self, state: State3DOF, control: ControlInput, dt: float, mismatch: np.ndarray) -> State3DOF:
+        y0 = state.as_vector()
+        k1 = self.derivatives(state, control, mismatch)
+        k2 = self.derivatives(_state_from_vector(y0 + 0.5 * dt * k1), control, mismatch)
+        k3 = self.derivatives(_state_from_vector(y0 + 0.5 * dt * k2), control, mismatch)
+        k4 = self.derivatives(_state_from_vector(y0 + dt * k3), control, mismatch)
+        return _state_from_vector(y0 + (dt / 6.0) * (k1 + 2.0 * k2 + 2.0 * k3 + k4))
 
 
 class Parallel6DOFEstimator:
@@ -103,6 +210,13 @@ class CoverageTracker:
         self.eta_cov = config.footprint.eta_cov
         self.footprint_length = config.footprint.length_lf
         self.footprint_width = config.footprint.width_wf
+        self.update_count = 0
+        self.updated_cell_count = 0
+        self.total_update_time_ms = 0.0
+        self.max_update_time_ms = 0.0
+        self.residual_detection_count = 0
+        self.total_residual_detection_time_ms = 0.0
+        self.max_residual_detection_time_ms = 0.0
         self.state = CoverageState(
             resolution=resolution,
             x_coords=x_coords,
@@ -112,7 +226,8 @@ class CoverageTracker:
         )
 
     def update(self, pose: Pose2D) -> CoverageState:
-        mask = rotated_rectangle_mask(
+        started = time.perf_counter()
+        mask, row_slice, col_slice = rotated_rectangle_local_mask(
             self.state.x_coords,
             self.state.y_coords,
             pose.x,
@@ -121,11 +236,20 @@ class CoverageTracker:
             self.footprint_length,
             self.footprint_width,
         )
-        self.state.coverage_ratio[mask] = 1.0
-        self.state.covered = self.state.coverage_ratio >= self.eta_cov
+        if mask.size:
+            local_ratio = self.state.coverage_ratio[row_slice, col_slice]
+            local_covered = self.state.covered[row_slice, col_slice]
+            local_ratio[mask] = 1.0
+            local_covered[:, :] = local_ratio >= self.eta_cov
+            self.updated_cell_count += int(mask.size)
+        elapsed_ms = (time.perf_counter() - started) * 1000.0
+        self.update_count += 1
+        self.total_update_time_ms += elapsed_ms
+        self.max_update_time_ms = max(self.max_update_time_ms, elapsed_ms)
         return self.state
 
     def detect_residuals(self, min_component_cells: int = 3) -> List[CoverageResidual]:
+        started = time.perf_counter()
         residual_mask = ~self.state.covered
         components = connected_components(residual_mask)
         residuals: List[CoverageResidual] = []
@@ -143,7 +267,24 @@ class CoverageTracker:
                 )
             )
         self.state.residual_components = residuals
+        elapsed_ms = (time.perf_counter() - started) * 1000.0
+        self.residual_detection_count += 1
+        self.total_residual_detection_time_ms += elapsed_ms
+        self.max_residual_detection_time_ms = max(self.max_residual_detection_time_ms, elapsed_ms)
         return residuals
+
+    def profiler_summary(self) -> Dict[str, float]:
+        update_count = max(self.update_count, 1)
+        residual_count = max(self.residual_detection_count, 1)
+        return {
+            "coverage_update_count": float(self.update_count),
+            "coverage_updated_cell_count": float(self.updated_cell_count),
+            "avg_coverage_update_time_ms": self.total_update_time_ms / update_count,
+            "max_coverage_update_time_ms": self.max_update_time_ms,
+            "residual_detection_count": float(self.residual_detection_count),
+            "avg_residual_detection_time_ms": self.total_residual_detection_time_ms / residual_count if self.residual_detection_count else 0.0,
+            "max_residual_detection_time_ms": self.max_residual_detection_time_ms,
+        }
 
 
 class SwarmRuntime:
@@ -153,14 +294,61 @@ class SwarmRuntime:
         self.model = USV3DOFModel()
         self.estimator = Parallel6DOFEstimator(delta_safe_max=config.safety.delta_safe_max)
         self.coverage = CoverageTracker(config)
-        self.horizon_steps = max(10, int(round(config.mission.local_control_hz * 3.0)))
         self.dt = 1.0 / max(config.mission.local_control_hz, 1e-6)
+        self.control_mode = _normalized_control_mode(config.mission.control_mode)
+        self.integration_method = _normalized_integration_method(config.mission.dynamics_integration_method)
+        self.nmpc_integration_method = _normalized_nmpc_integration_method(config.mission.nmpc_integration_method)
+        self.nmpc_update_interval_steps = max(1, int(config.mission.nmpc_update_interval_steps))
+        self.nmpc_max_wall_time_ms = max(float(config.mission.nmpc_max_wall_time_ms), 0.0)
+        self.nmpc_parallel_backend = _normalized_nmpc_parallel_backend(config.mission.nmpc_parallel_backend)
+        self.nmpc_parallel_backend_effective = self.nmpc_parallel_backend
+        self.nmpc_solver_backend_requested = _normalized_nmpc_solver_backend(config.mission.nmpc_solver_backend)
+        self.nmpc_solver_backend_effective = "none"
+        self.acados_available = False
+        self.acados_fallback_reason = ""
+        self.horizon_steps = min(
+            max(int(config.mission.nmpc_horizon_steps_cap), 1),
+            max(6, int(round(max(config.mission.nmpc_horizon_seconds, self.dt) / self.dt))),
+        )
         self.neighbor_radius = 4.0 * config.safety.d_safe
         self.max_neighbors = max(1, (config.fleet.num_agents or 1) - 1)
         self.max_obstacles = 4
-        self.nmpc_by_agent = {
-            agent_id: CasadiNMPCController(
-                config=config,
+        self.nmpc_process_backend = self._build_process_nmpc_backend() if self.control_mode != "fast_tracker" and self.nmpc_parallel_backend == "process" else None
+        self.nmpc_by_agent = self._build_nmpc_controllers() if self.control_mode != "fast_tracker" and self.nmpc_process_backend is None else {}
+        self._last_nmpc_step = {agent_id: -10**9 for agent_id in range(config.fleet.num_agents or 0)}
+        self._last_valid_nmpc: Dict[int, _SimResult] = {}
+        self.profiler = ControlProfiler()
+        self._sync_nmpc_solver_profile()
+        self.last_agent_profile: Dict[str, float | int | str | bool] = {}
+
+    def close(self) -> None:
+        if self.nmpc_process_backend is not None:
+            self.nmpc_process_backend.close(terminate_workers=True)
+
+    def _sync_nmpc_solver_profile(self) -> None:
+        controllers = list(self.nmpc_by_agent.values())
+        if controllers:
+            effective = sorted({str(getattr(item, "solver_backend_effective", "unknown")) for item in controllers})
+            fallbacks = [str(getattr(item, "acados_fallback_reason", "")) for item in controllers if getattr(item, "acados_fallback_reason", "")]
+            self.nmpc_solver_backend_effective = ",".join(effective)
+            self.acados_available = any(bool(getattr(item, "acados_available", False)) for item in controllers)
+            self.acados_fallback_reason = fallbacks[0] if fallbacks else ""
+        elif self.control_mode == "fast_tracker":
+            self.nmpc_solver_backend_effective = "none"
+            self.acados_available = False
+            self.acados_fallback_reason = ""
+        elif self.nmpc_process_backend is not None:
+            if self.nmpc_solver_backend_effective in {"", "none"}:
+                self.nmpc_solver_backend_effective = "process_worker_pending"
+        self.profiler.nmpc_solver_backend_requested = self.nmpc_solver_backend_requested
+        self.profiler.nmpc_solver_backend_effective = self.nmpc_solver_backend_effective
+        self.profiler.acados_available = self.acados_available
+        self.profiler.acados_fallback_reason = self.acados_fallback_reason
+
+    def _build_nmpc_controllers(self) -> Dict[int, object]:
+        return {
+            agent_id: create_nmpc_controller(
+                config=self.config,
                 horizon_steps=self.horizon_steps,
                 dt=self.dt,
                 max_neighbors=self.max_neighbors,
@@ -173,8 +361,27 @@ class SwarmRuntime:
                 damp_r=self.model.damp_r,
                 cross_coupling=self.model.cross_coupling,
             )
-            for agent_id in range(config.fleet.num_agents or 0)
+            for agent_id in range(self.config.fleet.num_agents or 0)
         }
+
+    def _build_process_nmpc_backend(self) -> ProcessNMPCBackend:
+        return ProcessNMPCBackend(
+            self.config,
+            horizon_steps=self.horizon_steps,
+            dt=self.dt,
+            max_neighbors=self.max_neighbors,
+            max_obstacles=self.max_obstacles,
+            model_params={
+                "mass_u": self.model.mass_u,
+                "mass_v": self.model.mass_v,
+                "mass_r": self.model.mass_r,
+                "damp_u": self.model.damp_u,
+                "damp_v": self.model.damp_v,
+                "damp_r": self.model.damp_r,
+                "cross_coupling": self.model.cross_coupling,
+            },
+            max_workers=max(1, self.config.fleet.num_agents or 1),
+        )
 
     def control_step(
         self,
@@ -182,31 +389,322 @@ class SwarmRuntime:
         shared_predictions: Optional[Dict[int, Sequence[TrajectorySample]]] = None,
         obstacle_tracks: Optional[Sequence[DynamicObstacleTrack]] = None,
     ) -> ControlStepResult:
+        self.nmpc_parallel_backend_effective = "process" if self.nmpc_parallel_backend == "process" and self.nmpc_process_backend is not None else "serial"
+        wall_started = time.perf_counter()
+        context = self._prepare_control_context(agent_state, shared_predictions, obstacle_tracks)
+        outcome = self._solve_nmpc_for_context(context) if context.should_call_nmpc else None
+        return self._finalize_control_context(context, outcome, wall_started)
+
+    def control_steps(
+        self,
+        runtime_states: Dict[int, AgentRuntimeState],
+        shared_predictions: Optional[Dict[int, Sequence[TrajectorySample]]] = None,
+        obstacle_tracks: Optional[Sequence[DynamicObstacleTrack]] = None,
+    ) -> Dict[int, ControlStepResult]:
+        if self.nmpc_parallel_backend == "process" and self.nmpc_process_backend is not None:
+            return self._control_steps_process_backend(runtime_states, shared_predictions, obstacle_tracks)
+
+        if self.nmpc_parallel_backend != "thread" or len(runtime_states) <= 1 or not self._thread_backend_can_run_nmpc():
+            effective_backend = (
+                "serial_casadi_thread_disabled"
+                if self.nmpc_parallel_backend == "thread" and not self._thread_backend_can_run_nmpc()
+                else "serial"
+            )
+            self.nmpc_parallel_backend_effective = effective_backend
+            predictions = dict(shared_predictions or {})
+            results: Dict[int, ControlStepResult] = {}
+            for agent_id in sorted(runtime_states):
+                result = self.control_step(runtime_states[agent_id], predictions if predictions else None, obstacle_tracks)
+                results[agent_id] = result
+                predictions[agent_id] = result.predicted_samples
+            self.nmpc_parallel_backend_effective = effective_backend
+            return results
+
+        self.nmpc_parallel_backend_effective = "thread"
+        started_by_agent: Dict[int, float] = {}
+        contexts: Dict[int, _ControlContext] = {}
+        for agent_id in sorted(runtime_states):
+            started_by_agent[agent_id] = time.perf_counter()
+            contexts[agent_id] = self._prepare_control_context(runtime_states[agent_id], shared_predictions, obstacle_tracks)
+
+        outcomes: Dict[int, _NmpcSolveOutcome] = {}
+        to_solve = [context for context in contexts.values() if context.should_call_nmpc]
+        if to_solve:
+            with ThreadPoolExecutor(max_workers=max(1, min(len(to_solve), self.max_neighbors + 1))) as executor:
+                future_to_agent = {executor.submit(self._solve_nmpc_for_context, context): context.agent_state.agent_id for context in to_solve}
+                for future in as_completed(future_to_agent):
+                    outcomes[future_to_agent[future]] = future.result()
+
+        results: Dict[int, ControlStepResult] = {}
+        for agent_id in sorted(contexts):
+            results[agent_id] = self._finalize_control_context(contexts[agent_id], outcomes.get(agent_id), started_by_agent[agent_id])
+        return results
+
+    def _thread_backend_can_run_nmpc(self) -> bool:
+        """Avoid threaded IPOPT/Opti solves; CasADi controllers are not reliably thread-safe."""
+
+        return all(not isinstance(controller, CasadiNMPCController) for controller in self.nmpc_by_agent.values())
+
+    def _control_steps_process_backend(
+        self,
+        runtime_states: Dict[int, AgentRuntimeState],
+        shared_predictions: Optional[Dict[int, Sequence[TrajectorySample]]],
+        obstacle_tracks: Optional[Sequence[DynamicObstacleTrack]],
+    ) -> Dict[int, ControlStepResult]:
+        self.nmpc_parallel_backend_effective = "process"
+        started_by_agent: Dict[int, float] = {}
+        contexts: Dict[int, _ControlContext] = {}
+        for agent_id in sorted(runtime_states):
+            started_by_agent[agent_id] = time.perf_counter()
+            contexts[agent_id] = self._prepare_control_context(runtime_states[agent_id], shared_predictions, obstacle_tracks)
+
+        outcomes: Dict[int, _NmpcSolveOutcome] = {}
+        to_solve = [context for context in contexts.values() if context.should_call_nmpc]
+        if to_solve and self.nmpc_process_backend is not None:
+            requests = [self._build_nmpc_solve_request(context) for context in to_solve]
+            backend_results = self.nmpc_process_backend.solve_many(requests, timeout_ms=self.nmpc_max_wall_time_ms)
+            self.profiler.nmpc_worker_restart_count = self.nmpc_process_backend.worker_restart_count
+            for context in to_solve:
+                backend_result = backend_results.get(context.agent_state.agent_id)
+                if backend_result is None:
+                    outcomes[context.agent_state.agent_id] = _NmpcSolveOutcome(
+                        result=context.tracker,
+                        solve_time_ms=self.nmpc_max_wall_time_ms,
+                        hard_timeout=True,
+                        error="missing_process_result",
+                    )
+                    continue
+                outcomes[context.agent_state.agent_id] = self._process_backend_result_to_outcome(context, backend_result)
+
+        results: Dict[int, ControlStepResult] = {}
+        for agent_id in sorted(contexts):
+            results[agent_id] = self._finalize_control_context(contexts[agent_id], outcomes.get(agent_id), started_by_agent[agent_id])
+        return results
+
+    def _prepare_control_context(
+        self,
+        agent_state: AgentRuntimeState,
+        shared_predictions: Optional[Dict[int, Sequence[TrajectorySample]]],
+        obstacle_tracks: Optional[Sequence[DynamicObstacleTrack]],
+    ) -> _ControlContext:
         ref_window = self._reference_window(agent_state.agent_id, agent_state.time)
         predictions = self._normalize_predictions(shared_predictions, agent_state.time, exclude_agent=agent_state.agent_id)
         obstacles = list(obstacle_tracks or [])
         mismatch, delta_safe = self.estimator.estimate(agent_state)
         preferred_velocity = self._compute_rvo_velocity(agent_state, ref_window, predictions, obstacles)
-        best = self._solve_true_nmpc(agent_state, ref_window, predictions, obstacles, mismatch, delta_safe, preferred_velocity)
+        tracker = self._solve_fast_tracker(agent_state, ref_window, predictions, obstacles, mismatch, delta_safe, preferred_velocity)
+        step_index = int(round(agent_state.time / max(self.dt, 1e-9)))
+        should_call = self._should_call_nmpc(agent_state, tracker, predictions, obstacles, delta_safe, step_index)
+        return _ControlContext(
+            agent_state=agent_state,
+            ref_window=ref_window,
+            predictions=predictions,
+            obstacles=obstacles,
+            mismatch=mismatch,
+            delta_safe=delta_safe,
+            preferred_velocity=preferred_velocity,
+            tracker=tracker,
+            step_index=step_index,
+            should_call_nmpc=should_call,
+        )
+
+    def _solve_nmpc_for_context(self, context: _ControlContext) -> _NmpcSolveOutcome:
+        if self.nmpc_parallel_backend == "process" and self.nmpc_process_backend is not None:
+            request = self._build_nmpc_solve_request(context)
+            backend_results = self.nmpc_process_backend.solve_many([request], timeout_ms=self.nmpc_max_wall_time_ms)
+            self.profiler.nmpc_worker_restart_count = self.nmpc_process_backend.worker_restart_count
+            backend_result = backend_results.get(context.agent_state.agent_id)
+            if backend_result is None:
+                return _NmpcSolveOutcome(
+                    result=context.tracker,
+                    solve_time_ms=self.nmpc_max_wall_time_ms,
+                    hard_timeout=True,
+                    error="missing_process_result",
+                )
+            return self._process_backend_result_to_outcome(context, backend_result)
+        solve_started = time.perf_counter()
+        result = self._solve_true_nmpc(
+            context.agent_state,
+            context.ref_window,
+            context.predictions,
+            context.obstacles,
+            context.mismatch,
+            context.delta_safe,
+            context.preferred_velocity,
+        )
+        return _NmpcSolveOutcome(result=result, solve_time_ms=(time.perf_counter() - solve_started) * 1000.0)
+
+    def _build_nmpc_solve_request(self, context: _ControlContext) -> NMPCSolveRequest:
+        preferred_horizon = np.repeat(context.preferred_velocity.reshape(1, 2), self.horizon_steps, axis=0)
+        return NMPCSolveRequest(
+            agent_id=context.agent_state.agent_id,
+            state=context.agent_state.state3,
+            previous_control=context.agent_state.previous_control,
+            ref_window=list(context.ref_window),
+            preferred_velocities=preferred_horizon,
+            neighbor_predictions=[list(samples) for samples in self._nearest_neighbor_predictions(context.agent_state, context.predictions)],
+            obstacle_predictions=self._predict_obstacles(context.obstacles, context.agent_state.time),
+            mismatch=context.mismatch,
+            safe_distance=self.config.safety.d_safe + context.delta_safe,
+        )
+
+    def _process_backend_result_to_outcome(
+        self,
+        context: _ControlContext,
+        backend_result: NMPCBackendSolveResult,
+    ) -> _NmpcSolveOutcome:
+        self._record_process_solver_metadata(backend_result)
+        if backend_result.timed_out:
+            return _NmpcSolveOutcome(
+                result=context.tracker,
+                solve_time_ms=max(backend_result.solve_time_ms, self.nmpc_max_wall_time_ms + 1.0),
+                hard_timeout=True,
+                error=backend_result.error,
+            )
+        if backend_result.result is None:
+            failed = _SimResult(
+                feasible=False,
+                cost=float("inf"),
+                control=ControlInput.zero(),
+                predicted_samples=context.tracker.predicted_samples,
+                min_margin=float("-inf"),
+            )
+            return _NmpcSolveOutcome(result=failed, solve_time_ms=backend_result.solve_time_ms, error=backend_result.error)
+        return _NmpcSolveOutcome(
+            result=self._nmpc_result_to_sim_result(context.agent_state, backend_result.result),
+            solve_time_ms=backend_result.solve_time_ms,
+            error=backend_result.error,
+        )
+
+    def _record_process_solver_metadata(self, backend_result: NMPCBackendSolveResult) -> None:
+        if backend_result.solver_backend_effective:
+            self.nmpc_solver_backend_effective = backend_result.solver_backend_effective
+        self.acados_available = bool(backend_result.acados_available)
+        if backend_result.acados_fallback_reason:
+            self.acados_fallback_reason = backend_result.acados_fallback_reason
+        self._sync_nmpc_solver_profile()
+
+    def _finalize_control_context(
+        self,
+        context: _ControlContext,
+        nmpc_outcome: Optional[_NmpcSolveOutcome],
+        wall_started: float,
+    ) -> ControlStepResult:
+        agent_state = context.agent_state
+        best = context.tracker
+        mode = self.control_mode if self.control_mode == "fast_tracker" else "hybrid_tracker"
+        nmpc_called = nmpc_outcome is not None
+        nmpc_time_ms = nmpc_outcome.solve_time_ms if nmpc_outcome is not None else 0.0
+        if nmpc_outcome is not None:
+            nmpc_result = nmpc_outcome.result
+            self.profiler.nmpc_called_count += 1
+            self.profiler.total_nmpc_time_ms += nmpc_time_ms
+            self.profiler.max_nmpc_time_ms = max(self.profiler.max_nmpc_time_ms, nmpc_time_ms)
+            if nmpc_outcome.hard_timeout:
+                self.profiler.nmpc_hard_timeout_count += 1
+            timed_out = nmpc_outcome.hard_timeout or (self.nmpc_max_wall_time_ms > 0.0 and nmpc_time_ms > self.nmpc_max_wall_time_ms)
+            if nmpc_result.feasible and not timed_out:
+                best = nmpc_result
+                mode = "full_nmpc" if self.control_mode == "full_nmpc" else "hybrid_nmpc"
+                self._last_valid_nmpc[agent_state.agent_id] = nmpc_result
+                self._last_nmpc_step[agent_state.agent_id] = context.step_index
+            else:
+                self.profiler.fallback_count += 1
+                mode = "nmpc_timeout_tracker_fallback" if timed_out else "nmpc_infeasible_tracker_fallback"
+                if timed_out:
+                    self.profiler.timeout_count += 1
+                self._last_nmpc_step[agent_state.agent_id] = context.step_index
+
         if not best.feasible:
-            best = self._safe_hold(agent_state, ref_window, predictions, obstacles, mismatch, delta_safe)
+            self.profiler.fallback_count += 1
+            best = self._safe_hold(agent_state, context.ref_window, context.predictions, context.obstacles, context.mismatch, context.delta_safe)
             mode = "degraded_safe_hold"
-        else:
-            mode = "nominal"
+
+        safety_filter_result = self._apply_safety_filter(agent_state, best.control, context)
+        safety_filter_warnings: List[str] = []
+        if safety_filter_result.filtered or not safety_filter_result.feasible:
+            best = self._rollout_control(
+                agent_state,
+                safety_filter_result.control,
+                context.ref_window,
+                context.predictions,
+                context.obstacles,
+                context.mismatch,
+                context.delta_safe,
+                preferred_velocity=context.preferred_velocity,
+            )
+            mode = f"{mode}+cbf_filtered" if safety_filter_result.feasible else f"{mode}+cbf_limited"
+            safety_filter_warnings.append("cbf safety filter adjusted control")
+        if safety_filter_result.active_constraints:
+            safety_filter_warnings.append("cbf active constraints: " + ",".join(safety_filter_result.active_constraints[:4]))
+        if not safety_filter_result.feasible:
+            safety_filter_warnings.append("cbf filter could not find strictly safe candidate")
+        if safety_filter_result.slack_used:
+            safety_filter_warnings.append("cbf slack used")
+        best.min_margin = min(best.min_margin, safety_filter_result.min_predicted_margin)
+
         self.coverage.update(agent_state.state3.pose())
-        if self.config.mission.residual_enable:
-            self.coverage.detect_residuals()
         warnings: List[str] = []
+        if nmpc_called and nmpc_time_ms > self.nmpc_max_wall_time_ms > 0.0:
+            warnings.append("nmpc timeout fallback")
+        if nmpc_outcome is not None and nmpc_outcome.hard_timeout:
+            warnings.append("nmpc hard timeout fallback")
+        if nmpc_outcome is not None and nmpc_outcome.error:
+            warnings.append(f"nmpc backend error: {nmpc_outcome.error}")
+        if self.control_mode != "full_nmpc" and not nmpc_called:
+            warnings.append("nmpc skipped by scheduler")
         if best.min_margin < self.config.safety.d_safe:
             warnings.append("reduced safety margin")
         if self.coverage.state.residual_components:
             warnings.append("residual coverage present")
+        warnings.extend(safety_filter_warnings)
+        elapsed_ms = (time.perf_counter() - wall_started) * 1000.0
+        self.profiler.control_step_count += 1
+        self.profiler.total_control_time_ms += elapsed_ms
+        self.profiler.max_control_time_ms = max(self.profiler.max_control_time_ms, elapsed_ms)
+        self.last_agent_profile = {
+            "agent_id": agent_state.agent_id,
+            "mode": mode,
+            "control_time_ms": elapsed_ms,
+            "nmpc_called": nmpc_called,
+            "nmpc_solve_time_ms": nmpc_time_ms,
+            "fallback_count": self.profiler.fallback_count,
+            "timeout_count": self.profiler.timeout_count,
+            "cbf_filter_called": self.profiler.cbf_filter_called_count,
+            "cbf_filter_failed": self.profiler.cbf_filter_failed_count,
+        }
         return ControlStepResult(
             cmd=best.control,
             safety_status=SafetyStatus(mode=mode, min_margin=best.min_margin, warnings=warnings),
-            local_ref=ref_window,
+            local_ref=context.ref_window,
             predicted_samples=best.predicted_samples,
         )
+
+    def _apply_safety_filter(
+        self,
+        agent_state: AgentRuntimeState,
+        nominal_control: ControlInput,
+        context: _ControlContext,
+    ) -> SafetyFilterResult:
+        result = filter_control_cbf_qp(
+            agent_state.state3,
+            nominal_control,
+            context.predictions,
+            context.obstacles,
+            self.config,
+            current_time=agent_state.time,
+            dt=self.dt,
+            delta_safe=context.delta_safe,
+        )
+        self.profiler.cbf_filter_called_count += 1
+        self.profiler.total_cbf_filter_time_ms += result.solve_time_ms
+        self.profiler.max_cbf_filter_time_ms = max(self.profiler.max_cbf_filter_time_ms, result.solve_time_ms)
+        if not result.feasible:
+            self.profiler.cbf_filter_failed_count += 1
+        if result.slack_used:
+            self.profiler.cbf_slack_used_count += 1
+        self.profiler.safety_min_margin = min(self.profiler.safety_min_margin, result.min_predicted_margin)
+        return result
 
     def _reference_window(self, agent_id: int, current_time: float) -> List[TrajectorySample]:
         ref = self.planning_result.refs.get(agent_id, TrajectoryReference(agent_id=agent_id, samples=[], horizon_time=0.0))
@@ -291,6 +789,86 @@ class SwarmRuntime:
             preferred = preferred / speed * self.config.fleet.cruise_speed
         return preferred
 
+    def _solve_fast_tracker(
+        self,
+        agent_state: AgentRuntimeState,
+        ref_window: Sequence[TrajectorySample],
+        predictions: Dict[int, Sequence[TrajectorySample]],
+        obstacle_tracks: Sequence[DynamicObstacleTrack],
+        mismatch: np.ndarray,
+        delta_safe: float,
+        preferred_velocity: np.ndarray,
+    ) -> _SimResult:
+        state = agent_state.state3
+        target = self._lookahead_reference(state, ref_window)
+        preferred_speed = float(np.linalg.norm(preferred_velocity))
+        if preferred_speed > 1e-6:
+            desired_heading = math.atan2(preferred_velocity[1], preferred_velocity[0])
+            desired_speed = min(preferred_speed, self.config.fleet.cruise_speed)
+        elif target is not None:
+            desired_heading = math.atan2(target.y - state.y, target.x - state.x)
+            desired_speed = min(max(target.u_ref, 0.0), self.config.fleet.cruise_speed)
+        else:
+            desired_heading = state.psi
+            desired_speed = self.config.fleet.cover_speed
+
+        heading_error = wrap_angle(desired_heading - state.psi)
+        speed_scale = max(0.25, math.cos(min(abs(heading_error), math.pi / 2.0)))
+        desired_speed *= speed_scale
+        r_abs_max = max(self.config.fleet.turn_speed_max / max(self.config.fleet.min_turn_radius, 1e-6), 0.2)
+        desired_r = float(np.clip(1.8 * heading_error, -r_abs_max, r_abs_max))
+        thrust = self.model.mass_u * (desired_speed - state.u) / max(self.dt, 1e-6) + self.model.damp_u * state.u
+        yaw_moment = self.model.mass_r * (desired_r - state.r) / max(self.dt, 1e-6) + self.model.damp_r * state.r
+        control = ControlInput(
+            thrust=float(np.clip(thrust, -self.config.fleet.max_thrust, self.config.fleet.max_thrust)),
+            yaw_moment=float(np.clip(yaw_moment, -self.config.fleet.max_yaw_moment, self.config.fleet.max_yaw_moment)),
+        )
+        return self._rollout_control(
+            agent_state,
+            control,
+            ref_window,
+            predictions,
+            obstacle_tracks,
+            mismatch,
+            delta_safe,
+            preferred_velocity=preferred_velocity,
+        )
+
+    def _lookahead_reference(
+        self,
+        state: State3DOF,
+        ref_window: Sequence[TrajectorySample],
+    ) -> Optional[TrajectorySample]:
+        if not ref_window:
+            return None
+        lookahead_distance = max(self.config.footprint.length_lf, self.config.fleet.cruise_speed * self.dt * 2.0)
+        for sample in ref_window:
+            if math.hypot(sample.x - state.x, sample.y - state.y) >= lookahead_distance:
+                return sample
+        return ref_window[-1]
+
+    def _should_call_nmpc(
+        self,
+        agent_state: AgentRuntimeState,
+        tracker: _SimResult,
+        predictions: Dict[int, Sequence[TrajectorySample]],
+        obstacle_tracks: Sequence[DynamicObstacleTrack],
+        delta_safe: float,
+        step_index: int,
+    ) -> bool:
+        if self.control_mode == "fast_tracker":
+            return False
+        if self.nmpc_parallel_backend == "process" and self.nmpc_process_backend is not None:
+            pass
+        elif agent_state.agent_id not in self.nmpc_by_agent:
+            return False
+        if self.control_mode == "full_nmpc":
+            return True
+        steps_since = step_index - self._last_nmpc_step.get(agent_state.agent_id, -10**9)
+        interval_due = steps_since >= self.nmpc_update_interval_steps
+        high_risk = not tracker.feasible
+        return interval_due or high_risk
+
     def _solve_true_nmpc(
         self,
         agent_state: AgentRuntimeState,
@@ -314,6 +892,9 @@ class SwarmRuntime:
             mismatch=mismatch,
             safe_distance=self.config.safety.d_safe + delta_safe,
         )
+        return self._nmpc_result_to_sim_result(agent_state, result)
+
+    def _nmpc_result_to_sim_result(self, agent_state: AgentRuntimeState, result) -> _SimResult:
         predicted_samples = [
             TrajectorySample(
                 time=agent_state.time + idx * self.dt,
@@ -386,7 +967,7 @@ class SwarmRuntime:
 
         for step in range(self.horizon_steps):
             time = agent_state.time + step * self.dt
-            state = self.model.step(state, control, self.dt, mismatch)
+            state = self.model.step(state, control, self.dt, mismatch, integration_method=self.integration_method)
             ref = ref_window[min(step, len(ref_window) - 1)] if ref_window else None
             if ref is not None:
                 total_cost += self.config.weights.w_pos * ((state.x - ref.x) ** 2 + (state.y - ref.y) ** 2)
@@ -523,6 +1104,57 @@ class SwarmRuntime:
         result.feasible = True
         result.min_margin = nearest_margin if nearest_margin != float("inf") else result.min_margin
         return result
+
+
+def _normalized_control_mode(control_mode: str) -> str:
+    mode = str(control_mode or "hybrid_nmpc").strip().lower()
+    allowed = {"fast_tracker", "hybrid_nmpc", "full_nmpc"}
+    if mode not in allowed:
+        raise ValueError(f"Unsupported control_mode '{control_mode}'. Expected one of {sorted(allowed)}")
+    return mode
+
+
+def _normalized_integration_method(integration_method: str) -> str:
+    method = str(integration_method or "rk4").strip().lower()
+    allowed = {"explicit_euler", "semi_implicit_euler", "rk4"}
+    if method not in allowed:
+        raise ValueError(f"Unsupported integration_method '{integration_method}'. Expected one of {sorted(allowed)}")
+    return method
+
+
+def _normalized_nmpc_integration_method(integration_method: str) -> str:
+    method = str(integration_method or "rk4").strip().lower()
+    allowed = {"explicit_euler", "rk4"}
+    if method not in allowed:
+        raise ValueError(f"Unsupported nmpc_integration_method '{integration_method}'. Expected one of {sorted(allowed)}")
+    return method
+
+
+def _normalized_nmpc_parallel_backend(parallel_backend: str) -> str:
+    backend = str(parallel_backend or "serial").strip().lower()
+    allowed = {"serial", "thread", "process"}
+    if backend not in allowed:
+        raise ValueError(f"Unsupported nmpc_parallel_backend '{parallel_backend}'. Expected one of {sorted(allowed)}")
+    return backend
+
+
+def _normalized_nmpc_solver_backend(solver_backend: str) -> str:
+    backend = str(solver_backend or "auto").strip().lower()
+    allowed = {"auto", "casadi", "acados"}
+    if backend not in allowed:
+        raise ValueError(f"Unsupported nmpc_solver_backend '{solver_backend}'. Expected one of {sorted(allowed)}")
+    return backend
+
+
+def _state_from_vector(vector: np.ndarray) -> State3DOF:
+    return State3DOF(
+        x=float(vector[0]),
+        y=float(vector[1]),
+        psi=wrap_angle(float(vector[2])),
+        u=float(vector[3]),
+        v=float(vector[4]),
+        r=float(vector[5]),
+    )
 
 
 def _sample_obstacle(track: DynamicObstacleTrack, time: float) -> Optional[DynamicObstacleSample]:

@@ -1,0 +1,71 @@
+{
+  "generated_at": "2026-06-21T22:49:52",
+  "run_status": "timeout_before_render",
+  "map_id": "static_obstacle_map_50x50_simple",
+  "usv_count": 3,
+  "rmin": 1.0,
+  "tsp_solver": "deterministic",
+  "target_coverage": 0.99,
+  "monitor_stages": true,
+  "stage_timing_sec": {
+    "obstacle_normalization": 0.0,
+    "free_space_decomposition": 0.142,
+    "region_coarsen_merge": 0.0,
+    "coverage_pattern_generation": 6.484,
+    "build_sweep_paths": 780.038,
+    "region_graph_building": 0.059,
+    "load_balancing_assignment": 0.004,
+    "coverage_ownership_map": 0.068,
+    "agent_0_region_tsp": 717.0,
+    "agent_1_region_tsp": 73.204,
+    "agent_2_region_tsp": 986.357
+  },
+  "latest_stage_completed": "agent_2_region_tsp",
+  "build_sweep_paths": {
+    "feasible_region_count": 87,
+    "infeasible_region_count": 0,
+    "prefiltered_pattern_count": 160,
+    "uturn_cache_hit_count": 330,
+    "uturn_cache_miss_count": 1909,
+    "open_chain_region_count": 209,
+    "open_chain_count": 1266,
+    "open_chain_break_count": 1073,
+    "open_chain_connected_count": 0
+  },
+  "agent_tsp_partial": {
+    "agent_0": {
+      "assigned_region_count": 13,
+      "final_region_count": 2,
+      "segment_count": 6,
+      "infeasible_edge_count": 8
+    },
+    "agent_1": {
+      "assigned_region_count": 25,
+      "final_region_count": 0,
+      "segment_count": 0,
+      "infeasible_edge_count": 8
+    },
+    "agent_2": {
+      "assigned_region_count": 49,
+      "final_region_count": 1,
+      "segment_count": 28,
+      "infeasible_edge_count": 8
+    }
+  },
+  "previous_diagnostic": {
+    "feasible_region_count": 82,
+    "skipped_region_count": 63,
+    "coverage_fraction": 0.5788,
+    "cover_only_coverage_fraction": 0.456
+  },
+  "partial_final_region_count": 3,
+  "partial_assigned_region_count": 87,
+  "partial_skipped_region_count_estimate": 84,
+  "diagnosis": [
+    "Open-chain made all 87 regions feasible at sweep stage, improving from previous 82 feasible regions.",
+    "open_chain_connected_count is still 0 at build_sweep_paths because chain reconnection is deferred to TSP expansion.",
+    "Region TSP is now the main bottleneck and selected only 3 of 87 assigned regions before timeout.",
+    "Skipped estimate worsened from previous 63 to about 84 in this incomplete run.",
+    "No final coverage path images were updated because rendering was not reached."
+  ]
+}

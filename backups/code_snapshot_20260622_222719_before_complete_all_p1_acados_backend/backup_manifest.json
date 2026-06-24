@@ -1,0 +1,19 @@
+﻿{
+    "backup_time":  "2026-06-22T22:27:19.4209849+08:00",
+    "source_root":  "D:\\code\\work1_update",
+    "backup_dir":  "D:\\code\\work1_update\\backups\\code_snapshot_20260622_222719_before_complete_all_p1_acados_backend",
+    "included_items":  [
+                           "src",
+                           "tests",
+                           "examples",
+                           "plans",
+                           "maps",
+                           "pyproject.toml"
+                       ],
+    "excluded_items":  [
+                           "outputs",
+                           "backups",
+                           "__pycache__",
+                           "*.pyc"
+                       ]
+}

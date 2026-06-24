@@ -21,6 +21,39 @@ class NMPCResult:
     min_margin: float
 
 
+class AcadosUnavailableError(RuntimeError):
+    """Raised when the optional Acados backend cannot be constructed."""
+
+
+class AcadosNMPCController:
+    """Optional Acados NMPC backend.
+
+    The project keeps Acados optional because it requires a native acados
+    installation and generated solver artifacts. This class is intentionally
+    lazy: importing the package does not require Acados, while selecting the
+    backend gives a clear error if the runtime is unavailable.
+    """
+
+    solver_backend_requested = "acados"
+    solver_backend_effective = "acados"
+    acados_available = False
+    acados_fallback_reason = ""
+
+    def __init__(self, *args, **kwargs) -> None:
+        try:
+            import acados_template  # noqa: F401
+        except BaseException as exc:
+            self.acados_fallback_reason = f"acados_template unavailable: {type(exc).__name__}: {exc}"
+            raise AcadosUnavailableError(self.acados_fallback_reason) from exc
+
+        self.acados_available = True
+        self.acados_fallback_reason = (
+            "acados_template is importable, but generated Acados solver support "
+            "is not configured in this source checkout"
+        )
+        raise AcadosUnavailableError(self.acados_fallback_reason)
+
+
 class CasadiNMPCController:
     def __init__(
         self,
@@ -49,6 +82,11 @@ class CasadiNMPCController:
         self.damp_v = damp_v
         self.damp_r = damp_r
         self.cross_coupling = cross_coupling
+        self.integration_method = _normalized_nmpc_integration_method(config.mission.nmpc_integration_method)
+        self.solver_backend_requested = str(getattr(config.mission, "nmpc_solver_backend", "casadi") or "casadi").strip().lower()
+        self.solver_backend_effective = "casadi"
+        self.acados_available = False
+        self.acados_fallback_reason = ""
         self._build_problem()
         self._last_x_guess: np.ndarray | None = None
         self._last_u_guess: np.ndarray | None = None
@@ -105,15 +143,7 @@ class CasadiNMPCController:
             thrust = uk[0]
             yaw = uk[1]
 
-            u_dot = (thrust - self.damp_u * xk[3]) / self.mass_u + mismatch_p[0]
-            v_dot = (-self.damp_v * xk[4] + self.cross_coupling * xk[5]) / self.mass_v + mismatch_p[1]
-            r_dot = (yaw - self.damp_r * xk[5]) / self.mass_r + mismatch_p[2]
-            x_dot = xk[3] * ca.cos(xk[2]) - xk[4] * ca.sin(xk[2])
-            y_dot = xk[3] * ca.sin(xk[2]) + xk[4] * ca.cos(xk[2])
-            psi_dot = xk[5]
-
-            fk = ca.vertcat(x_dot, y_dot, psi_dot, u_dot, v_dot, r_dot)
-            opti.subject_to(xkp == xk + self.dt * fk)
+            opti.subject_to(xkp == self._symbolic_next_state(xk, uk, mismatch_p))
 
             opti.subject_to(opti.bounded(-self.config.fleet.max_thrust, thrust, self.config.fleet.max_thrust))
             opti.subject_to(opti.bounded(-self.config.fleet.max_yaw_moment, yaw, self.config.fleet.max_yaw_moment))
@@ -139,18 +169,24 @@ class CasadiNMPCController:
             for j in range(self.max_neighbors):
                 h_cur = (xk[0] - neigh_x_p[j, k]) ** 2 + (xk[1] - neigh_y_p[j, k]) ** 2 - safe_distance_p**2
                 h_next = (xkp[0] - neigh_x_p[j, k + 1]) ** 2 + (xkp[1] - neigh_y_p[j, k + 1]) ** 2 - safe_distance_p**2
-                opti.subject_to(h_cur + s_nei[j, k] >= 0)
-                opti.subject_to(h_next - (1.0 - gamma) * h_cur + s_nei[j, k] >= 0)
-                objective += self.config.weights.w_soft * s_nei[j, k] ** 2
+                if self.config.mission.cbf_allow_slack:
+                    opti.subject_to(h_cur + s_nei[j, k] >= 0)
+                    opti.subject_to(h_next - (1.0 - gamma) * h_cur + s_nei[j, k] >= 0)
+                    objective += self.config.weights.w_soft * s_nei[j, k] ** 2
+                else:
+                    opti.subject_to(h_next - (1.0 - gamma) * h_cur >= 0)
 
             for j in range(self.max_obstacles):
                 safe_radius_cur = safe_distance_p + obs_r_p[j, k]
                 safe_radius_next = safe_distance_p + obs_r_p[j, k + 1]
                 h_cur = (xk[0] - obs_x_p[j, k]) ** 2 + (xk[1] - obs_y_p[j, k]) ** 2 - safe_radius_cur**2
                 h_next = (xkp[0] - obs_x_p[j, k + 1]) ** 2 + (xkp[1] - obs_y_p[j, k + 1]) ** 2 - safe_radius_next**2
-                opti.subject_to(h_cur + s_obs[j, k] >= 0)
-                opti.subject_to(h_next - (1.0 - gamma) * h_cur + s_obs[j, k] >= 0)
-                objective += self.config.weights.w_soft * s_obs[j, k] ** 2
+                if self.config.mission.cbf_allow_slack:
+                    opti.subject_to(h_cur + s_obs[j, k] >= 0)
+                    opti.subject_to(h_next - (1.0 - gamma) * h_cur + s_obs[j, k] >= 0)
+                    objective += self.config.weights.w_soft * s_obs[j, k] ** 2
+                else:
+                    opti.subject_to(h_next - (1.0 - gamma) * h_cur >= 0)
 
             boundary_pairs = (
                 (xk[0] - self.config.safety.boundary_margin_x, xkp[0] - self.config.safety.boundary_margin_x, s_bound[0, k]),
@@ -167,9 +203,12 @@ class CasadiNMPCController:
                 ),
             )
             for h_cur, h_next, slack in boundary_pairs:
-                opti.subject_to(h_cur + slack >= 0)
-                opti.subject_to(h_next - (1.0 - gamma_b) * h_cur + slack >= 0)
-                objective += 0.5 * self.config.weights.w_soft * slack**2
+                if self.config.mission.cbf_allow_slack:
+                    opti.subject_to(h_cur + slack >= 0)
+                    opti.subject_to(h_next - (1.0 - gamma_b) * h_cur + slack >= 0)
+                    objective += 0.5 * self.config.weights.w_soft * slack**2
+                else:
+                    opti.subject_to(h_next - (1.0 - gamma_b) * h_cur >= 0)
 
         objective += self.config.weights.w_pos * ((x[0, h] - ref_x_p[h - 1]) ** 2 + (x[1, h] - ref_y_p[h - 1]) ** 2)
         objective += self.config.weights.w_psi * (1.0 - ca.cos(x[2, h] - ref_psi_p[h - 1]))
@@ -218,6 +257,26 @@ class CasadiNMPCController:
         self.obs_x_p = obs_x_p
         self.obs_y_p = obs_y_p
         self.obs_r_p = obs_r_p
+
+    def _symbolic_dynamics(self, xk, uk, mismatch_p):
+        thrust = uk[0]
+        yaw = uk[1]
+        u_dot = (thrust - self.damp_u * xk[3]) / self.mass_u + mismatch_p[0]
+        v_dot = (-self.damp_v * xk[4] + self.cross_coupling * xk[5]) / self.mass_v + mismatch_p[1]
+        r_dot = (yaw - self.damp_r * xk[5]) / self.mass_r + mismatch_p[2]
+        x_dot = xk[3] * ca.cos(xk[2]) - xk[4] * ca.sin(xk[2])
+        y_dot = xk[3] * ca.sin(xk[2]) + xk[4] * ca.cos(xk[2])
+        psi_dot = xk[5]
+        return ca.vertcat(x_dot, y_dot, psi_dot, u_dot, v_dot, r_dot)
+
+    def _symbolic_next_state(self, xk, uk, mismatch_p):
+        if self.integration_method == "explicit_euler":
+            return xk + self.dt * self._symbolic_dynamics(xk, uk, mismatch_p)
+        k1 = self._symbolic_dynamics(xk, uk, mismatch_p)
+        k2 = self._symbolic_dynamics(xk + 0.5 * self.dt * k1, uk, mismatch_p)
+        k3 = self._symbolic_dynamics(xk + 0.5 * self.dt * k2, uk, mismatch_p)
+        k4 = self._symbolic_dynamics(xk + self.dt * k3, uk, mismatch_p)
+        return xk + (self.dt / 6.0) * (k1 + 2.0 * k2 + 2.0 * k3 + k4)
 
     def solve(
         self,
@@ -316,6 +375,61 @@ class CasadiNMPCController:
         return guess
 
 
+def create_nmpc_controller(
+    *,
+    config: PlannerConfig,
+    horizon_steps: int,
+    dt: float,
+    max_neighbors: int,
+    max_obstacles: int,
+    mass_u: float,
+    mass_v: float,
+    mass_r: float,
+    damp_u: float,
+    damp_v: float,
+    damp_r: float,
+    cross_coupling: float,
+):
+    requested = _normalized_nmpc_solver_backend(getattr(config.mission, "nmpc_solver_backend", "auto"))
+    kwargs = dict(
+        config=config,
+        horizon_steps=horizon_steps,
+        dt=dt,
+        max_neighbors=max_neighbors,
+        max_obstacles=max_obstacles,
+        mass_u=mass_u,
+        mass_v=mass_v,
+        mass_r=mass_r,
+        damp_u=damp_u,
+        damp_v=damp_v,
+        damp_r=damp_r,
+        cross_coupling=cross_coupling,
+    )
+    if requested in {"auto", "acados"}:
+        try:
+            controller = AcadosNMPCController(**kwargs)
+            controller.solver_backend_requested = requested
+            controller.solver_backend_effective = "acados"
+            controller.acados_available = True
+            controller.acados_fallback_reason = ""
+            return controller
+        except AcadosUnavailableError as exc:
+            if requested == "acados":
+                raise
+            fallback = CasadiNMPCController(**kwargs)
+            fallback.solver_backend_requested = "auto"
+            fallback.solver_backend_effective = "casadi"
+            fallback.acados_available = False
+            fallback.acados_fallback_reason = str(exc)
+            return fallback
+    controller = CasadiNMPCController(**kwargs)
+    controller.solver_backend_requested = "casadi"
+    controller.solver_backend_effective = "casadi"
+    controller.acados_available = False
+    controller.acados_fallback_reason = ""
+    return controller
+
+
 def _pad_reference_window(ref_window: Sequence[TrajectorySample], horizon_steps: int) -> List[TrajectorySample]:
     refs = list(ref_window)
     if not refs:
@@ -373,6 +487,22 @@ def _pack_obstacle_predictions(
         for step in range(horizon_steps + 1):
             obs_x[idx, step], obs_y[idx, step], obs_r[idx, step] = samples[step]
     return obs_x, obs_y, obs_r
+
+
+def _normalized_nmpc_integration_method(integration_method: str) -> str:
+    method = str(integration_method or "rk4").strip().lower()
+    allowed = {"explicit_euler", "rk4"}
+    if method not in allowed:
+        raise ValueError(f"Unsupported nmpc_integration_method '{integration_method}'. Expected one of {sorted(allowed)}")
+    return method
+
+
+def _normalized_nmpc_solver_backend(solver_backend: str) -> str:
+    backend = str(solver_backend or "auto").strip().lower()
+    allowed = {"auto", "casadi", "acados"}
+    if backend not in allowed:
+        raise ValueError(f"Unsupported nmpc_solver_backend '{solver_backend}'. Expected one of {sorted(allowed)}")
+    return backend
 
 
 def _estimate_min_margin(

@@ -59,6 +59,23 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Run multi-USV closed-loop coverage simulation and export a GIF animation.")
     parser.add_argument("--total-time", type=float, default=28.0, help="Simulation horizon in seconds.")
     parser.add_argument("--fps", type=int, default=6, help="GIF frame rate.")
+    parser.add_argument("--control-mode", choices=["fast_tracker", "hybrid_nmpc", "full_nmpc"], default="hybrid_nmpc", help="Online control mode.")
+    parser.add_argument("--nmpc-update-interval", type=int, default=5, help="Hybrid NMPC update interval in control steps.")
+    parser.add_argument("--nmpc-horizon-seconds", type=float, default=1.2, help="NMPC prediction horizon in seconds.")
+    parser.add_argument("--nmpc-horizon-cap", type=int, default=10, help="Maximum NMPC horizon steps.")
+    parser.add_argument("--nmpc-max-wall-time-ms", type=float, default=80.0, help="NMPC solve-time budget before tracker fallback.")
+    parser.add_argument(
+        "--nmpc-parallel-backend",
+        choices=["serial", "thread", "process"],
+        default="serial",
+        help="NMPC execution backend. Use process for worker-local CasADi with hard timeout.",
+    )
+    parser.add_argument(
+        "--nmpc-solver-backend",
+        choices=["auto", "casadi", "acados"],
+        default="auto",
+        help="NMPC solver backend. auto tries optional Acados first and falls back to CasADi.",
+    )
     parser.add_argument(
         "--output",
         type=str,
@@ -68,6 +85,13 @@ def main() -> None:
     args = parser.parse_args()
 
     config = build_closed_loop_demo_config()
+    config.mission.control_mode = args.control_mode
+    config.mission.nmpc_update_interval_steps = args.nmpc_update_interval
+    config.mission.nmpc_horizon_seconds = args.nmpc_horizon_seconds
+    config.mission.nmpc_horizon_steps_cap = args.nmpc_horizon_cap
+    config.mission.nmpc_max_wall_time_ms = args.nmpc_max_wall_time_ms
+    config.mission.nmpc_parallel_backend = args.nmpc_parallel_backend
+    config.mission.nmpc_solver_backend = args.nmpc_solver_backend
     plan = plan_global_coverage(config)
     total_time = args.total_time
     obstacle_tracks = build_crossing_obstacle_scenario(config, total_time=total_time, dt=1.0 / config.mission.local_control_hz)
@@ -77,6 +101,7 @@ def main() -> None:
 
     print(f"frames: {len(log.frames)}")
     print(f"final coverage: {log.final_coverage_fraction:.3f}")
+    print(f"runtime profile: {log.runtime_profile.get('summary', {})}")
     print(f"animation: {output_path}")
     for agent_id in range(config.fleet.num_agents or 0):
         trajectory = log.trajectory(agent_id)

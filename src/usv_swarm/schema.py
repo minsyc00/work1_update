@@ -82,6 +82,29 @@ class MissionConfig:
     global_replan_hz: float = 0.5
     local_control_hz: float = 5.0
     residual_enable: bool = True
+    coverage_residual_interval_steps: int = 1
+    control_mode: str = "hybrid_nmpc"
+    nmpc_update_interval_steps: int = 5
+    nmpc_max_wall_time_ms: float = 80.0
+    nmpc_horizon_seconds: float = 1.2
+    nmpc_horizon_steps_cap: int = 10
+    nmpc_parallel_backend: str = "serial"
+    nmpc_solver_backend: str = "auto"
+    dynamics_integration_method: str = "rk4"
+    nmpc_integration_method: str = "rk4"
+    safety_filter_mode: str = "hybrid_cbf_qp"
+    cbf_alpha: float = 0.8
+    cbf_allow_slack: bool = False
+    cbf_slack_weight: float = 1.0e4
+    cbf_qp_max_iter: int = 30
+    cbf_qp_timeout_ms: float = 5.0
+    safety_min_margin_epsilon: float = 1.0e-3
+    mapf_solver: str = "auto"
+    mapf_max_expanded_nodes: int = 5000
+    mapf_max_conflicts: int = 2000
+    mapf_max_wall_time_ms: float = 2000.0
+    mapf_suboptimality_bound: float = 1.2
+    mapf_fallback: str = "prioritized_resource_windows"
 
 
 @dataclass
@@ -207,6 +230,14 @@ class MAPFReservationTable:
     reservations: Dict[int, List[ReservationEntry]]
     conflicts_resolved: int
     makespan: float
+    solver_status: str = "solved"
+    expanded_nodes: int = 0
+    open_set_peak: int = 0
+    conflict_checks: int = 0
+    budget_exhausted: bool = False
+    fallback_used: bool = False
+    unresolved_conflict_count: int = 0
+    unresolved_conflicts: List[str] = field(default_factory=list)
 
 
 @dataclass
