@@ -1,0 +1,14 @@
+{
+  "algorithm": "CROWN-MCPP",
+  "map_id": "static_obstacle_map_200x200_mixed_obstacles",
+  "solution_status": "failed_before_first_feasible_solution",
+  "runtime_sec": 119.29760601557791,
+  "peak_rss_mb": 169.94921875,
+  "configured_lns_time_budget_sec": 60.0,
+  "fleet_profile_id": "crown_200x200_usv4",
+  "error_type": "ValueError",
+  "error": "CROWN-LNS could not construct an initial conflict-free solution; elapsed=60.412s diagnostics={'pool_recombined': False, 'bcd_contiguous_connectivity': False, 'single_agent_connectivity': False, 'spatial_connectivity': False, 'greedy_connectivity': False, 'direct_beam_connectivity': False, 'exact_beam_connectivity': False, 'fixed_connectivity_candidate': False, 'fixed_order_pricing_candidate': False, 'free_order_pricing_candidate': False, 'single_agent_max_covered': 13, 'single_agent_remaining': ('crown_cell_12', 'crown_cell_13', 'crown_cell_14', 'crown_cell_16', 'crown_cell_17', 'crown_cell_2', 'crown_cell_20', 'crown_cell_21')} connection_cache_sizes={'0': 69, '1': 12, '2': 10, '3': 9}",
+  "artifacts": {
+    "failure_report": "outputs/crown_low_turn_horizontal_bcd_20260721/static_obstacle_map_200x200_mixed_obstacles_usv4_sensor20x10_hull1x0p5_rmin0p5_fleet-crown_200x200_usv4/crown_mcpp/crown_mcpp_failure_report.json"
+  }
+}

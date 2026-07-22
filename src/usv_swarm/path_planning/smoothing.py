@@ -75,8 +75,15 @@ def build_transition_segment(
             candidate.metadata["dubins_modes"] = "-".join(dubins_path.modes)
             return candidate
 
-    step = max(dubins_path.total_length / max(sample_count - 1, 1), turn_radius / 8.0)
-    points, headings, max_curvature = sample_dubins_path(dubins_path, step_size=step)
+    step = max(
+        dubins_path.total_length / max(sample_count - 1, 1),
+        turn_radius / 8.0,
+    )
+    points, headings, max_curvature = sample_dubins_path(
+        dubins_path,
+        step_size=step,
+        max_heading_step=0.35,
+    )
     duration = dubins_path.total_length / speed
     return PathSegmentSpec(
         segment_id=segment_id,
@@ -112,10 +119,51 @@ def build_obstacle_aware_transition_segments(
         use_bezier=path_config.use_bezier_smoothing,
     )
     direct_reasons = path_segment_invalid_reasons(direct, config, obstacle_field)
-    if not direct_reasons:
+    if not direct_reasons and _single_segment_trackable(
+        direct,
+        config,
+        obstacle_field,
+    ):
         _annotate_validity(direct, config, obstacle_field, direct_reasons)
         direct.metadata["connector"] = direct.path_source
         return [direct]
+    if not direct_reasons:
+        direct_reasons = [
+            reason
+            for reason in direct.metadata.get(
+                "dynamic_invalid_reasons",
+                "dynamic_validation_failed",
+            ).split(",")
+            if reason
+        ]
+    # A Bezier candidate can be collision-free yet fail endpoint tangency or
+    # sampled heading continuity.  Retry the analytic curvature-bounded
+    # Dubins path before invoking the obstacle corridor search.
+    if direct.path_source == "bezier":
+        dubins = build_transition_segment(
+            segment_id=f"{segment_id}_dubins_retry",
+            start=start,
+            end=end,
+            start_time=start_time,
+            config=config,
+            kind=kind,
+            sample_count=sample_count,
+            use_bezier=False,
+        )
+        dubins_reasons = path_segment_invalid_reasons(
+            dubins,
+            config,
+            obstacle_field,
+        )
+        if not dubins_reasons and _single_segment_trackable(
+            dubins,
+            config,
+            obstacle_field,
+        ):
+            _annotate_validity(dubins, config, obstacle_field, ())
+            dubins.metadata["connector"] = "dubins_dynamic_retry"
+            dubins.metadata["bezier_retry_reason"] = ",".join(direct_reasons)
+            return [dubins]
     _annotate_validity(direct, config, obstacle_field, direct_reasons)
 
     search_field = obstacle_field or ObstacleField()
@@ -135,6 +183,17 @@ def build_obstacle_aware_transition_segments(
     if astar is None:
         raise RuntimeError("A* resolution candidate generation failed")
     if not astar.found or len(astar.points) < 2:
+        if not path_config.obstacle_aware_allow_motion_lattice:
+            _annotate_validity(direct, config, obstacle_field, direct_reasons)
+            direct.metadata["connector"] = "blocked_dubins_no_astar"
+            direct.metadata["kinematic_feasible"] = "false"
+            direct.metadata["dynamic_feasible"] = "false"
+            direct.metadata["astar_found"] = "false"
+            direct.metadata["astar_corridor_conversion_attempted"] = "false"
+            direct.metadata["astar_corridor_conversion_success"] = "false"
+            direct.metadata["astar_corridor_conversion_failure_reason"] = "astar_not_found_motion_lattice_disabled"
+            direct.metadata["direct_invalid_reasons"] = ",".join(direct_reasons)
+            return [direct]
         lattice = _build_motion_lattice_segment(
             segment_id=f"{segment_id}_motion_lattice_no_astar",
             start=start,
@@ -178,7 +237,11 @@ def build_obstacle_aware_transition_segments(
         kind=kind,
         sample_count=max(sample_count, 24),
     )
-    if smoothed is not None:
+    if smoothed is not None and _single_segment_trackable(
+        smoothed,
+        config,
+        obstacle_field,
+    ):
         smoothed.metadata.update(
             {
                 "connector": "smoothed_astar_corridor",
@@ -193,60 +256,62 @@ def build_obstacle_aware_transition_segments(
         )
         return [smoothed]
 
-    lattice = _build_motion_lattice_segment(
-        segment_id=f"{segment_id}_motion_lattice",
-        start=start,
-        end=end,
-        start_time=start_time,
-        config=config,
-        path_config=path_config,
-        obstacle_field=obstacle_field,
-        kind=kind,
-        sample_count=max(sample_count, 24),
-    )
-    if lattice is not None:
-        lattice.metadata.update(
-            {
-                "connector": "motion_lattice",
-                "astar_corridor_conversion_attempted": "true",
-                "astar_corridor_conversion_success": "true",
-                "corridor_conversion_method": "motion_lattice_after_astar",
-                "astar_corridor_conversion_fallback_reason": "smoothed_corridor_failed",
-                "astar_cost": f"{astar.cost:.6f}",
-                "astar_expanded": str(astar.expanded),
-                "corridor_point_count": str(len(astar.points)),
-                "direct_invalid_reasons": ",".join(direct_reasons),
-            }
+    if path_config.obstacle_aware_allow_motion_lattice:
+        lattice = _build_motion_lattice_segment(
+            segment_id=f"{segment_id}_motion_lattice",
+            start=start,
+            end=end,
+            start_time=start_time,
+            config=config,
+            path_config=path_config,
+            obstacle_field=obstacle_field,
+            kind=kind,
+            sample_count=max(sample_count, 24),
         )
-        return [lattice]
-
-    converted = _convert_corridor_to_trackable_segments(
-        segment_id=segment_id,
-        corridor_points=astar.points,
-        start=start,
-        end=end,
-        start_time=start_time,
-        config=config,
-        path_config=path_config,
-        obstacle_field=obstacle_field,
-        kind=kind,
-        sample_count=max(sample_count, 24),
-    )
-    if converted:
-        for idx, segment in enumerate(converted):
-            segment.metadata.update(
+        if lattice is not None:
+            lattice.metadata.update(
                 {
-                    "connector": "astar_corridor",
+                    "connector": "motion_lattice",
                     "astar_corridor_conversion_attempted": "true",
                     "astar_corridor_conversion_success": "true",
+                    "corridor_conversion_method": "motion_lattice_after_astar",
+                    "astar_corridor_conversion_fallback_reason": "smoothed_corridor_failed",
                     "astar_cost": f"{astar.cost:.6f}",
                     "astar_expanded": str(astar.expanded),
-                    "corridor_index": str(idx),
                     "corridor_point_count": str(len(astar.points)),
                     "direct_invalid_reasons": ",".join(direct_reasons),
                 }
             )
-        return converted
+            return [lattice]
+
+    if path_config.obstacle_aware_allow_corridor_conversion:
+        converted = _convert_corridor_to_trackable_segments(
+            segment_id=segment_id,
+            corridor_points=astar.points,
+            start=start,
+            end=end,
+            start_time=start_time,
+            config=config,
+            path_config=path_config,
+            obstacle_field=obstacle_field,
+            kind=kind,
+            sample_count=max(sample_count, 24),
+        )
+        if converted:
+            for idx, segment in enumerate(converted):
+                segment.metadata.update(
+                    {
+                        "connector": "astar_corridor",
+                        "astar_corridor_conversion_attempted": "true",
+                        "astar_corridor_conversion_success": "true",
+                        "astar_cost": f"{astar.cost:.6f}",
+                        "astar_expanded": str(astar.expanded),
+                        "corridor_index": str(idx),
+                        "corridor_point_count": str(len(astar.points)),
+                        "direct_invalid_reasons": ",".join(direct_reasons),
+                    }
+                )
+            return converted
 
     _annotate_validity(direct, config, obstacle_field, direct_reasons)
     direct.metadata.update(
@@ -260,7 +325,11 @@ def build_obstacle_aware_transition_segments(
             "corridor_point_count": str(len(astar.points)),
             "astar_corridor_conversion_attempted": "true",
             "astar_corridor_conversion_success": "false",
-            "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+            "astar_corridor_conversion_failure_reason": (
+                "all_conversion_methods_failed"
+                if path_config.obstacle_aware_allow_motion_lattice or path_config.obstacle_aware_allow_corridor_conversion
+                else "advanced_conversion_disabled"
+            ),
             "direct_invalid_reasons": ",".join(direct_reasons),
         }
     )
@@ -431,6 +500,8 @@ def _build_segmented_corridor_transitions(
             use_bezier=path_config.use_bezier_smoothing,
         )
         if not _single_segment_trackable(candidate, config, obstacle_field):
+            if not path_config.obstacle_aware_allow_motion_lattice:
+                return None
             lattice = _build_motion_lattice_segment(
                 segment_id=f"{sub_id}_lattice",
                 start=pose_a,
@@ -599,6 +670,8 @@ def _maybe_build_heading_adapter(
         use_bezier=path_config.use_bezier_smoothing,
     )
     if not _single_segment_trackable(adapter, config, obstacle_field):
+        if not path_config.obstacle_aware_allow_motion_lattice:
+            return "failed"
         lattice = _build_motion_lattice_segment(
             segment_id=f"{segment_id}_lattice",
             start=start_pose,
@@ -1047,7 +1120,10 @@ def _motion_lattice_search(
     heading_bins = 16
     heading_step = 2.0 * math.pi / heading_bins
     straight_step = xy_resolution
-    max_expanded = 16000
+    max_expanded = max(
+        int(path_config.obstacle_aware_motion_lattice_max_expansions),
+        1,
+    )
     bounds = (0.0, 0.0, config.mission.area_length_x, config.mission.area_length_y)
 
     def key_for(pose: Pose2D) -> Tuple[int, int, int]:
@@ -1266,7 +1342,11 @@ def _build_corridor_edge_segment(
 
 
 def _astar_resolution_candidates(config: PlannerConfig, path_config: PathPlanningConfig) -> List[float]:
-    base = float(path_config.coverage_resolution or config.footprint.width_wf * 0.5)
+    base = float(
+        path_config.obstacle_aware_grid_resolution
+        or path_config.coverage_resolution
+        or config.footprint.width_wf * 0.5
+    )
     candidates = [
         base,
         config.footprint.width_wf * 0.5,

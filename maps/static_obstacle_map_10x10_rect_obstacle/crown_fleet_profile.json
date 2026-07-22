@@ -1,0 +1,24 @@
+{
+  "fleet_profile_id": "crown_10x10_usv1",
+  "map_id": "static_obstacle_map_10x10_rect_obstacle",
+  "planning_defaults": {
+    "engine": "certified_lns",
+    "return_to_start": false,
+    "lns_time_budget_sec": 30.0,
+    "baseline_time_budget_sec": 10.0,
+    "lns_iterations": 100,
+    "root_exact_pricing": false,
+    "connector_max_expansions": 500,
+    "mode_limit_per_region_agent": 4,
+    "max_candidate_axes": 2
+  },
+  "agents": [
+    {
+      "agent_id": 0,
+      "initial_state": {"x": 1.5, "y": 1.5, "psi_deg": 0.0},
+      "coverage_footprint": {"length_lf": 4.0, "width_wf": 2.0, "overlap_ratio": 0.2},
+      "vehicle_footprint": {"length": 1.0, "width": 0.5},
+      "motion_constraints": {"min_turn_radius": 0.5, "cruise_speed": 2.0, "cover_speed": 1.2, "turn_speed_max": 1.0, "max_thrust": 2.0, "max_yaw_moment": 1.0, "max_mission_time": 10000.0}
+    }
+  ]
+}

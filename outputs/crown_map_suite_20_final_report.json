@@ -1,0 +1,19 @@
+{
+  "suite": "CROWN bundled-map end-to-end regression",
+  "runtime_sec": 165.75738862901926,
+  "map_count": 1,
+  "repeat_count": 1,
+  "passed": 0,
+  "failed": 1,
+  "results": [
+    {
+      "map": "static_obstacle_map_20x20_two_obstacles",
+      "returncode": 1,
+      "wall_runtime_sec": 165.75728702358902,
+      "stderr_tail": "Traceback (most recent call last):\n  File \"/home/myc/code/work1_update/work1_update/examples/run_crown_mcpp_experiment.py\", line 270, in <module>\n    main()\n    ~~~~^^\n  File \"/home/myc/code/work1_update/work1_update/examples/run_crown_mcpp_experiment.py\", line 257, in main\n    _, report = run_crown_mcpp_experiment(\n                ~~~~~~~~~~~~~~~~~~~~~~~~~^\n        config,\n        ^^^^^^^\n    ...<4 lines>...\n        render=not args.no_render,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/home/myc/code/work1_update/work1_update/src/usv_swarm/path_planning/crown/full_experiment.py\", line 32, in run_crown_mcpp_experiment\n    plan = run_crown_mcpp_pipeline(\n        config,\n    ...<2 lines>...\n        paper_references,\n    )\n  File \"/home/myc/code/work1_update/work1_update/src/usv_swarm/path_planning/crown/pipeline.py\", line 482, in run_crown_mcpp_pipeline\n    solution = solve_prepared_crown_problem(problem)\n  File \"/home/myc/code/work1_update/work1_update/src/usv_swarm/path_planning/crown/pipeline.py\", line 455, in solve_prepared_crown_problem\n    return solve_crown_lns(\n        problem.graphs,\n    ...<2 lines>...\n        initial_routes=baseline,\n    )\n  File \"/home/myc/code/work1_update/work1_update/src/usv_swarm/path_planning/crown/lns.py\", line 953, in solve_crown_lns\n    raise ValueError(\"CROWN-LNS could not construct an initial conflict-free solution\")\nValueError: CROWN-LNS could not construct an initial conflict-free solution\n",
+      "status": "failed",
+      "stdout_tail": "",
+      "repeat": 0
+    }
+  ]
+}

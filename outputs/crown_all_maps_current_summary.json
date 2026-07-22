@@ -1,0 +1,122 @@
+{
+  "suite": "CROWN current-code bundled-map consolidated evidence",
+  "date": "2026-07-19",
+  "scope": "single-run end-to-end feasibility; not a statistical stability claim",
+  "map_count": 7,
+  "passed": 7,
+  "failed": 0,
+  "results": [
+    {
+      "map": "static_obstacle_map_10x10_rect_obstacle",
+      "status": "passed",
+      "fixed_region_count": 4,
+      "mode_count": 16,
+      "fleet_size": 1,
+      "active_agent_count": 1,
+      "runtime_sec": 33.467193238437176,
+      "end_to_end_first_feasible_sec": 3.402960933754055,
+      "peak_rss_mb": 339.765625,
+      "coverage_fraction": 1.0,
+      "optimality_gap": 0.8261647,
+      "report": "outputs/crown_map_suite_small_timing_final/repeat_00/static_obstacle_map_10x10_rect_obstacle_usv1_sensor4x2_hull1x0p5_rmin0p5_fleet-crown_10x10_usv1/crown_mcpp/crown_mcpp_report.json"
+    },
+    {
+      "map": "static_obstacle_map_15x15_rect_triangle_small",
+      "status": "passed",
+      "fixed_region_count": 8,
+      "mode_count": 64,
+      "fleet_size": 2,
+      "active_agent_count": 2,
+      "runtime_sec": 79.67862528935075,
+      "end_to_end_first_feasible_sec": 19.41164405059939,
+      "peak_rss_mb": 1134.48046875,
+      "coverage_fraction": 1.0,
+      "optimality_gap": 0.80538988,
+      "report": "outputs/crown_map_suite_small_timing_final/repeat_00/static_obstacle_map_15x15_rect_triangle_small_usv2_sensor4x2_hull1x0p5_rmin0p5_fleet-crown_15x15_usv2/crown_mcpp/crown_mcpp_report.json"
+    },
+    {
+      "map": "static_obstacle_map_20x20_two_obstacles",
+      "status": "passed",
+      "fixed_region_count": 7,
+      "mode_count": 52,
+      "fleet_size": 2,
+      "active_agent_count": 2,
+      "runtime_sec": 76.70109802670777,
+      "end_to_end_first_feasible_sec": 16.540409104838716,
+      "peak_rss_mb": 607.2890625,
+      "coverage_fraction": 1.0,
+      "optimality_gap": 0.712347191,
+      "report": "outputs/crown_map_suite_small_timing_final/repeat_00/static_obstacle_map_20x20_two_obstacles_usv2_sensor4x2_hull1x0p5_rmin0p5_fleet-crown_20x20_usv2/crown_mcpp/crown_mcpp_report.json"
+    },
+    {
+      "map": "static_obstacle_map_50x50_simple",
+      "status": "passed",
+      "fixed_region_count": 20,
+      "mode_count": 180,
+      "fleet_size": 3,
+      "active_agent_count": 3,
+      "runtime_sec": 120.16730866767466,
+      "end_to_end_first_feasible_sec": 29.538395624701696,
+      "peak_rss_mb": 1102.03515625,
+      "coverage_fraction": 1.0,
+      "optimality_gap": 0.738637454,
+      "report": "outputs/crown_map_suite_small_timing_final/repeat_00/static_obstacle_map_50x50_simple_usv3_sensor8x4_hull1x0p5_rmin0p5_fleet-crown_50x50_usv3/crown_mcpp/crown_mcpp_report.json"
+    },
+    {
+      "map": "static_obstacle_map_200x200_mixed_obstacles",
+      "status": "passed",
+      "fixed_region_count": 52,
+      "mode_count": 416,
+      "fleet_size": 4,
+      "active_agent_count": 2,
+      "configured_lns_time_budget_sec": 60.0,
+      "runtime_sec": 118.89947463944554,
+      "end_to_end_first_feasible_sec": 87.98582006971296,
+      "peak_rss_mb": 256.21875,
+      "coverage_fraction": 0.999875,
+      "optimality_gap": 0.924813104,
+      "report": "outputs/crown_map_suite_large_budget60_current/repeat_00/static_obstacle_map_200x200_mixed_obstacles_usv4_sensor20x10_hull1x0p5_rmin0p5_fleet-crown_200x200_usv4/crown_mcpp/crown_mcpp_report.json"
+    },
+    {
+      "map": "static_obstacle_map_200x200_mixed_obstacles_s_polygon",
+      "status": "passed",
+      "fixed_region_count": 67,
+      "mode_count": 798,
+      "fleet_size": 6,
+      "active_agent_count": 5,
+      "configured_lns_time_budget_sec": 60.0,
+      "runtime_sec": 192.41935502365232,
+      "end_to_end_first_feasible_sec": 155.66202274320148,
+      "peak_rss_mb": 328.23828125,
+      "coverage_fraction": 0.999875,
+      "optimality_gap": 0.957060285,
+      "report": "outputs/crown_map_suite_large_budget60_current/repeat_00/static_obstacle_map_200x200_mixed_obstacles_s_polygon_usv6_sensor20x10_hull1x0p5_rmin0p5_fleet-crown_200x200_s_polygon_usv6/crown_mcpp/crown_mcpp_report.json"
+    },
+    {
+      "map": "static_obstacle_map_400x400_mixed_obstacles",
+      "status": "passed",
+      "fixed_region_count": 67,
+      "mode_count": 670,
+      "fleet_size": 5,
+      "active_agent_count": 4,
+      "configured_lns_time_budget_sec": 60.0,
+      "runtime_sec": 540.5229597818106,
+      "end_to_end_first_feasible_sec": 453.7454518006051,
+      "peak_rss_mb": 445.875,
+      "coverage_fraction": 0.9998375,
+      "optimality_gap": 0.961637469,
+      "report": "outputs/crown_map_suite_large_budget60_current/repeat_00/static_obstacle_map_400x400_mixed_obstacles_usv5_sensor32x16_hull1x0p5_rmin0p5_fleet-crown_400x400_usv5/crown_mcpp/crown_mcpp_report.json"
+    }
+  ],
+  "budget_comparison_reports": [
+    "outputs/crown_map_suite_large_budget60_current_report.json",
+    "outputs/crown_map_suite_large_current_report.json"
+  ],
+  "unit_tests": {
+    "command": "MPLCONFIGDIR=/tmp/matplotlib-crown PYTHONPATH=src python -m unittest discover -s tests",
+    "ran": 176,
+    "passed": 169,
+    "skipped_expensive_map_gates": 7,
+    "failed": 0
+  }
+}

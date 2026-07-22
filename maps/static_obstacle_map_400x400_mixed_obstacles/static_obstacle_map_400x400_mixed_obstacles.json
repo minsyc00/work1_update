@@ -1,0 +1,108 @@
+{
+  "map_id": "static_obstacle_map_400x400_mixed_obstacles",
+  "description": "400m x 400m static-obstacle map adjusted for the current large-convex-region sweep planner. The map includes circle, ellipse, convex polygon, shallow concave polygon, and a single shallow-concave S-like polygon while keeping wide corridors for complete planning runs.",
+  "units": "m",
+  "mission_area": {
+    "type": "rectangle",
+    "origin": [0.0, 0.0],
+    "length_x": 400.0,
+    "length_y": 400.0
+  },
+  "coverage_footprint": {
+    "length_lf": 4.0,
+    "width_wf": 2.0
+  },
+  "motion_constraints": {
+    "model": "3-DOF",
+    "min_turn_radius": 2.0
+  },
+  "static_obstacles": [
+    {
+      "obstacle_id": "rect_platform_sw_01",
+      "type": "rectangle",
+      "center": [55.0, 50.0],
+      "size": [28.0, 20.0],
+      "yaw_deg": 0.0
+    },
+    {
+      "obstacle_id": "rotated_dock_s_01",
+      "type": "rectangle",
+      "center": [130.0, 52.0],
+      "size": [48.0, 8.0],
+      "yaw_deg": -18.0
+    },
+    {
+      "obstacle_id": "ellipse_reef_s_01",
+      "type": "ellipse",
+      "center": [205.0, 70.0],
+      "radii": [22.0, 8.0],
+      "yaw_deg": 12.0
+    },
+    {
+      "obstacle_id": "circle_reef_se_01",
+      "type": "circle",
+      "center": [340.0, 55.0],
+      "radius": 10.0
+    },
+    {
+      "obstacle_id": "west_trapezoid_island_01",
+      "type": "polygon",
+      "vertices": [
+        [44.0, 150.0],
+        [106.0, 146.0],
+        [112.0, 210.0],
+        [50.0, 222.0]
+      ]
+    },
+    {
+      "obstacle_id": "s_curve_shallow_polygon_c_01",
+      "type": "polygon",
+      "vertices": [
+        [224.0, 126.0],
+        [292.0, 146.0],
+        [276.0, 168.0],
+        [238.0, 180.0],
+        [292.0, 214.0],
+        [292.0, 238.0],
+        [250.0, 264.0],
+        [232.0, 240.0],
+        [204.0, 206.0],
+        [208.0, 166.0]
+      ]
+    },
+    {
+      "obstacle_id": "shallow_concave_island_nw_01",
+      "type": "polygon",
+      "vertices": [
+        [112.0, 300.0],
+        [184.0, 300.0],
+        [202.0, 334.0],
+        [168.0, 328.0],
+        [148.0, 356.0],
+        [116.0, 344.0]
+      ]
+    },
+    {
+      "obstacle_id": "irregular_convex_island_ne_01",
+      "type": "polygon",
+      "vertices": [
+        [284.0, 318.0],
+        [326.0, 298.0],
+        [366.0, 316.0],
+        [372.0, 350.0],
+        [336.0, 374.0],
+        [294.0, 356.0]
+      ]
+    }
+  ],
+  "notes": {
+    "contains_usv_initial_states": false,
+    "contains_paths": false,
+    "recommended_usv_count": 5,
+    "recommended_overlap_ratio": 0.2,
+    "recommended_d_safe": 1.0,
+    "special_obstacles": ["shallow_concave_island_nw_01", "s_curve_shallow_polygon_c_01"],
+    "planner_adaptation": "mixed_shapes_with_shallow_concavity_single_s_polygon_and_wide_corridors",
+    "default_fleet_profile": "crown_fleet_profile.json"
+  }
+}

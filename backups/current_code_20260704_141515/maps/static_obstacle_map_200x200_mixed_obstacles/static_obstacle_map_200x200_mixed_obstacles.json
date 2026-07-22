@@ -1,0 +1,95 @@
+{
+  "map_id": "static_obstacle_map_200x200_mixed_obstacles",
+  "description": "200m x 200m static-obstacle map adjusted for the current large-convex-region sweep planner. The map includes circle, ellipse, convex polygon, shallow concave polygon, and a short S-like ellipse chain while keeping wide corridors for complete planning runs.",
+  "units": "m",
+  "mission_area": {
+    "type": "rectangle",
+    "origin": [0.0, 0.0],
+    "length_x": 200.0,
+    "length_y": 200.0
+  },
+  "coverage_footprint": {
+    "length_lf": 4.0,
+    "width_wf": 2.0
+  },
+  "motion_constraints": {
+    "model": "3-DOF",
+    "min_turn_radius": 2.0
+  },
+  "static_obstacles": [
+    {
+      "obstacle_id": "rect_platform_sw_01",
+      "type": "rectangle",
+      "center": [32.0, 34.0],
+      "size": [16.0, 12.0],
+      "yaw_deg": 0.0
+    },
+    {
+      "obstacle_id": "rotated_dock_sw_01",
+      "type": "rectangle",
+      "center": [72.0, 38.0],
+      "size": [26.0, 5.0],
+      "yaw_deg": -20.0
+    },
+    {
+      "obstacle_id": "ellipse_reef_s_01",
+      "type": "ellipse",
+      "center": [116.0, 36.0],
+      "radii": [11.0, 4.5],
+      "yaw_deg": 18.0
+    },
+    {
+      "obstacle_id": "circle_reef_e_01",
+      "type": "circle",
+      "center": [164.0, 86.0],
+      "radius": 7.0
+    },
+    {
+      "obstacle_id": "shallow_concave_island_e_01",
+      "type": "polygon",
+      "vertices": [
+        [150.0, 112.0],
+        [184.0, 112.0],
+        [190.0, 130.0],
+        [170.0, 126.0],
+        [160.0, 136.0],
+        [148.0, 128.0]
+      ]
+    },
+    {
+      "obstacle_id": "s_curve_lower_arc_01",
+      "type": "ellipse",
+      "center": [58.0, 146.0],
+      "radii": [14.0, 3.5],
+      "yaw_deg": 28.0
+    },
+    {
+      "obstacle_id": "s_curve_upper_arc_02",
+      "type": "ellipse",
+      "center": [66.0, 174.0],
+      "radii": [14.0, 3.5],
+      "yaw_deg": -28.0
+    },
+    {
+      "obstacle_id": "north_convex_island_01",
+      "type": "polygon",
+      "vertices": [
+        [104.0, 158.0],
+        [144.0, 152.0],
+        [176.0, 172.0],
+        [156.0, 196.0],
+        [116.0, 190.0],
+        [96.0, 170.0]
+      ]
+    }
+  ],
+  "notes": {
+    "contains_usv_initial_states": false,
+    "contains_paths": false,
+    "recommended_usv_count": 4,
+    "recommended_overlap_ratio": 0.2,
+    "recommended_d_safe": 1.0,
+    "special_obstacles": ["shallow_concave_island_e_01", "s_curve_lower_arc_01", "s_curve_upper_arc_02"],
+    "planner_adaptation": "mixed_shapes_with_shallow_concavity_short_s_curve_and_wide_corridors"
+  }
+}

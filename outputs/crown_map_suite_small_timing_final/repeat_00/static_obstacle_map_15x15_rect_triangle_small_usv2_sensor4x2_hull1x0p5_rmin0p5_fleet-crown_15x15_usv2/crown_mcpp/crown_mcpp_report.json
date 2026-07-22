@@ -1,0 +1,111 @@
+{
+  "algorithm": "CROWN-MCPP",
+  "map_id": "static_obstacle_map_15x15_rect_triangle_small",
+  "solution_status": "certified_lns_service_bound",
+  "certification_scope": "continuous_responsibility_fixed_modes_time_grid_horizon",
+  "runtime_sec": 79.67862528935075,
+  "preparation_runtime_sec": 2.22724843,
+  "solve_runtime_sec": 77.195646338,
+  "materialization_validation_runtime_sec": 0.017335109,
+  "peak_rss_mb": 1134.48046875,
+  "fleet_size": 2,
+  "active_agent_count": 2,
+  "configured_lns_time_budget_sec": 60.0,
+  "configured_return_to_start": false,
+  "connector_grid_resolution": 1.0,
+  "fleet_profile_id": "crown_15x15_usv2",
+  "fleet": {
+    "0": {
+      "initial_pose": [
+        2.25,
+        2.25,
+        0.0
+      ],
+      "coverage_footprint": [
+        4.0,
+        2.0
+      ],
+      "vehicle_footprint": [
+        1.0,
+        0.5
+      ],
+      "min_turn_radius": 0.5
+    },
+    "1": {
+      "initial_pose": [
+        2.25,
+        12.0,
+        0.0
+      ],
+      "coverage_footprint": [
+        4.0,
+        2.0
+      ],
+      "vehicle_footprint": [
+        1.0,
+        0.5
+      ],
+      "min_turn_radius": 0.5
+    }
+  },
+  "fixed_region_count": 8,
+  "mode_count": 64,
+  "makespan": 265.0,
+  "total_energy": 150.170976861,
+  "lower_bound": 51.571681866,
+  "upper_bound": 265.0,
+  "optimality_gap": 0.80538988,
+  "root_lp_lower_bound": null,
+  "service_lower_bound": 51.571681866,
+  "sequential_baseline_makespan": 292.0,
+  "joint_gain_ratio": 1.1018867924528302,
+  "joint_not_worse_than_sequential_baseline": true,
+  "coverage_fraction": 1.0,
+  "coverage_target": 0.99,
+  "continuous_conflict_validated": true,
+  "generated_columns": 4,
+  "pricing_iterations": 2,
+  "branch_nodes": 0,
+  "resource_precedence_branches": 0,
+  "route_variable_branches": 0,
+  "conflict_separation_rounds": 0,
+  "anytime_trace": [
+    {
+      "time": 17.18439562059939,
+      "lower_bound": 51.57168186557826,
+      "upper_bound": 292.0,
+      "gap": 0.8233846511452799,
+      "iteration": 0.0
+    },
+    {
+      "time": 39.78530528768897,
+      "lower_bound": 51.57168186557826,
+      "upper_bound": 265.0,
+      "gap": 0.8053898797525348,
+      "iteration": 1.0
+    }
+  ],
+  "agents": {
+    "0": {
+      "segment_count": 472,
+      "metrics": {
+        "total_length": 96.47137466102139,
+        "estimated_time": 265.0,
+        "total_energy": 79.41466235483902
+      }
+    },
+    "1": {
+      "segment_count": 310,
+      "metrics": {
+        "total_length": 91.90074206727539,
+        "estimated_time": 188.0,
+        "total_energy": 70.75631450612164
+      }
+    }
+  },
+  "artifacts": {
+    "report": "outputs/crown_map_suite_small_timing_final/repeat_00/static_obstacle_map_15x15_rect_triangle_small_usv2_sensor4x2_hull1x0p5_rmin0p5_fleet-crown_15x15_usv2/crown_mcpp/crown_mcpp_report.json"
+  },
+  "solver_first_feasible_sec": 17.18439562059939,
+  "end_to_end_first_feasible_sec": 19.41164405059939
+}

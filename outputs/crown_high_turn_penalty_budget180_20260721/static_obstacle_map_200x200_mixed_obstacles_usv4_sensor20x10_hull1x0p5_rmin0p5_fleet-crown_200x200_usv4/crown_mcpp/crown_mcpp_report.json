@@ -1,0 +1,181 @@
+{
+  "algorithm": "CROWN-MCPP",
+  "map_id": "static_obstacle_map_200x200_mixed_obstacles",
+  "solution_status": "certified_lns_service_bound",
+  "certification_scope": "continuous_responsibility_fixed_modes_time_grid_horizon",
+  "runtime_sec": 241.30466023273766,
+  "preparation_runtime_sec": 57.172255604,
+  "solve_runtime_sec": 182.761207173,
+  "materialization_validation_runtime_sec": 1.255235534,
+  "peak_rss_mb": 688.046875,
+  "fleet_size": 4,
+  "active_agent_count": 4,
+  "configured_lns_time_budget_sec": 180.0,
+  "configured_return_to_start": false,
+  "connector_grid_resolution": 2.0,
+  "fleet_profile_id": "crown_200x200_usv4",
+  "fleet": {
+    "0": {
+      "initial_pose": [
+        6.0,
+        22.0,
+        0.0
+      ],
+      "coverage_footprint": [
+        20.0,
+        10.0
+      ],
+      "vehicle_footprint": [
+        1.0,
+        0.5
+      ],
+      "min_turn_radius": 0.5,
+      "turn_power": 8.0,
+      "turn_time_penalty_per_rad": 12.0,
+      "turn_energy_penalty_per_rad": 20.0
+    },
+    "1": {
+      "initial_pose": [
+        6.0,
+        72.0,
+        0.0
+      ],
+      "coverage_footprint": [
+        20.0,
+        10.0
+      ],
+      "vehicle_footprint": [
+        1.0,
+        0.5
+      ],
+      "min_turn_radius": 0.5,
+      "turn_power": 8.0,
+      "turn_time_penalty_per_rad": 12.0,
+      "turn_energy_penalty_per_rad": 20.0
+    },
+    "2": {
+      "initial_pose": [
+        6.0,
+        128.0,
+        0.0
+      ],
+      "coverage_footprint": [
+        20.0,
+        10.0
+      ],
+      "vehicle_footprint": [
+        1.0,
+        0.5
+      ],
+      "min_turn_radius": 0.5,
+      "turn_power": 8.0,
+      "turn_time_penalty_per_rad": 12.0,
+      "turn_energy_penalty_per_rad": 20.0
+    },
+    "3": {
+      "initial_pose": [
+        6.0,
+        178.0,
+        0.0
+      ],
+      "coverage_footprint": [
+        20.0,
+        10.0
+      ],
+      "vehicle_footprint": [
+        1.0,
+        0.5
+      ],
+      "min_turn_radius": 0.5,
+      "turn_power": 8.0,
+      "turn_time_penalty_per_rad": 12.0,
+      "turn_energy_penalty_per_rad": 20.0
+    }
+  },
+  "fixed_region_count": 52,
+  "mode_count": 416,
+  "makespan": 20178.0,
+  "total_energy": 35493.394753546,
+  "total_turn_angle_rad": 794.9637253269283,
+  "total_turn_angle_deg": 45548.06632723022,
+  "turn_maneuver_count": 273,
+  "lower_bound": 1609.191776428,
+  "upper_bound": 20178.0,
+  "optimality_gap": 0.920250185,
+  "root_lp_lower_bound": null,
+  "service_lower_bound": 1609.191776428,
+  "sequential_baseline_makespan": null,
+  "joint_gain_ratio": null,
+  "joint_not_worse_than_sequential_baseline": true,
+  "coverage_fraction": 0.999975,
+  "coverage_target": 0.99,
+  "continuous_conflict_validated": true,
+  "generated_columns": 4,
+  "pricing_iterations": 1,
+  "branch_nodes": 0,
+  "resource_precedence_branches": 0,
+  "route_variable_branches": 0,
+  "conflict_separation_rounds": 0,
+  "anytime_trace": [
+    {
+      "time": 58.09158792719245,
+      "lower_bound": 1609.1917764284533,
+      "upper_bound": 20178.0,
+      "gap": 0.9202501845362052,
+      "iteration": 0.0
+    }
+  ],
+  "agents": {
+    "0": {
+      "segment_count": 12510,
+      "metrics": {
+        "total_length": 5067.390467682646,
+        "estimated_time": 12510.0,
+        "total_energy": 21910.06902984654,
+        "total_turn_angle_rad": 473.25077339265164,
+        "total_turn_angle_deg": 27115.271966701053,
+        "turn_maneuver_count": 155
+      }
+    },
+    "1": {
+      "segment_count": 4910,
+      "metrics": {
+        "total_length": 1308.6590191882417,
+        "estimated_time": 17422.0,
+        "total_energy": 9250.201815094499,
+        "total_turn_angle_rad": 206.18250250559186,
+        "total_turn_angle_deg": 11813.387203015935,
+        "turn_maneuver_count": 66
+      }
+    },
+    "2": {
+      "segment_count": 1600,
+      "metrics": {
+        "total_length": 680.1059017752327,
+        "estimated_time": 19024.0,
+        "total_energy": 2889.307152247171,
+        "total_turn_angle_rad": 63.01182725387502,
+        "total_turn_angle_deg": 3610.3117610544546,
+        "turn_maneuver_count": 22
+      }
+    },
+    "3": {
+      "segment_count": 1152,
+      "metrics": {
+        "total_length": 408.7920863320835,
+        "estimated_time": 20178.0,
+        "total_energy": 1443.816756357791,
+        "total_turn_angle_rad": 52.5186221748098,
+        "total_turn_angle_deg": 3009.0953964587784,
+        "turn_maneuver_count": 30
+      }
+    }
+  },
+  "artifacts": {
+    "report": "outputs/crown_high_turn_penalty_budget180_20260721/static_obstacle_map_200x200_mixed_obstacles_usv4_sensor20x10_hull1x0p5_rmin0p5_fleet-crown_200x200_usv4/crown_mcpp/crown_mcpp_report.json",
+    "routes": "outputs/crown_high_turn_penalty_budget180_20260721/static_obstacle_map_200x200_mixed_obstacles_usv4_sensor20x10_hull1x0p5_rmin0p5_fleet-crown_200x200_usv4/crown_mcpp/crown_mcpp_routes.png",
+    "anytime": "outputs/crown_high_turn_penalty_budget180_20260721/static_obstacle_map_200x200_mixed_obstacles_usv4_sensor20x10_hull1x0p5_rmin0p5_fleet-crown_200x200_usv4/crown_mcpp/crown_mcpp_anytime.png"
+  },
+  "solver_first_feasible_sec": 58.09158792719245,
+  "end_to_end_first_feasible_sec": 115.26384353119245
+}

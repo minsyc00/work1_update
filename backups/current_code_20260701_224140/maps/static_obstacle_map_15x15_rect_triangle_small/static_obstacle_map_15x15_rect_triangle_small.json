@@ -1,0 +1,44 @@
+{
+  "map_id": "static_obstacle_map_15x15_rect_triangle_small",
+  "description": "Initial 15m x 15m static-obstacle map. Contains only mission boundary, one small rectangular obstacle, and one small triangular obstacle, with no USV initial states and no paths.",
+  "units": "m",
+  "mission_area": {
+    "type": "rectangle",
+    "origin": [0.0, 0.0],
+    "length_x": 15.0,
+    "length_y": 15.0
+  },
+  "coverage_footprint": {
+    "length_lf": 4.0,
+    "width_wf": 2.0
+  },
+  "motion_constraints": {
+    "model": "3-DOF",
+    "min_turn_radius": 2.0
+  },
+  "static_obstacles": [
+    {
+      "obstacle_id": "small_rect_01",
+      "type": "rectangle",
+      "center": [5.0, 5.5],
+      "size": [1.4, 1.2],
+      "yaw_deg": 0.0
+    },
+    {
+      "obstacle_id": "small_triangle_01",
+      "type": "polygon",
+      "vertices": [
+        [10.0, 9.5],
+        [11.4, 9.2],
+        [10.7, 10.7]
+      ]
+    }
+  ],
+  "notes": {
+    "contains_usv_initial_states": false,
+    "contains_paths": false,
+    "recommended_usv_count": 2,
+    "recommended_overlap_ratio": 0.2,
+    "recommended_d_safe": 0.5
+  }
+}

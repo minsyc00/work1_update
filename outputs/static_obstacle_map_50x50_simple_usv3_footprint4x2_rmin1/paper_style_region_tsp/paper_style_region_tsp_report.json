@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-18T15:50:02",
-  "map_id": "static_obstacle_map_50x50_simple_diagnostic_fast",
+  "generated_at": "2026-07-04T20:14:42",
+  "map_id": "static_obstacle_map_50x50_simple",
   "algorithm": "paper_style_region_tsp",
   "requested_tsp_solver": "deterministic",
   "effective_tsp_solvers": {
@@ -12,19 +12,31 @@
   "aco_initial_objective": 0.0,
   "aco_iteration_count": 0,
   "aco_accepted_3opt_count": 0,
-  "elapsed_sec": 1274.5552028000002,
+  "elapsed_sec": 729.6298354454339,
   "stage_timing_sec": {
-    "obstacle_normalization": 0.000215,
-    "free_space_decomposition": 0.144638,
-    "region_coarsen_merge": 1.9e-05,
-    "coverage_pattern_generation": 6.925758,
-    "build_sweep_paths": 597.436817,
-    "region_graph_building": 0.067063,
-    "load_balancing_assignment": 0.005548,
-    "coverage_ownership_map": 0.094301,
-    "agent_0_region_tsp": 616.517592,
-    "agent_1_region_tsp": 45.552228,
-    "agent_2_region_tsp": 3.678294
+    "obstacle_normalization": 8.2e-05,
+    "free_space_decomposition": 0.033357,
+    "region_coarsen_merge": 58.33014,
+    "coverage_pattern_generation": 23.726997,
+    "build_sweep_paths": 151.960166,
+    "large_convex_region_split_repair": 7.1e-05,
+    "region_graph_building": 0.001444,
+    "load_balancing_assignment": 0.000479,
+    "agent_task_region_merge": 44.524512,
+    "coverage_ownership_map": 0.02759,
+    "joint_region_candidate_optimization": 41.565694,
+    "agent_0_region_tsp": 0.00466,
+    "agent_1_region_tsp": 0.005712,
+    "agent_2_region_tsp": 0.01288,
+    "skipped_region_recovery": 118.725197,
+    "main_integrated_residual_candidates": 151.684219,
+    "residual_backfill_cycle_2": 5.844487,
+    "residual_backfill_cycle_3": 5.242508,
+    "residual_backfill_cycle_4": 4.110313,
+    "residual_backfill_cycle_5": 4.282799,
+    "residual_backfill_cycle_6": 3.653576,
+    "cover_only_residual_backfill_cycle_1": 2.327329,
+    "route_refinement": 103.871327
   },
   "stage_monitor": {
     "obstacle_normalization": {
@@ -32,726 +44,550 @@
       "inflated_obstacle_count": 4
     },
     "free_space_decomposition": {
-      "base_region_count": 177,
-      "composite_mode_enabled": true,
-      "composite_region_count": 87
+      "base_region_count": 18,
+      "large_convex_mode_enabled": true,
+      "large_convex_region_count": 18,
+      "composite_mode_enabled": false,
+      "composite_region_count": 0
     },
     "region_coarsen_merge": {
-      "coarsened_region_count": 87,
-      "merged_region_count": 87,
-      "composite_region_count": 87,
-      "composite_member_cell_count": 177,
+      "coarsened_region_count": 18,
+      "merged_region_count": 18,
+      "composite_region_count": 0,
+      "composite_member_cell_count": 0,
       "merge_rejected_count": 0,
-      "merge_rejected_by_reason": {}
+      "merge_rejected_by_reason": {},
+      "coverage_aware_merge_enabled": true,
+      "coverage_merge_region_count_before": 18,
+      "coverage_merge_region_count_after": 18,
+      "coverage_merge_candidate_count": 18,
+      "coverage_merge_accepted_count": 0
     },
     "coverage_pattern_generation": {
-      "region_count": 87,
-      "raw_pattern_count": 501
+      "region_count": 18,
+      "raw_pattern_count": 30
     },
     "build_sweep_paths": {
-      "feasible_region_count": 82,
-      "infeasible_region_count": 5,
-      "prefiltered_pattern_count": 160,
-      "uturn_cache_hit_count": 2,
-      "uturn_cache_miss_count": 543
+      "feasible_region_count": 17,
+      "infeasible_region_count": 1,
+      "prefiltered_pattern_count": 0,
+      "uturn_cache_hit_count": 0,
+      "uturn_cache_miss_count": 208,
+      "open_chain_region_count": 0,
+      "open_chain_count": 0,
+      "open_chain_break_count": 0,
+      "open_chain_connected_count": 0
+    },
+    "large_convex_region_split_repair": {
+      "large_convex_split_count": 0,
+      "large_convex_split_repair_depth": 0,
+      "feasible_region_count": 17,
+      "infeasible_region_count": 1
     },
     "region_graph_building": {
-      "feasible_region_count": 82,
-      "edge_count": 106
+      "feasible_region_count": 17,
+      "edge_count": 9
     },
     "load_balancing_assignment": {
-      "agent_count": 3
+      "agent_count": 3,
+      "load_swap_count": 0,
+      "load_swap_candidate_count": 8,
+      "load_swap_before_imbalance": 0.691317,
+      "load_swap_after_imbalance": 0.691317
+    },
+    "agent_task_region_merge": {
+      "status": "no_improvement",
+      "region_count_before": 17,
+      "region_count_after": 17,
+      "candidate_count": 9,
+      "accepted_count": 0
     },
     "coverage_ownership_map": {
-      "owned_region_count": 82
+      "owned_region_count": 17
+    },
+    "joint_region_candidate_optimization": {
+      "status": "no_improvement",
+      "improvement_count": 0,
+      "global_joint_objective": 854927.94705,
+      "joint_mission_makespan": 2496.891192
     },
     "agent_0_region_tsp": {
-      "assigned_region_count": 33,
-      "final_region_count": 9,
-      "segment_count": 22,
-      "infeasible_edge_count": 8
-    },
-    "agent_1_region_tsp": {
-      "assigned_region_count": 2,
-      "final_region_count": 2,
-      "segment_count": 57,
+      "assigned_region_count": 4,
+      "final_region_count": 4,
+      "segment_count": 32,
       "infeasible_edge_count": 0
     },
+    "agent_1_region_tsp": {
+      "assigned_region_count": 5,
+      "final_region_count": 4,
+      "segment_count": 44,
+      "infeasible_edge_count": 1
+    },
     "agent_2_region_tsp": {
-      "assigned_region_count": 47,
+      "assigned_region_count": 8,
       "final_region_count": 8,
-      "segment_count": 11,
-      "infeasible_edge_count": 8
+      "segment_count": 70,
+      "infeasible_edge_count": 0
+    },
+    "skipped_region_recovery": {
+      "recovered_count": 0,
+      "failed_count": 1,
+      "connector_cache_size": 6
+    },
+    "main_integrated_residual_candidates": {
+      "appended_count": 2,
+      "status": "success",
+      "residual_feasible_count": "3",
+      "residual_infeasible_count": "3"
+    },
+    "residual_backfill_cycle_2": {
+      "appended_count": 3,
+      "status": "success",
+      "residual_feasible_count": "4",
+      "residual_infeasible_count": "5"
+    },
+    "residual_backfill_cycle_3": {
+      "appended_count": 2,
+      "status": "success",
+      "residual_feasible_count": "3",
+      "residual_infeasible_count": "6"
+    },
+    "residual_backfill_cycle_4": {
+      "appended_count": 1,
+      "status": "success",
+      "residual_feasible_count": "1",
+      "residual_infeasible_count": "6"
+    },
+    "residual_backfill_cycle_5": {
+      "appended_count": 2,
+      "status": "success",
+      "residual_feasible_count": "2",
+      "residual_infeasible_count": "5"
+    },
+    "residual_backfill_cycle_6": {
+      "appended_count": 0,
+      "status": "no_append",
+      "residual_feasible_count": "0",
+      "residual_infeasible_count": "6"
+    },
+    "cover_only_residual_backfill_cycle_1": {
+      "appended_count": 0,
+      "status": "no_append",
+      "residual_feasible_count": "0",
+      "residual_infeasible_count": "4"
+    },
+    "route_refinement": {
+      "refined_connector_count": 12,
+      "merged_noncover_window_count": 5,
+      "turn_angle_reduction": 2.329097,
+      "length_reduction": 4.292069,
+      "status": "success"
     }
   },
   "large_map_mode_enabled": true,
-  "prefiltered_pattern_count": 160,
-  "prefiltered_variant_count": 0,
-  "uturn_cache_hit_count": 2,
-  "uturn_cache_miss_count": 543,
-  "uturn_direct_fail_repair_success_count": 49,
+  "prefiltered_pattern_count": 0,
+  "prefiltered_variant_count": 58,
+  "uturn_cache_hit_count": 0,
+  "uturn_cache_miss_count": 208,
+  "uturn_direct_fail_repair_success_count": 56,
+  "open_chain_region_count": 0,
+  "open_chain_count": 0,
+  "open_chain_break_count": 0,
+  "open_chain_invalid_pass_count": 0,
+  "open_chain_connected_count": 0,
+  "open_chain_skipped_count": 0,
+  "open_chain_recovered_coverage_length": 0.0,
+  "rmin_aware_chain_enabled": false,
+  "turn_stride_distribution": {},
+  "rmin_180_attempt_count": 0,
+  "rmin_180_success_count": 0,
+  "rmin_180_feasible_ratio": 0.0,
+  "single_pass_chain_count": 0,
+  "short_pass_residual_count": 0,
+  "adaptive_retraction_pattern_count": 40,
+  "adaptive_retracted_pass_count": 216,
+  "adaptive_total_retraction_length": 279.29369800000006,
+  "adaptive_max_retraction_length": 1.873505,
+  "adaptive_retraction_failed_count": 38,
+  "adaptive_retraction_extended_count": 22,
   "region_repair_count": 0,
-  "heading_repair_count": 3,
-  "raw_free_cell_count": 177,
-  "composite_region_enabled": true,
-  "composite_region_count": 87,
-  "composite_member_cell_count": 177,
+  "heading_repair_count": 2,
+  "raw_free_cell_count": 18,
+  "large_convex_region_count": 18,
+  "rectangle_region_count": 16,
+  "trapezoid_region_count": 0,
+  "fallback_cell_region_count": 2,
+  "oriented_pattern_count": 0,
+  "axis_aligned_pattern_count": 30,
+  "selected_oriented_pattern_count": 0,
+  "main_tsp_executed_region_count": 16,
+  "recovered_region_count": 0,
+  "residual_only_region_count": 1,
+  "composite_region_enabled": false,
+  "composite_region_count": 0,
+  "composite_member_cell_count": 0,
   "composite_split_count": 0,
-  "coarsened_region_count": 87,
-  "merged_region_count": 87,
-  "feasible_sweep_region_count": 82,
+  "large_convex_split_count": 0,
+  "coarsened_region_count": 18,
+  "merged_region_count": 18,
+  "coverage_aware_merge_enabled": true,
+  "coverage_merge_region_count_before": 18,
+  "coverage_merge_region_count_after": 18,
+  "coverage_merge_candidate_count": 18,
+  "coverage_merge_accepted_count": 0,
+  "coverage_merge_rejected_by_reason": {
+    "non_contiguous": 127,
+    "gap_bridge_obstacle_collision": 8,
+    "no_preview_pattern": 12,
+    "low_coverage_fraction": 4,
+    "coverage_merge_region_0_pattern_x_high_to_low_min_to_max:uturn_dynamic_violation:heading_jump,heading_tangent_mismatch,coverage_merge_region_0_pattern_x_low_to_high_max_to_min:uturn_dynamic_violation:heading_jump,heading_tangent_mismatch": 2
+  },
+  "coverage_merge_rejected_candidates": [
+    {
+      "source_region_ids": [
+        "large_region_0",
+        "large_region_6"
+      ],
+      "reason": "no_preview_pattern",
+      "boundary_turn_proxy": 1.299557,
+      "objective_before": 301.096845,
+      "objective_after": Infinity,
+      "objective_delta": -Infinity,
+      "coverage_fraction": 0.0,
+      "candidate_region_id": "coverage_merge_region_0",
+      "candidate_area": 402.47205,
+      "shape_class": "nonconvex_composite"
+    },
+    {
+      "source_region_ids": [
+        "large_region_1",
+        "large_region_5"
+      ],
+      "reason": "low_coverage_fraction",
+      "boundary_turn_proxy": 1.299557,
+      "objective_before": 271.635392,
+      "objective_after": 256.607097,
+      "objective_delta": 15.028296,
+      "coverage_fraction": 0.909599,
+      "candidate_region_id": "coverage_merge_region_0",
+      "candidate_area": 397.894882,
+      "shape_class": "near_convex_composite"
+    },
+    {
+      "source_region_ids": [
+        "large_region_3",
+        "large_region_4"
+      ],
+      "reason": "no_preview_pattern",
+      "boundary_turn_proxy": 1.299557,
+      "objective_before": 342.984529,
+      "objective_after": Infinity,
+      "objective_delta": -Infinity,
+      "coverage_fraction": 0.0,
+      "candidate_region_id": "coverage_merge_region_0",
+      "candidate_area": 387.328628,
+      "shape_class": "nonconvex_composite"
+    },
+    {
+      "source_region_ids": [
+        "large_region_0",
+        "large_region_8"
+      ],
+      "reason": "low_coverage_fraction",
+      "boundary_turn_proxy": 1.299557,
+      "objective_before": 285.053965,
+      "objective_after": 337.801756,
+      "objective_delta": -52.747792,
+      "coverage_fraction": 0.972907,
+      "candidate_region_id": "coverage_merge_region_0",
+      "candidate_area": 380.184477,
+      "shape_class": "nonconvex_composite"
+    },
+    {
+      "source_region_ids": [
+        "large_region_2",
+        "large_region_7"
+      ],
+      "reason": "no_preview_pattern",
+      "boundary_turn_proxy": 1.299557,
+      "objective_before": 267.356428,
+      "objective_after": Infinity,
+      "objective_delta": -Infinity,
+      "coverage_fraction": 0.0,
+      "candidate_region_id": "coverage_merge_region_0",
+      "candidate_area": 343.156767,
+      "shape_class": "nonconvex_composite"
+    },
+    {
+      "source_region_ids": [
+        "large_region_2",
+        "large_region_9"
+      ],
+      "reason": "no_preview_pattern",
+      "boundary_turn_proxy": 1.299557,
+      "objective_before": 250.289968,
+      "objective_after": Infinity,
+      "objective_delta": -Infinity,
+      "coverage_fraction": 0.0,
+      "candidate_region_id": "coverage_merge_region_0",
+      "candidate_area": 321.158022,
+      "shape_class": "nonconvex_composite"
+    },
+    {
+      "source_region_ids": [
+        "large_region_3",
+        "large_region_8"
+      ],
+      "reason": "no_preview_pattern",
+      "boundary_turn_proxy": 1.299557,
+      "objective_before": 286.190639,
+      "objective_after": Infinity,
+      "objective_delta": -Infinity,
+      "coverage_fraction": 0.0,
+      "candidate_region_id": "coverage_merge_region_0",
+      "candidate_area": 299.972028,
+      "shape_class": "nonconvex_composite"
+    },
+    {
+      "source_region_ids": [
+        "large_region_2",
+        "large_region_12"
+      ],
+      "reason": "no_preview_pattern",
+      "boundary_turn_proxy": 1.299557,
+      "objective_before": 233.99506,
+      "objective_after": Infinity,
+      "objective_delta": -Infinity,
+      "coverage_fraction": 0.0,
+      "candidate_region_id": "coverage_merge_region_0",
+      "candidate_area": 286.72786,
+      "shape_class": "nonconvex_composite"
+    },
+    {
+      "source_region_ids": [
+        "large_region_2",
+        "large_region_15"
+      ],
+      "reason": "no_preview_pattern",
+      "boundary_turn_proxy": 1.299557,
+      "objective_before": 519.233245,
+      "objective_after": Infinity,
+      "objective_delta": -Infinity,
+      "coverage_fraction": 0.0,
+      "candidate_region_id": "coverage_merge_region_0",
+      "candidate_area": 245.67471,
+      "shape_class": "nonconvex_composite"
+    },
+    {
+      "source_region_ids": [
+        "large_region_3",
+        "large_region_13"
+      ],
+      "reason": "no_preview_pattern",
+      "boundary_turn_proxy": 1.299557,
+      "objective_before": 216.124212,
+      "objective_after": Infinity,
+      "objective_delta": -Infinity,
+      "coverage_fraction": 0.0,
+      "candidate_region_id": "coverage_merge_region_0",
+      "candidate_area": 233.348058,
+      "shape_class": "nonconvex_composite"
+    },
+    {
+      "source_region_ids": [
+        "large_region_4",
+        "large_region_12"
+      ],
+      "reason": "low_coverage_fraction",
+      "boundary_turn_proxy": 1.299557,
+      "objective_before": 241.654842,
+      "objective_after": 272.999645,
+      "objective_delta": -31.344803,
+      "coverage_fraction": 0.868257,
+      "candidate_region_id": "coverage_merge_region_0",
+      "candidate_area": 223.967704,
+      "shape_class": "nonconvex_composite"
+    },
+    {
+      "source_region_ids": [
+        "large_region_3",
+        "large_region_16"
+      ],
+      "reason": "no_preview_pattern",
+      "boundary_turn_proxy": 1.299557,
+      "objective_before": 270.509595,
+      "objective_after": Infinity,
+      "objective_delta": -Infinity,
+      "coverage_fraction": 0.0,
+      "candidate_region_id": "coverage_merge_region_0",
+      "candidate_area": 223.093979,
+      "shape_class": "nonconvex_composite"
+    },
+    {
+      "source_region_ids": [
+        "large_region_5",
+        "large_region_14"
+      ],
+      "reason": "low_coverage_fraction",
+      "boundary_turn_proxy": 1.299557,
+      "objective_before": 157.460958,
+      "objective_after": 212.117831,
+      "objective_delta": -54.656872,
+      "coverage_fraction": 0.907298,
+      "candidate_region_id": "coverage_merge_region_0",
+      "candidate_area": 147.417296,
+      "shape_class": "nonconvex_composite"
+    },
+    {
+      "source_region_ids": [
+        "large_region_7",
+        "large_region_15"
+      ],
+      "reason": "no_preview_pattern",
+      "boundary_turn_proxy": 1.299557,
+      "objective_before": 489.428482,
+      "objective_after": Infinity,
+      "objective_delta": -Infinity,
+      "coverage_fraction": 0.0,
+      "candidate_region_id": "coverage_merge_region_0",
+      "candidate_area": 116.515433,
+      "shape_class": "nonconvex_composite"
+    },
+    {
+      "source_region_ids": [
+        "large_region_8",
+        "large_region_16"
+      ],
+      "reason": "no_preview_pattern",
+      "boundary_turn_proxy": 1.299557,
+      "objective_before": 183.211929,
+      "objective_after": Infinity,
+      "objective_delta": -Infinity,
+      "coverage_fraction": 0.0,
+      "candidate_region_id": "coverage_merge_region_0",
+      "candidate_area": 95.204483,
+      "shape_class": "nonconvex_composite"
+    },
+    {
+      "source_region_ids": [
+        "large_region_8",
+        "large_region_17"
+      ],
+      "reason": "no_preview_pattern",
+      "boundary_turn_proxy": 1.299557,
+      "objective_before": Infinity,
+      "objective_after": Infinity,
+      "objective_delta": NaN,
+      "coverage_fraction": 0.0,
+      "candidate_region_id": "coverage_merge_region_0",
+      "candidate_area": 93.433571,
+      "shape_class": "nonconvex_composite"
+    },
+    {
+      "source_region_ids": [
+        "large_region_12",
+        "large_region_15"
+      ],
+      "reason": "coverage_merge_region_0_pattern_x_high_to_low_min_to_max:uturn_dynamic_violation:heading_jump,heading_tangent_mismatch,coverage_merge_region_0_pattern_x_low_to_high_max_to_min:uturn_dynamic_violation:heading_jump,heading_tangent_mismatch",
+      "boundary_turn_proxy": 1.299557,
+      "objective_before": 456.067115,
+      "objective_after": Infinity,
+      "objective_delta": -Infinity,
+      "coverage_fraction": 0.0,
+      "candidate_region_id": "coverage_merge_region_0",
+      "candidate_area": 60.086526,
+      "shape_class": "nonconvex_composite"
+    },
+    {
+      "source_region_ids": [
+        "large_region_0",
+        "large_region_3"
+      ],
+      "reason": "coverage_merge_region_0_pattern_x_high_to_low_min_to_max:uturn_dynamic_violation:heading_jump,heading_tangent_mismatch,coverage_merge_region_0_pattern_x_low_to_high_max_to_min:uturn_dynamic_violation:heading_jump,heading_tangent_mismatch",
+      "boundary_turn_proxy": 1.299557,
+      "objective_before": 372.35163,
+      "objective_after": Infinity,
+      "objective_delta": -Infinity,
+      "coverage_fraction": 0.0,
+      "candidate_region_id": "coverage_merge_region_0",
+      "candidate_area": 508.073974,
+      "shape_class": "nonconvex_composite"
+    }
+  ],
+  "coverage_merge_objective_delta": 0.0,
+  "coverage_merge_regions": [],
+  "agent_task_merge_enabled": true,
+  "agent_task_merge_status": "no_improvement",
+  "agent_task_merge_region_count_before": 17,
+  "agent_task_merge_region_count_after": 17,
+  "agent_task_merge_candidate_count": 9,
+  "agent_task_merge_accepted_count": 0,
+  "agent_task_merge_rejected_by_reason": {
+    "non_contiguous": 29,
+    "no_preview_pattern": 4,
+    "low_coverage_fraction": 3,
+    "agent0_task_merge_region_0_pattern_x_high_to_low_min_to_max:uturn_dynamic_violation:heading_jump,heading_tangent_mismatch,agent0_task_merge_region_0_pattern_x_low_to_high_max_to_min:uturn_dynamic_violation:heading_jump,heading_tangent_mismatch": 1,
+    "gap_bridge_obstacle_collision": 6,
+    "agent1_task_merge_region_0_pattern_x_high_to_low_min_to_max:uturn_dynamic_violation:heading_jump,heading_tangent_mismatch,agent1_task_merge_region_0_pattern_x_low_to_high_max_to_min:uturn_dynamic_violation:heading_jump,heading_tangent_mismatch": 1
+  },
+  "agent_task_merge_rejected_candidates": [],
+  "agent_task_merge_regions": [],
+  "feasible_sweep_region_count": 17,
   "merge_rejected_count": 0,
   "merge_rejected_by_reason": {},
   "raw_astar_edge_rejected_count": 0,
-  "astar_corridor_conversion_attempt_count": 13,
-  "astar_corridor_conversion_success_count": 9,
-  "astar_corridor_conversion_failure_count": 4,
+  "astar_corridor_conversion_attempt_count": 18,
+  "astar_corridor_conversion_success_count": 18,
+  "astar_corridor_conversion_failure_count": 0,
   "corridor_conversion_methods": {
-    "motion_lattice_after_astar": 7,
-    "segmented_dubins_lattice": 2
+    "motion_lattice_after_astar": 11,
+    "segmented_dubins_lattice": 2,
+    "filleted_astar_corridor": 5
   },
-  "astar_corridor_conversion_failure_reasons": {
-    "all_conversion_methods_failed": 4
-  },
-  "region_count": 87,
-  "base_region_count": 177,
+  "astar_corridor_conversion_failure_reasons": {},
+  "region_count": 18,
+  "base_region_count": 18,
   "performance_merge_fallback": false,
-  "feasible_region_count": 82,
+  "feasible_region_count": 17,
   "infeasible_regions": [
     {
-      "region_id": "composite_region_13",
+      "region_id": "large_region_17",
       "reasons": [
-        "composite_region_13_pattern_y_pocket_0p0:cover_invalid:obstacle_collision",
-        "composite_region_13_pattern_y_pocket_0p0_rev:cover_invalid:obstacle_collision",
-        "composite_region_13_pattern_y_pocket_0p5:uturn_invalid:obstacle_collision",
-        "composite_region_13_pattern_y_pocket_0p5_rev:uturn_invalid:obstacle_collision",
-        "composite_region_13_pattern_y_pocket_1p0:uturn_invalid:obstacle_collision",
-        "composite_region_13_pattern_y_pocket_1p0_rev:uturn_invalid:obstacle_collision"
-      ]
-    },
-    {
-      "region_id": "composite_region_5",
-      "reasons": [
-        "composite_region_5_pattern_y_pocket_0p0:cover_invalid:obstacle_collision",
-        "composite_region_5_pattern_y_pocket_0p0_rev:cover_invalid:obstacle_collision",
-        "composite_region_5_pattern_y_pocket_0p5:uturn_invalid:obstacle_collision",
-        "composite_region_5_pattern_y_pocket_0p5_rev:uturn_invalid:obstacle_collision",
-        "composite_region_5_pattern_y_pocket_1p0:uturn_invalid:obstacle_collision",
-        "composite_region_5_pattern_y_pocket_1p0_rev:uturn_invalid:obstacle_collision"
-      ]
-    },
-    {
-      "region_id": "composite_region_62",
-      "reasons": [
-        "composite_region_62_pattern_x_pocket_0p0:uturn_invalid:out_of_bounds",
-        "composite_region_62_pattern_x_pocket_0p0_rev:uturn_invalid:out_of_bounds",
-        "composite_region_62_pattern_y_pocket_0p5:uturn_invalid:obstacle_collision",
-        "composite_region_62_pattern_y_pocket_0p5_rev:uturn_invalid:obstacle_collision",
-        "composite_region_62_pattern_x_pocket_0p5:uturn_invalid:out_of_bounds",
-        "composite_region_62_pattern_x_pocket_0p5_rev:uturn_invalid:out_of_bounds"
-      ]
-    },
-    {
-      "region_id": "composite_region_75",
-      "reasons": [
-        "composite_region_75_pattern_x_pocket_0p5:uturn_invalid:out_of_bounds",
-        "composite_region_75_pattern_x_pocket_0p5_rev:uturn_invalid:obstacle_collision",
-        "composite_region_75_pattern_y_pocket_0p0:uturn_invalid:obstacle_collision",
-        "composite_region_75_pattern_y_pocket_0p0_rev:uturn_invalid:obstacle_collision",
-        "composite_region_75_pattern_x_pocket_0p0:cover_invalid:obstacle_collision",
-        "composite_region_75_pattern_x_pocket_0p0_rev:cover_invalid:obstacle_collision"
-      ]
-    },
-    {
-      "region_id": "composite_region_9",
-      "reasons": [
-        "composite_region_9_pattern_y_pocket_0p0:cover_invalid:obstacle_collision",
-        "composite_region_9_pattern_y_pocket_0p0_rev:cover_invalid:obstacle_collision",
-        "composite_region_9_pattern_y_pocket_0p5:uturn_invalid:obstacle_collision",
-        "composite_region_9_pattern_y_pocket_0p5_rev:uturn_invalid:obstacle_collision",
-        "composite_region_9_pattern_y_pocket_1p0:uturn_invalid:obstacle_collision",
-        "composite_region_9_pattern_y_pocket_1p0_rev:uturn_invalid:obstacle_collision"
+        "no_candidate_patterns"
       ]
     }
   ],
   "infeasible_edges": [
     {
-      "agent_id": 0,
-      "from": [
-        24.5,
-        25.5,
-        1.571
-      ],
-      "to_region": "composite_region_66",
-      "reason": "kinematic_infeasible,obstacle_collision",
-      "segment_sources": [
-        "dubins_fallback"
-      ],
-      "segment_connectors": [
-        "astar_corridor_conversion_failed"
-      ],
-      "segment_dynamic_reasons": [
-        "kinematic_infeasible,obstacle_collision"
-      ],
-      "astar_corridor_conversion_attempted": true,
-      "astar_corridor_conversion_success": false,
-      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
-      "max_curvature": 1.0,
-      "max_heading_jump": 0.2057115664766207,
-      "max_yaw_rate": 0.9999999999999892,
-      "max_yaw_acceleration": 4.861175368637472,
-      "max_speed": 0.9982377137562135,
-      "max_thrust_required": 0.7985901710049709,
-      "max_yaw_moment_required": 5.7611753686374625
-    },
-    {
-      "agent_id": 0,
-      "from": [
-        24.5,
-        25.5,
-        1.571
-      ],
-      "to_region": "composite_region_72",
-      "reason": "kinematic_infeasible,obstacle_collision",
-      "segment_sources": [
-        "bezier"
-      ],
-      "segment_connectors": [
-        "astar_corridor_conversion_failed"
-      ],
-      "segment_dynamic_reasons": [
-        "kinematic_infeasible,obstacle_collision"
-      ],
-      "astar_corridor_conversion_attempted": true,
-      "astar_corridor_conversion_success": false,
-      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
-      "max_curvature": 0.0,
-      "max_heading_jump": 0.0,
-      "max_yaw_rate": 0.0,
-      "max_yaw_acceleration": 0.0,
-      "max_speed": 1.5,
-      "max_thrust_required": 1.2000000000000002,
-      "max_yaw_moment_required": 0.0
-    },
-    {
-      "agent_id": 0,
-      "from": [
-        24.5,
-        25.5,
-        1.571
-      ],
-      "to_region": "composite_region_63",
-      "reason": "obstacle_collision",
-      "segment_sources": [
-        "bezier"
-      ],
-      "segment_connectors": [
-        ""
-      ],
-      "segment_dynamic_reasons": [
-        "obstacle_collision"
-      ],
-      "astar_corridor_conversion_attempted": false,
-      "astar_corridor_conversion_success": false,
-      "astar_corridor_conversion_failure_reason": "",
-      "max_curvature": 0.944762975167193,
-      "max_heading_jump": 0.45415487237510055,
-      "max_yaw_rate": 0.9999999999999717,
-      "max_yaw_acceleration": 0.8066696671129602,
-      "max_speed": 0.9866590534004409,
-      "max_thrust_required": 0.7893272427203528,
-      "max_yaw_moment_required": 1.5221665181155548
-    },
-    {
-      "agent_id": 0,
-      "from": [
-        24.5,
-        25.5,
-        1.571
-      ],
-      "to_region": "composite_region_2",
-      "reason": "obstacle_collision",
-      "segment_sources": [
-        "bezier"
-      ],
-      "segment_connectors": [
-        ""
-      ],
-      "segment_dynamic_reasons": [
-        "obstacle_collision"
-      ],
-      "astar_corridor_conversion_attempted": false,
-      "astar_corridor_conversion_success": false,
-      "astar_corridor_conversion_failure_reason": "",
-      "max_curvature": 0.624409002531105,
-      "max_heading_jump": 0.3364523063079816,
-      "max_yaw_rate": 0.9655677575149164,
-      "max_yaw_acceleration": 1.003643738588485,
-      "max_speed": 1.5,
-      "max_thrust_required": 1.2000000000000002,
-      "max_yaw_moment_required": 1.7166555880504442
-    },
-    {
-      "agent_id": 0,
-      "from": [
-        24.5,
-        25.5,
-        1.571
-      ],
-      "to_region": "composite_region_64",
-      "reason": "obstacle_collision",
-      "segment_sources": [
-        "bezier"
-      ],
-      "segment_connectors": [
-        ""
-      ],
-      "segment_dynamic_reasons": [
-        "obstacle_collision"
-      ],
-      "astar_corridor_conversion_attempted": false,
-      "astar_corridor_conversion_success": false,
-      "astar_corridor_conversion_failure_reason": "",
-      "max_curvature": 0.4015714422780176,
-      "max_heading_jump": 0.23983839763083248,
-      "max_yaw_rate": 0.5796357644295713,
-      "max_yaw_acceleration": 0.6167821324191415,
-      "max_speed": 1.5,
-      "max_thrust_required": 1.2000000000000002,
-      "max_yaw_moment_required": 0.9704384744197844
-    },
-    {
-      "agent_id": 0,
-      "from": [
-        24.5,
-        25.5,
-        1.571
-      ],
-      "to_region": "composite_region_73",
-      "reason": "obstacle_collision",
-      "segment_sources": [
-        "bezier"
-      ],
-      "segment_connectors": [
-        ""
-      ],
-      "segment_dynamic_reasons": [
-        "obstacle_collision"
-      ],
-      "astar_corridor_conversion_attempted": false,
-      "astar_corridor_conversion_success": false,
-      "astar_corridor_conversion_failure_reason": "",
-      "max_curvature": 0.0,
-      "max_heading_jump": 0.0,
-      "max_yaw_rate": 0.0,
-      "max_yaw_acceleration": 0.0,
-      "max_speed": 1.5,
-      "max_thrust_required": 1.2000000000000002,
-      "max_yaw_moment_required": 0.0
-    },
-    {
-      "agent_id": 0,
-      "from": [
-        24.5,
-        25.5,
-        1.571
-      ],
-      "to_region": "composite_region_23",
-      "reason": "obstacle_collision",
-      "segment_sources": [
-        "bezier"
-      ],
-      "segment_connectors": [
-        ""
-      ],
-      "segment_dynamic_reasons": [
-        "obstacle_collision"
-      ],
-      "astar_corridor_conversion_attempted": false,
-      "astar_corridor_conversion_success": false,
-      "astar_corridor_conversion_failure_reason": "",
-      "max_curvature": 0.6981249814669787,
-      "max_heading_jump": 0.3244573892020304,
-      "max_yaw_rate": 0.9999999999999316,
-      "max_yaw_acceleration": 0.8765983692801279,
-      "max_speed": 1.4217714042107117,
-      "max_thrust_required": 1.1374171233685695,
-      "max_yaw_moment_required": 1.5545877504861556
-    },
-    {
-      "agent_id": 0,
-      "from": [
-        24.5,
-        25.5,
-        1.571
-      ],
-      "to_region": "composite_region_21",
-      "reason": "obstacle_collision",
-      "segment_sources": [
-        "dubins_fallback"
-      ],
-      "segment_connectors": [
-        ""
-      ],
-      "segment_dynamic_reasons": [
-        "obstacle_collision"
-      ],
-      "astar_corridor_conversion_attempted": false,
-      "astar_corridor_conversion_success": false,
-      "astar_corridor_conversion_failure_reason": "",
-      "max_curvature": 1.0,
-      "max_heading_jump": 0.3654132891625754,
-      "max_yaw_rate": 1.000000000000001,
-      "max_yaw_acceleration": 4.821535483451397,
-      "max_speed": 0.9944456591195165,
-      "max_thrust_required": 0.7955565272956133,
-      "max_yaw_moment_required": 4.793410483451397
-    },
-    {
-      "agent_id": 2,
-      "from": [
-        50.0,
-        49.0,
-        0.0
-      ],
-      "to_region": "composite_region_45",
-      "reason": "heading_jump,heading_tangent_mismatch,kinematic_infeasible,out_of_bounds",
-      "segment_sources": [
-        "bezier"
-      ],
-      "segment_connectors": [
-        "astar_corridor_conversion_failed"
-      ],
-      "segment_dynamic_reasons": [
-        "heading_jump,heading_tangent_mismatch,kinematic_infeasible,out_of_bounds"
-      ],
-      "astar_corridor_conversion_attempted": true,
-      "astar_corridor_conversion_success": false,
-      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
-      "max_curvature": 0.0,
-      "max_heading_jump": 3.141592653589793,
-      "max_yaw_rate": 1.0000000000004738,
-      "max_yaw_acceleration": 0.31830988618409234,
-      "max_speed": 0.0028955407769989876,
-      "max_thrust_required": 0.0023164326215991903,
-      "max_yaw_moment_required": 1.2183098861845187
-    },
-    {
-      "agent_id": 2,
-      "from": [
-        50.0,
-        49.0,
-        0.0
-      ],
-      "to_region": "composite_region_59",
-      "reason": "kinematic_infeasible,out_of_bounds",
-      "segment_sources": [
-        "dubins_fallback"
-      ],
-      "segment_connectors": [
-        "astar_corridor_conversion_failed"
-      ],
-      "segment_dynamic_reasons": [
-        "kinematic_infeasible,out_of_bounds"
-      ],
-      "astar_corridor_conversion_attempted": true,
-      "astar_corridor_conversion_success": false,
-      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
-      "max_curvature": 1.0,
-      "max_heading_jump": 0.2274980496958996,
-      "max_yaw_rate": 1.0000000000000155,
-      "max_yaw_acceleration": 4.39564207841231,
-      "max_speed": 0.9978449212412789,
-      "max_thrust_required": 0.7982759369930231,
-      "max_yaw_moment_required": 5.295642078412324
-    },
-    {
-      "agent_id": 2,
-      "from": [
-        50.0,
-        49.0,
-        0.0
-      ],
-      "to_region": "composite_region_40",
-      "reason": "heading_jump,heading_tangent_mismatch,out_of_bounds",
-      "segment_sources": [
-        "bezier"
-      ],
-      "segment_connectors": [
-        ""
-      ],
-      "segment_dynamic_reasons": [
-        "heading_jump,heading_tangent_mismatch,out_of_bounds"
-      ],
-      "astar_corridor_conversion_attempted": false,
-      "astar_corridor_conversion_success": false,
-      "astar_corridor_conversion_failure_reason": "",
-      "max_curvature": 0.0,
-      "max_heading_jump": 3.141592653589793,
-      "max_yaw_rate": 0.9999999999998949,
-      "max_yaw_acceleration": 0.31830988618372374,
-      "max_speed": 0.0024142315614448886,
-      "max_thrust_required": 0.001931385249155911,
-      "max_yaw_moment_required": 1.2183098861836292
-    },
-    {
-      "agent_id": 2,
-      "from": [
-        50.0,
-        49.0,
-        0.0
-      ],
-      "to_region": "composite_region_36",
-      "reason": "heading_jump,heading_tangent_mismatch,out_of_bounds",
-      "segment_sources": [
-        "bezier"
-      ],
-      "segment_connectors": [
-        ""
-      ],
-      "segment_dynamic_reasons": [
-        "heading_jump,heading_tangent_mismatch,out_of_bounds"
-      ],
-      "astar_corridor_conversion_attempted": false,
-      "astar_corridor_conversion_success": false,
-      "astar_corridor_conversion_failure_reason": "",
-      "max_curvature": 0.0,
-      "max_heading_jump": 3.141592653589793,
-      "max_yaw_rate": 1.0000000000000033,
-      "max_yaw_acceleration": 0.3183098861837928,
-      "max_speed": 0.016540549702437762,
-      "max_thrust_required": 0.01323243976195021,
-      "max_yaw_moment_required": 1.2183098861837958
-    },
-    {
-      "agent_id": 2,
-      "from": [
-        50.0,
-        49.0,
-        0.0
-      ],
-      "to_region": "composite_region_58",
-      "reason": "heading_jump,out_of_bounds",
-      "segment_sources": [
-        "dubins_fallback"
-      ],
-      "segment_connectors": [
-        ""
-      ],
-      "segment_dynamic_reasons": [
-        "heading_jump,out_of_bounds"
-      ],
-      "astar_corridor_conversion_attempted": false,
-      "astar_corridor_conversion_success": false,
-      "astar_corridor_conversion_failure_reason": "",
-      "max_curvature": 1.0,
-      "max_heading_jump": 0.9591506604949864,
-      "max_yaw_rate": 1.000000000000017,
-      "max_yaw_acceleration": 4.824544763621776,
-      "max_speed": 0.9621063155202638,
-      "max_thrust_required": 0.7696850524162111,
-      "max_yaw_moment_required": 4.824544763621776
-    },
-    {
-      "agent_id": 2,
-      "from": [
-        50.0,
-        49.0,
-        0.0
-      ],
-      "to_region": "composite_region_83",
-      "reason": "obstacle_collision,out_of_bounds",
-      "segment_sources": [
-        "dubins_fallback"
-      ],
-      "segment_connectors": [
-        ""
-      ],
-      "segment_dynamic_reasons": [
-        "obstacle_collision,out_of_bounds"
-      ],
-      "astar_corridor_conversion_attempted": false,
-      "astar_corridor_conversion_success": false,
-      "astar_corridor_conversion_failure_reason": "",
-      "max_curvature": 1.0,
-      "max_heading_jump": 0.7952892163291558,
-      "max_yaw_rate": 1.0000000000000224,
-      "max_yaw_acceleration": 1.2574041989601066,
-      "max_speed": 0.9738540309550673,
-      "max_thrust_required": 0.7790832247640539,
-      "max_yaw_moment_required": 2.1574041989600943
-    },
-    {
-      "agent_id": 2,
-      "from": [
-        50.0,
-        49.0,
-        0.0
-      ],
-      "to_region": "composite_region_79",
-      "reason": "heading_jump,heading_tangent_mismatch,out_of_bounds",
-      "segment_sources": [
-        "bezier"
-      ],
-      "segment_connectors": [
-        ""
-      ],
-      "segment_dynamic_reasons": [
-        "heading_jump,heading_tangent_mismatch,out_of_bounds"
-      ],
-      "astar_corridor_conversion_attempted": false,
-      "astar_corridor_conversion_success": false,
-      "astar_corridor_conversion_failure_reason": "",
-      "max_curvature": 0.0,
-      "max_heading_jump": 3.141592653589793,
-      "max_yaw_rate": 1.0000000000000033,
-      "max_yaw_acceleration": 0.3183098861837928,
-      "max_speed": 0.030392028646636815,
-      "max_thrust_required": 0.024313622917309454,
-      "max_yaw_moment_required": 1.2183098861837958
-    },
-    {
-      "agent_id": 2,
-      "from": [
-        50.0,
-        49.0,
-        0.0
-      ],
-      "to_region": "composite_region_84",
-      "reason": "heading_jump,out_of_bounds",
-      "segment_sources": [
-        "dubins_fallback"
-      ],
-      "segment_connectors": [
-        ""
-      ],
-      "segment_dynamic_reasons": [
-        "heading_jump,out_of_bounds"
-      ],
-      "astar_corridor_conversion_attempted": false,
-      "astar_corridor_conversion_success": false,
-      "astar_corridor_conversion_failure_reason": "",
-      "max_curvature": 1.0,
-      "max_heading_jump": 0.8189790598293305,
-      "max_yaw_rate": 0.9999999999999989,
-      "max_yaw_acceleration": 4.9237013481172625,
-      "max_speed": 0.9722864303961276,
-      "max_thrust_required": 0.7778291443169021,
-      "max_yaw_moment_required": 4.9237013481172625
+      "agent_id": 1,
+      "region_id": "large_region_3",
+      "reason": "missing_candidate_patterns"
     }
   ],
-  "tsp_node_count": 82,
-  "coverage_endpoint_count": 334,
+  "tsp_node_count": 17,
+  "coverage_endpoint_count": 156,
   "agent_tsp_records": {
     "0": {
       "assigned_regions": [
-        "composite_region_0",
-        "composite_region_1",
-        "composite_region_63",
-        "composite_region_2",
-        "composite_region_64",
-        "composite_region_3",
-        "composite_region_4",
-        "composite_region_6",
-        "composite_region_66",
-        "composite_region_67",
-        "composite_region_7",
-        "composite_region_8",
-        "composite_region_10",
-        "composite_region_11",
-        "composite_region_12",
-        "composite_region_14",
-        "composite_region_15",
-        "composite_region_16",
-        "composite_region_68",
-        "composite_region_17",
-        "composite_region_70",
-        "composite_region_18",
-        "composite_region_71",
-        "composite_region_74",
-        "composite_region_72",
-        "composite_region_73",
-        "composite_region_19",
-        "composite_region_20",
-        "composite_region_21",
-        "composite_region_22",
-        "composite_region_23",
-        "composite_region_24",
-        "composite_region_69"
+        "large_region_2",
+        "large_region_12",
+        "large_region_15",
+        "large_region_4"
       ],
       "initial_order": [
-        "composite_region_0",
-        "composite_region_1",
-        "composite_region_63",
-        "composite_region_2",
-        "composite_region_64",
-        "composite_region_3",
-        "composite_region_4",
-        "composite_region_6",
-        "composite_region_66",
-        "composite_region_67",
-        "composite_region_7",
-        "composite_region_8",
-        "composite_region_10",
-        "composite_region_11",
-        "composite_region_12",
-        "composite_region_14",
-        "composite_region_15",
-        "composite_region_16",
-        "composite_region_68",
-        "composite_region_17",
-        "composite_region_70",
-        "composite_region_18",
-        "composite_region_71",
-        "composite_region_74",
-        "composite_region_72",
-        "composite_region_73",
-        "composite_region_19",
-        "composite_region_20",
-        "composite_region_21",
-        "composite_region_22",
-        "composite_region_23",
-        "composite_region_24",
-        "composite_region_69"
+        "large_region_2",
+        "large_region_12",
+        "large_region_15",
+        "large_region_4"
       ],
       "final_order": [
-        "composite_region_11",
-        "composite_region_19",
-        "composite_region_70",
-        "composite_region_8",
-        "composite_region_18",
-        "composite_region_17",
-        "composite_region_12",
-        "composite_region_20",
-        "composite_region_71"
+        "large_region_2",
+        "large_region_4",
+        "large_region_12",
+        "large_region_15"
       ],
-      "skipped_regions": [
-        "composite_region_0",
-        "composite_region_1",
-        "composite_region_63",
-        "composite_region_2",
-        "composite_region_64",
-        "composite_region_3",
-        "composite_region_4",
-        "composite_region_6",
-        "composite_region_66",
-        "composite_region_67",
-        "composite_region_7",
-        "composite_region_10",
-        "composite_region_14",
-        "composite_region_15",
-        "composite_region_16",
-        "composite_region_68",
-        "composite_region_74",
-        "composite_region_72",
-        "composite_region_73",
-        "composite_region_21",
-        "composite_region_22",
-        "composite_region_23",
-        "composite_region_24",
-        "composite_region_69"
-      ],
-      "tsp_node_count": 33,
+      "skipped_regions": [],
+      "tsp_node_count": 4,
       "tsp_solver_metadata": {
         "requested_tsp_solver": "deterministic",
         "effective_tsp_solver": "deterministic",
@@ -762,10 +598,10 @@
         "aco_convergence_trace": [],
         "aco_accepted_3opt_count": 0,
         "large_map_greedy_tsp": true,
-        "large_map_greedy_final_region_count": 9,
-        "large_map_connector_cache_size": 33,
-        "large_map_reachability_probe_count": 40,
-        "large_map_reachability_probe_success_count": 23,
+        "large_map_greedy_final_region_count": 4,
+        "large_map_connector_cache_size": 9,
+        "large_map_reachability_probe_count": 8,
+        "large_map_reachability_probe_success_count": 3,
         "large_map_dead_end_avoidance_count": 0
       },
       "requested_tsp_solver": "deterministic",
@@ -777,309 +613,59 @@
       "aco_convergence_trace": [],
       "aco_accepted_3opt_count": 0,
       "candidate_pattern_counts": {
-        "composite_region_0": 1,
-        "composite_region_1": 1,
-        "composite_region_63": 1,
-        "composite_region_2": 1,
-        "composite_region_64": 1,
-        "composite_region_3": 1,
-        "composite_region_4": 1,
-        "composite_region_6": 1,
-        "composite_region_66": 1,
-        "composite_region_67": 1,
-        "composite_region_7": 1,
-        "composite_region_8": 1,
-        "composite_region_10": 1,
-        "composite_region_11": 1,
-        "composite_region_12": 1,
-        "composite_region_14": 1,
-        "composite_region_15": 1,
-        "composite_region_16": 1,
-        "composite_region_68": 1,
-        "composite_region_17": 1,
-        "composite_region_70": 1,
-        "composite_region_18": 1,
-        "composite_region_71": 1,
-        "composite_region_74": 1,
-        "composite_region_72": 1,
-        "composite_region_73": 1,
-        "composite_region_19": 1,
-        "composite_region_20": 1,
-        "composite_region_21": 1,
-        "composite_region_22": 1,
-        "composite_region_23": 1,
-        "composite_region_24": 1,
-        "composite_region_69": 1
+        "large_region_2": 2,
+        "large_region_12": 2,
+        "large_region_15": 2,
+        "large_region_4": 2
       },
-      "candidate_attempt_count": 24,
-      "rejected_candidate_count": 14,
+      "candidate_attempt_count": 6,
+      "rejected_candidate_count": 0,
       "selected_pattern_ids": {
-        "composite_region_11": "composite_region_11_pattern_x_pocket_0p0",
-        "composite_region_19": "composite_region_19_pattern_x_pocket_0p0",
-        "composite_region_70": "composite_region_70_pattern_y_pocket_0p0",
-        "composite_region_8": "composite_region_8_pattern_y_pocket_0p0",
-        "composite_region_18": "composite_region_18_pattern_x_pocket_0p5",
-        "composite_region_17": "composite_region_17_pattern_x_pocket_0p5",
-        "composite_region_12": "composite_region_12_pattern_y_pocket_0p0",
-        "composite_region_20": "composite_region_20_pattern_y_pocket_0p0",
-        "composite_region_71": "composite_region_71_pattern_y_pocket_0p5"
+        "large_region_2": "large_region_2_pattern_x_pocket_0p0_low_to_high_max_to_min",
+        "large_region_4": "large_region_4_pattern_y_pocket_0p0_high_to_low_max_to_min",
+        "large_region_12": "large_region_12_pattern_x_pocket_0p0_high_to_low_max_to_min",
+        "large_region_15": "large_region_15_pattern_x_pocket_0p0_low_to_high_min_to_max"
       },
-      "main_repeat_overlap_length": 22.30968445767991,
-      "main_repeat_penalty_total": 294.95996749215897,
-      "cross_agent_overlap_length": 7.080375019738634,
-      "cross_agent_penalty_total": 70.80375019738634,
+      "skipped_region_reasons": {},
+      "connector_failure_reasons": {},
+      "all_connector_failure_reasons": {},
+      "main_repeat_overlap_length": 27.09544178759105,
+      "main_repeat_penalty_total": 927.8955439021852,
+      "connector_noncover_repeat_length": 14.66485611859364,
+      "connector_noncover_repeat_penalty": 351.9565468462474,
+      "connector_length": 76.81069111873485,
+      "connector_turn_angle": 15.590241144422297,
+      "cross_agent_overlap_length": 14.29720684611901,
+      "cross_agent_penalty_total": 142.97206846119005,
       "unavoidable_cross_agent_overlap_count": 0,
-      "coverage_endpoint_count": 152,
-      "infeasible_edges": [
-        {
-          "agent_id": 0,
-          "from": [
-            24.5,
-            25.5,
-            1.571
-          ],
-          "to_region": "composite_region_66",
-          "reason": "kinematic_infeasible,obstacle_collision",
-          "segment_sources": [
-            "dubins_fallback"
-          ],
-          "segment_connectors": [
-            "astar_corridor_conversion_failed"
-          ],
-          "segment_dynamic_reasons": [
-            "kinematic_infeasible,obstacle_collision"
-          ],
-          "astar_corridor_conversion_attempted": true,
-          "astar_corridor_conversion_success": false,
-          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
-          "max_curvature": 1.0,
-          "max_heading_jump": 0.2057115664766207,
-          "max_yaw_rate": 0.9999999999999892,
-          "max_yaw_acceleration": 4.861175368637472,
-          "max_speed": 0.9982377137562135,
-          "max_thrust_required": 0.7985901710049709,
-          "max_yaw_moment_required": 5.7611753686374625
-        },
-        {
-          "agent_id": 0,
-          "from": [
-            24.5,
-            25.5,
-            1.571
-          ],
-          "to_region": "composite_region_72",
-          "reason": "kinematic_infeasible,obstacle_collision",
-          "segment_sources": [
-            "bezier"
-          ],
-          "segment_connectors": [
-            "astar_corridor_conversion_failed"
-          ],
-          "segment_dynamic_reasons": [
-            "kinematic_infeasible,obstacle_collision"
-          ],
-          "astar_corridor_conversion_attempted": true,
-          "astar_corridor_conversion_success": false,
-          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
-          "max_curvature": 0.0,
-          "max_heading_jump": 0.0,
-          "max_yaw_rate": 0.0,
-          "max_yaw_acceleration": 0.0,
-          "max_speed": 1.5,
-          "max_thrust_required": 1.2000000000000002,
-          "max_yaw_moment_required": 0.0
-        },
-        {
-          "agent_id": 0,
-          "from": [
-            24.5,
-            25.5,
-            1.571
-          ],
-          "to_region": "composite_region_63",
-          "reason": "obstacle_collision",
-          "segment_sources": [
-            "bezier"
-          ],
-          "segment_connectors": [
-            ""
-          ],
-          "segment_dynamic_reasons": [
-            "obstacle_collision"
-          ],
-          "astar_corridor_conversion_attempted": false,
-          "astar_corridor_conversion_success": false,
-          "astar_corridor_conversion_failure_reason": "",
-          "max_curvature": 0.944762975167193,
-          "max_heading_jump": 0.45415487237510055,
-          "max_yaw_rate": 0.9999999999999717,
-          "max_yaw_acceleration": 0.8066696671129602,
-          "max_speed": 0.9866590534004409,
-          "max_thrust_required": 0.7893272427203528,
-          "max_yaw_moment_required": 1.5221665181155548
-        },
-        {
-          "agent_id": 0,
-          "from": [
-            24.5,
-            25.5,
-            1.571
-          ],
-          "to_region": "composite_region_2",
-          "reason": "obstacle_collision",
-          "segment_sources": [
-            "bezier"
-          ],
-          "segment_connectors": [
-            ""
-          ],
-          "segment_dynamic_reasons": [
-            "obstacle_collision"
-          ],
-          "astar_corridor_conversion_attempted": false,
-          "astar_corridor_conversion_success": false,
-          "astar_corridor_conversion_failure_reason": "",
-          "max_curvature": 0.624409002531105,
-          "max_heading_jump": 0.3364523063079816,
-          "max_yaw_rate": 0.9655677575149164,
-          "max_yaw_acceleration": 1.003643738588485,
-          "max_speed": 1.5,
-          "max_thrust_required": 1.2000000000000002,
-          "max_yaw_moment_required": 1.7166555880504442
-        },
-        {
-          "agent_id": 0,
-          "from": [
-            24.5,
-            25.5,
-            1.571
-          ],
-          "to_region": "composite_region_64",
-          "reason": "obstacle_collision",
-          "segment_sources": [
-            "bezier"
-          ],
-          "segment_connectors": [
-            ""
-          ],
-          "segment_dynamic_reasons": [
-            "obstacle_collision"
-          ],
-          "astar_corridor_conversion_attempted": false,
-          "astar_corridor_conversion_success": false,
-          "astar_corridor_conversion_failure_reason": "",
-          "max_curvature": 0.4015714422780176,
-          "max_heading_jump": 0.23983839763083248,
-          "max_yaw_rate": 0.5796357644295713,
-          "max_yaw_acceleration": 0.6167821324191415,
-          "max_speed": 1.5,
-          "max_thrust_required": 1.2000000000000002,
-          "max_yaw_moment_required": 0.9704384744197844
-        },
-        {
-          "agent_id": 0,
-          "from": [
-            24.5,
-            25.5,
-            1.571
-          ],
-          "to_region": "composite_region_73",
-          "reason": "obstacle_collision",
-          "segment_sources": [
-            "bezier"
-          ],
-          "segment_connectors": [
-            ""
-          ],
-          "segment_dynamic_reasons": [
-            "obstacle_collision"
-          ],
-          "astar_corridor_conversion_attempted": false,
-          "astar_corridor_conversion_success": false,
-          "astar_corridor_conversion_failure_reason": "",
-          "max_curvature": 0.0,
-          "max_heading_jump": 0.0,
-          "max_yaw_rate": 0.0,
-          "max_yaw_acceleration": 0.0,
-          "max_speed": 1.5,
-          "max_thrust_required": 1.2000000000000002,
-          "max_yaw_moment_required": 0.0
-        },
-        {
-          "agent_id": 0,
-          "from": [
-            24.5,
-            25.5,
-            1.571
-          ],
-          "to_region": "composite_region_23",
-          "reason": "obstacle_collision",
-          "segment_sources": [
-            "bezier"
-          ],
-          "segment_connectors": [
-            ""
-          ],
-          "segment_dynamic_reasons": [
-            "obstacle_collision"
-          ],
-          "astar_corridor_conversion_attempted": false,
-          "astar_corridor_conversion_success": false,
-          "astar_corridor_conversion_failure_reason": "",
-          "max_curvature": 0.6981249814669787,
-          "max_heading_jump": 0.3244573892020304,
-          "max_yaw_rate": 0.9999999999999316,
-          "max_yaw_acceleration": 0.8765983692801279,
-          "max_speed": 1.4217714042107117,
-          "max_thrust_required": 1.1374171233685695,
-          "max_yaw_moment_required": 1.5545877504861556
-        },
-        {
-          "agent_id": 0,
-          "from": [
-            24.5,
-            25.5,
-            1.571
-          ],
-          "to_region": "composite_region_21",
-          "reason": "obstacle_collision",
-          "segment_sources": [
-            "dubins_fallback"
-          ],
-          "segment_connectors": [
-            ""
-          ],
-          "segment_dynamic_reasons": [
-            "obstacle_collision"
-          ],
-          "astar_corridor_conversion_attempted": false,
-          "astar_corridor_conversion_success": false,
-          "astar_corridor_conversion_failure_reason": "",
-          "max_curvature": 1.0,
-          "max_heading_jump": 0.3654132891625754,
-          "max_yaw_rate": 1.000000000000001,
-          "max_yaw_acceleration": 4.821535483451397,
-          "max_speed": 0.9944456591195165,
-          "max_thrust_required": 0.7955565272956133,
-          "max_yaw_moment_required": 4.793410483451397
-        }
-      ]
+      "coverage_endpoint_count": 32,
+      "infeasible_edges": []
     },
     "1": {
       "assigned_regions": [
-        "composite_region_61",
-        "composite_region_65"
+        "large_region_9",
+        "large_region_7",
+        "large_region_0",
+        "large_region_3",
+        "large_region_6"
       ],
       "initial_order": [
-        "composite_region_61",
-        "composite_region_65"
+        "large_region_9",
+        "large_region_7",
+        "large_region_0",
+        "large_region_3",
+        "large_region_6"
       ],
       "final_order": [
-        "composite_region_65",
-        "composite_region_61"
+        "large_region_0",
+        "large_region_6",
+        "large_region_9",
+        "large_region_7"
       ],
-      "skipped_regions": [],
-      "tsp_node_count": 2,
+      "skipped_regions": [
+        "large_region_3"
+      ],
+      "tsp_node_count": 5,
       "tsp_solver_metadata": {
         "requested_tsp_solver": "deterministic",
         "effective_tsp_solver": "deterministic",
@@ -1088,7 +674,13 @@
         "aco_initial_objective": null,
         "aco_iteration_count": 0,
         "aco_convergence_trace": [],
-        "aco_accepted_3opt_count": 0
+        "aco_accepted_3opt_count": 0,
+        "large_map_greedy_tsp": true,
+        "large_map_greedy_final_region_count": 4,
+        "large_map_connector_cache_size": 7,
+        "large_map_reachability_probe_count": 10,
+        "large_map_reachability_probe_success_count": 3,
+        "large_map_dead_end_avoidance_count": 0
       },
       "requested_tsp_solver": "deterministic",
       "effective_tsp_solver": "deterministic",
@@ -1099,174 +691,88 @@
       "aco_convergence_trace": [],
       "aco_accepted_3opt_count": 0,
       "candidate_pattern_counts": {
-        "composite_region_61": 1,
-        "composite_region_65": 1
+        "large_region_9": 2,
+        "large_region_7": 1,
+        "large_region_0": 2,
+        "large_region_3": 0,
+        "large_region_6": 2
       },
-      "candidate_attempt_count": 2,
-      "rejected_candidate_count": 0,
+      "candidate_attempt_count": 5,
+      "rejected_candidate_count": 1,
       "selected_pattern_ids": {
-        "composite_region_65": "composite_region_65_pattern_x_pocket_1p0_rev",
-        "composite_region_61": "composite_region_61_pattern_x_pocket_1p0_rev"
+        "large_region_0": "large_region_0_pattern_x_pocket_0p0_low_to_high_max_to_min",
+        "large_region_6": "large_region_6_pattern_y_pocket_0p0_high_to_low_min_to_max",
+        "large_region_9": "large_region_9_pattern_y_pocket_0p0_high_to_low_max_to_min",
+        "large_region_7": "large_region_7_pattern_y_pocket_0p0_high_to_low_min_to_max"
       },
-      "main_repeat_overlap_length": 10.195120640093755,
-      "main_repeat_penalty_total": 471.705294681125,
-      "cross_agent_overlap_length": 64.29470916939692,
-      "cross_agent_penalty_total": 642.9470916939686,
-      "unavoidable_cross_agent_overlap_count": 2,
-      "coverage_endpoint_count": 56,
-      "infeasible_edges": []
+      "skipped_region_reasons": {
+        "large_region_3": "missing_candidate_patterns"
+      },
+      "connector_failure_reasons": {
+        "large_region_0": "heading_jump,heading_tangent_mismatch",
+        "large_region_3": "kinematic_infeasible,obstacle_collision"
+      },
+      "all_connector_failure_reasons": {
+        "large_region_0": [
+          "heading_jump,heading_tangent_mismatch"
+        ],
+        "large_region_3": [
+          "missing_candidate_patterns",
+          "kinematic_infeasible,obstacle_collision",
+          "heading_jump,heading_tangent_mismatch,kinematic_infeasible,obstacle_collision"
+        ]
+      },
+      "main_repeat_overlap_length": 29.64527810257738,
+      "main_repeat_penalty_total": 1031.0172814618572,
+      "connector_noncover_repeat_length": 15.730780164557888,
+      "connector_noncover_repeat_penalty": 377.5387239493893,
+      "connector_length": 86.64304881313225,
+      "connector_turn_angle": 13.395714179180537,
+      "cross_agent_overlap_length": 68.14291840483064,
+      "cross_agent_penalty_total": 741.4291840483077,
+      "unavoidable_cross_agent_overlap_count": 0,
+      "coverage_endpoint_count": 60,
+      "infeasible_edges": [
+        {
+          "agent_id": 1,
+          "region_id": "large_region_3",
+          "reason": "missing_candidate_patterns"
+        }
+      ]
     },
     "2": {
       "assigned_regions": [
-        "composite_region_25",
-        "composite_region_26",
-        "composite_region_27",
-        "composite_region_28",
-        "composite_region_29",
-        "composite_region_30",
-        "composite_region_76",
-        "composite_region_31",
-        "composite_region_77",
-        "composite_region_78",
-        "composite_region_32",
-        "composite_region_79",
-        "composite_region_33",
-        "composite_region_34",
-        "composite_region_35",
-        "composite_region_36",
-        "composite_region_37",
-        "composite_region_38",
-        "composite_region_39",
-        "composite_region_40",
-        "composite_region_41",
-        "composite_region_42",
-        "composite_region_43",
-        "composite_region_44",
-        "composite_region_45",
-        "composite_region_46",
-        "composite_region_47",
-        "composite_region_48",
-        "composite_region_50",
-        "composite_region_49",
-        "composite_region_80",
-        "composite_region_51",
-        "composite_region_52",
-        "composite_region_82",
-        "composite_region_83",
-        "composite_region_86",
-        "composite_region_53",
-        "composite_region_84",
-        "composite_region_54",
-        "composite_region_81",
-        "composite_region_85",
-        "composite_region_55",
-        "composite_region_56",
-        "composite_region_57",
-        "composite_region_58",
-        "composite_region_60",
-        "composite_region_59"
+        "large_region_8",
+        "large_region_16",
+        "large_region_13",
+        "large_region_11",
+        "large_region_10",
+        "large_region_14",
+        "large_region_1",
+        "large_region_5"
       ],
       "initial_order": [
-        "composite_region_25",
-        "composite_region_26",
-        "composite_region_27",
-        "composite_region_28",
-        "composite_region_29",
-        "composite_region_30",
-        "composite_region_76",
-        "composite_region_31",
-        "composite_region_77",
-        "composite_region_78",
-        "composite_region_32",
-        "composite_region_79",
-        "composite_region_33",
-        "composite_region_34",
-        "composite_region_35",
-        "composite_region_36",
-        "composite_region_37",
-        "composite_region_38",
-        "composite_region_39",
-        "composite_region_40",
-        "composite_region_41",
-        "composite_region_42",
-        "composite_region_43",
-        "composite_region_44",
-        "composite_region_45",
-        "composite_region_46",
-        "composite_region_47",
-        "composite_region_48",
-        "composite_region_50",
-        "composite_region_49",
-        "composite_region_80",
-        "composite_region_51",
-        "composite_region_52",
-        "composite_region_82",
-        "composite_region_83",
-        "composite_region_86",
-        "composite_region_53",
-        "composite_region_84",
-        "composite_region_54",
-        "composite_region_81",
-        "composite_region_85",
-        "composite_region_55",
-        "composite_region_56",
-        "composite_region_57",
-        "composite_region_58",
-        "composite_region_60",
-        "composite_region_59"
+        "large_region_8",
+        "large_region_16",
+        "large_region_13",
+        "large_region_11",
+        "large_region_10",
+        "large_region_14",
+        "large_region_1",
+        "large_region_5"
       ],
       "final_order": [
-        "composite_region_28",
-        "composite_region_32",
-        "composite_region_44",
-        "composite_region_49",
-        "composite_region_54",
-        "composite_region_50",
-        "composite_region_86",
-        "composite_region_60"
+        "large_region_1",
+        "large_region_8",
+        "large_region_13",
+        "large_region_10",
+        "large_region_11",
+        "large_region_14",
+        "large_region_5",
+        "large_region_16"
       ],
-      "skipped_regions": [
-        "composite_region_25",
-        "composite_region_26",
-        "composite_region_27",
-        "composite_region_29",
-        "composite_region_30",
-        "composite_region_76",
-        "composite_region_31",
-        "composite_region_77",
-        "composite_region_78",
-        "composite_region_79",
-        "composite_region_33",
-        "composite_region_34",
-        "composite_region_35",
-        "composite_region_36",
-        "composite_region_37",
-        "composite_region_38",
-        "composite_region_39",
-        "composite_region_40",
-        "composite_region_41",
-        "composite_region_42",
-        "composite_region_43",
-        "composite_region_45",
-        "composite_region_46",
-        "composite_region_47",
-        "composite_region_48",
-        "composite_region_80",
-        "composite_region_51",
-        "composite_region_52",
-        "composite_region_82",
-        "composite_region_83",
-        "composite_region_53",
-        "composite_region_84",
-        "composite_region_81",
-        "composite_region_85",
-        "composite_region_55",
-        "composite_region_56",
-        "composite_region_57",
-        "composite_region_58",
-        "composite_region_59"
-      ],
-      "tsp_node_count": 47,
+      "skipped_regions": [],
+      "tsp_node_count": 8,
       "tsp_solver_metadata": {
         "requested_tsp_solver": "deterministic",
         "effective_tsp_solver": "deterministic",
@@ -1278,9 +784,9 @@
         "aco_accepted_3opt_count": 0,
         "large_map_greedy_tsp": true,
         "large_map_greedy_final_region_count": 8,
-        "large_map_connector_cache_size": 24,
-        "large_map_reachability_probe_count": 40,
-        "large_map_reachability_probe_success_count": 18,
+        "large_map_connector_cache_size": 26,
+        "large_map_reachability_probe_count": 45,
+        "large_map_reachability_probe_success_count": 7,
         "large_map_dead_end_avoidance_count": 1
       },
       "requested_tsp_solver": "deterministic",
@@ -1292,353 +798,273 @@
       "aco_convergence_trace": [],
       "aco_accepted_3opt_count": 0,
       "candidate_pattern_counts": {
-        "composite_region_25": 1,
-        "composite_region_26": 1,
-        "composite_region_27": 1,
-        "composite_region_28": 1,
-        "composite_region_29": 1,
-        "composite_region_30": 1,
-        "composite_region_76": 1,
-        "composite_region_31": 1,
-        "composite_region_77": 1,
-        "composite_region_78": 1,
-        "composite_region_32": 1,
-        "composite_region_79": 1,
-        "composite_region_33": 1,
-        "composite_region_34": 1,
-        "composite_region_35": 1,
-        "composite_region_36": 1,
-        "composite_region_37": 1,
-        "composite_region_38": 1,
-        "composite_region_39": 1,
-        "composite_region_40": 1,
-        "composite_region_41": 1,
-        "composite_region_42": 1,
-        "composite_region_43": 1,
-        "composite_region_44": 1,
-        "composite_region_45": 1,
-        "composite_region_46": 1,
-        "composite_region_47": 1,
-        "composite_region_48": 1,
-        "composite_region_50": 1,
-        "composite_region_49": 1,
-        "composite_region_80": 1,
-        "composite_region_51": 1,
-        "composite_region_52": 1,
-        "composite_region_82": 1,
-        "composite_region_83": 1,
-        "composite_region_86": 1,
-        "composite_region_53": 1,
-        "composite_region_84": 1,
-        "composite_region_54": 1,
-        "composite_region_81": 1,
-        "composite_region_85": 1,
-        "composite_region_55": 1,
-        "composite_region_56": 1,
-        "composite_region_57": 1,
-        "composite_region_58": 1,
-        "composite_region_60": 1,
-        "composite_region_59": 1
+        "large_region_8": 2,
+        "large_region_16": 2,
+        "large_region_13": 2,
+        "large_region_11": 2,
+        "large_region_10": 2,
+        "large_region_14": 2,
+        "large_region_1": 2,
+        "large_region_5": 1
       },
-      "candidate_attempt_count": 19,
-      "rejected_candidate_count": 9,
+      "candidate_attempt_count": 14,
+      "rejected_candidate_count": 0,
       "selected_pattern_ids": {
-        "composite_region_28": "composite_region_28_pattern_x_pocket_0p0",
-        "composite_region_32": "composite_region_32_pattern_x_pocket_0p0",
-        "composite_region_44": "composite_region_44_pattern_x_pocket_0p0",
-        "composite_region_49": "composite_region_49_pattern_x_pocket_0p0",
-        "composite_region_54": "composite_region_54_pattern_x_pocket_0p0",
-        "composite_region_50": "composite_region_50_pattern_x_pocket_0p0",
-        "composite_region_86": "composite_region_86_pattern_x_pocket_0p0",
-        "composite_region_60": "composite_region_60_pattern_x_pocket_0p0"
+        "large_region_1": "large_region_1_pattern_x_pocket_0p0_low_to_high_min_to_max",
+        "large_region_8": "large_region_8_pattern_y_pocket_0p0_high_to_low_max_to_min",
+        "large_region_13": "large_region_13_pattern_y_pocket_0p0_high_to_low_max_to_min",
+        "large_region_10": "large_region_10_pattern_y_pocket_0p0_high_to_low_min_to_max",
+        "large_region_11": "large_region_11_pattern_y_pocket_0p0_high_to_low_min_to_max",
+        "large_region_14": "large_region_14_pattern_y_pocket_0p0_high_to_low_max_to_min",
+        "large_region_5": "large_region_5_pattern_x_pocket_0p0_low_to_high_min_to_max",
+        "large_region_16": "large_region_16_pattern_y_pocket_0p0_high_to_low_min_to_max"
       },
-      "main_repeat_overlap_length": 2.1587696179171245,
-      "main_repeat_penalty_total": 25.905235415005492,
-      "cross_agent_overlap_length": 29.976161050828352,
-      "cross_agent_penalty_total": 301.8344062546472,
+      "skipped_region_reasons": {},
+      "connector_failure_reasons": {},
+      "all_connector_failure_reasons": {},
+      "main_repeat_overlap_length": 124.61683809180144,
+      "main_repeat_penalty_total": 3634.297215203235,
+      "connector_noncover_repeat_length": 97.13023313682018,
+      "connector_noncover_repeat_penalty": 2331.1255952836846,
+      "connector_length": 234.68134679032528,
+      "connector_turn_angle": 106.78015988482896,
+      "cross_agent_overlap_length": 38.46782296831345,
+      "cross_agent_penalty_total": 384.6782296831345,
       "unavoidable_cross_agent_overlap_count": 0,
-      "coverage_endpoint_count": 126,
-      "infeasible_edges": [
-        {
-          "agent_id": 2,
-          "from": [
-            50.0,
-            49.0,
-            0.0
-          ],
-          "to_region": "composite_region_45",
-          "reason": "heading_jump,heading_tangent_mismatch,kinematic_infeasible,out_of_bounds",
-          "segment_sources": [
-            "bezier"
-          ],
-          "segment_connectors": [
-            "astar_corridor_conversion_failed"
-          ],
-          "segment_dynamic_reasons": [
-            "heading_jump,heading_tangent_mismatch,kinematic_infeasible,out_of_bounds"
-          ],
-          "astar_corridor_conversion_attempted": true,
-          "astar_corridor_conversion_success": false,
-          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
-          "max_curvature": 0.0,
-          "max_heading_jump": 3.141592653589793,
-          "max_yaw_rate": 1.0000000000004738,
-          "max_yaw_acceleration": 0.31830988618409234,
-          "max_speed": 0.0028955407769989876,
-          "max_thrust_required": 0.0023164326215991903,
-          "max_yaw_moment_required": 1.2183098861845187
-        },
-        {
-          "agent_id": 2,
-          "from": [
-            50.0,
-            49.0,
-            0.0
-          ],
-          "to_region": "composite_region_59",
-          "reason": "kinematic_infeasible,out_of_bounds",
-          "segment_sources": [
-            "dubins_fallback"
-          ],
-          "segment_connectors": [
-            "astar_corridor_conversion_failed"
-          ],
-          "segment_dynamic_reasons": [
-            "kinematic_infeasible,out_of_bounds"
-          ],
-          "astar_corridor_conversion_attempted": true,
-          "astar_corridor_conversion_success": false,
-          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
-          "max_curvature": 1.0,
-          "max_heading_jump": 0.2274980496958996,
-          "max_yaw_rate": 1.0000000000000155,
-          "max_yaw_acceleration": 4.39564207841231,
-          "max_speed": 0.9978449212412789,
-          "max_thrust_required": 0.7982759369930231,
-          "max_yaw_moment_required": 5.295642078412324
-        },
-        {
-          "agent_id": 2,
-          "from": [
-            50.0,
-            49.0,
-            0.0
-          ],
-          "to_region": "composite_region_40",
-          "reason": "heading_jump,heading_tangent_mismatch,out_of_bounds",
-          "segment_sources": [
-            "bezier"
-          ],
-          "segment_connectors": [
-            ""
-          ],
-          "segment_dynamic_reasons": [
-            "heading_jump,heading_tangent_mismatch,out_of_bounds"
-          ],
-          "astar_corridor_conversion_attempted": false,
-          "astar_corridor_conversion_success": false,
-          "astar_corridor_conversion_failure_reason": "",
-          "max_curvature": 0.0,
-          "max_heading_jump": 3.141592653589793,
-          "max_yaw_rate": 0.9999999999998949,
-          "max_yaw_acceleration": 0.31830988618372374,
-          "max_speed": 0.0024142315614448886,
-          "max_thrust_required": 0.001931385249155911,
-          "max_yaw_moment_required": 1.2183098861836292
-        },
-        {
-          "agent_id": 2,
-          "from": [
-            50.0,
-            49.0,
-            0.0
-          ],
-          "to_region": "composite_region_36",
-          "reason": "heading_jump,heading_tangent_mismatch,out_of_bounds",
-          "segment_sources": [
-            "bezier"
-          ],
-          "segment_connectors": [
-            ""
-          ],
-          "segment_dynamic_reasons": [
-            "heading_jump,heading_tangent_mismatch,out_of_bounds"
-          ],
-          "astar_corridor_conversion_attempted": false,
-          "astar_corridor_conversion_success": false,
-          "astar_corridor_conversion_failure_reason": "",
-          "max_curvature": 0.0,
-          "max_heading_jump": 3.141592653589793,
-          "max_yaw_rate": 1.0000000000000033,
-          "max_yaw_acceleration": 0.3183098861837928,
-          "max_speed": 0.016540549702437762,
-          "max_thrust_required": 0.01323243976195021,
-          "max_yaw_moment_required": 1.2183098861837958
-        },
-        {
-          "agent_id": 2,
-          "from": [
-            50.0,
-            49.0,
-            0.0
-          ],
-          "to_region": "composite_region_58",
-          "reason": "heading_jump,out_of_bounds",
-          "segment_sources": [
-            "dubins_fallback"
-          ],
-          "segment_connectors": [
-            ""
-          ],
-          "segment_dynamic_reasons": [
-            "heading_jump,out_of_bounds"
-          ],
-          "astar_corridor_conversion_attempted": false,
-          "astar_corridor_conversion_success": false,
-          "astar_corridor_conversion_failure_reason": "",
-          "max_curvature": 1.0,
-          "max_heading_jump": 0.9591506604949864,
-          "max_yaw_rate": 1.000000000000017,
-          "max_yaw_acceleration": 4.824544763621776,
-          "max_speed": 0.9621063155202638,
-          "max_thrust_required": 0.7696850524162111,
-          "max_yaw_moment_required": 4.824544763621776
-        },
-        {
-          "agent_id": 2,
-          "from": [
-            50.0,
-            49.0,
-            0.0
-          ],
-          "to_region": "composite_region_83",
-          "reason": "obstacle_collision,out_of_bounds",
-          "segment_sources": [
-            "dubins_fallback"
-          ],
-          "segment_connectors": [
-            ""
-          ],
-          "segment_dynamic_reasons": [
-            "obstacle_collision,out_of_bounds"
-          ],
-          "astar_corridor_conversion_attempted": false,
-          "astar_corridor_conversion_success": false,
-          "astar_corridor_conversion_failure_reason": "",
-          "max_curvature": 1.0,
-          "max_heading_jump": 0.7952892163291558,
-          "max_yaw_rate": 1.0000000000000224,
-          "max_yaw_acceleration": 1.2574041989601066,
-          "max_speed": 0.9738540309550673,
-          "max_thrust_required": 0.7790832247640539,
-          "max_yaw_moment_required": 2.1574041989600943
-        },
-        {
-          "agent_id": 2,
-          "from": [
-            50.0,
-            49.0,
-            0.0
-          ],
-          "to_region": "composite_region_79",
-          "reason": "heading_jump,heading_tangent_mismatch,out_of_bounds",
-          "segment_sources": [
-            "bezier"
-          ],
-          "segment_connectors": [
-            ""
-          ],
-          "segment_dynamic_reasons": [
-            "heading_jump,heading_tangent_mismatch,out_of_bounds"
-          ],
-          "astar_corridor_conversion_attempted": false,
-          "astar_corridor_conversion_success": false,
-          "astar_corridor_conversion_failure_reason": "",
-          "max_curvature": 0.0,
-          "max_heading_jump": 3.141592653589793,
-          "max_yaw_rate": 1.0000000000000033,
-          "max_yaw_acceleration": 0.3183098861837928,
-          "max_speed": 0.030392028646636815,
-          "max_thrust_required": 0.024313622917309454,
-          "max_yaw_moment_required": 1.2183098861837958
-        },
-        {
-          "agent_id": 2,
-          "from": [
-            50.0,
-            49.0,
-            0.0
-          ],
-          "to_region": "composite_region_84",
-          "reason": "heading_jump,out_of_bounds",
-          "segment_sources": [
-            "dubins_fallback"
-          ],
-          "segment_connectors": [
-            ""
-          ],
-          "segment_dynamic_reasons": [
-            "heading_jump,out_of_bounds"
-          ],
-          "astar_corridor_conversion_attempted": false,
-          "astar_corridor_conversion_success": false,
-          "astar_corridor_conversion_failure_reason": "",
-          "max_curvature": 1.0,
-          "max_heading_jump": 0.8189790598293305,
-          "max_yaw_rate": 0.9999999999999989,
-          "max_yaw_acceleration": 4.9237013481172625,
-          "max_speed": 0.9722864303961276,
-          "max_thrust_required": 0.7778291443169021,
-          "max_yaw_moment_required": 4.9237013481172625
-        }
+      "coverage_endpoint_count": 64,
+      "infeasible_edges": []
+    }
+  },
+  "coverage_fraction": 0.9848,
+  "cover_only_coverage_fraction": 0.9648,
+  "cover_only_target_fraction": 0.99,
+  "cover_only_coverage_gap": 0.0252,
+  "transit_assisted_coverage_fraction": 0.9848,
+  "free_space_target_coverage": 0.99,
+  "residual_count": 6,
+  "residual_backfill_count": 10,
+  "main_integrated_residual_count": 2,
+  "post_backfill_residual_count": 8,
+  "cover_only_residual_backfill_count": 0,
+  "residual_feasible_count": 4,
+  "residual_infeasible_count": 6,
+  "residual_low_efficiency_filtered_count": 0,
+  "residual_low_efficiency_soft_count": 0,
+  "residual_best_gain_per_path_meter": 6.045162,
+  "residual_min_positive_gain_per_path_meter": 0.046372,
+  "residual_gain_per_meter_summary": {
+    "cycle_count": 7,
+    "best": 6.045162,
+    "min_positive": 0.046372,
+    "mean_positive": 1.0658858,
+    "threshold": 0.03,
+    "filtered_count": 0,
+    "soft_count": 0
+  },
+  "residual_min_gain_per_path_meter": 0.03,
+  "residual_filter_after_target_only": true,
+  "residual_local_tsp_enabled": true,
+  "residual_local_tsp_status": "no_append",
+  "residual_backfill_diagnostics": [
+    {
+      "skipped_infeasible_residuals": "4",
+      "status": "success",
+      "residual_candidate_attempt_count": "324",
+      "residual_low_efficiency_filtered_count": "0",
+      "residual_low_efficiency_soft_count": "0",
+      "residual_best_gain_per_path_meter": "6.045162",
+      "residual_min_positive_gain_per_path_meter": "0.117830",
+      "residual_mean_positive_gain_per_path_meter": "2.666798",
+      "residual_min_gain_per_path_meter": "0.030000",
+      "residual_filter_after_target_only": "true",
+      "residual_obstacle_aware_retry_count": "24",
+      "residual_feasible_count": "3",
+      "residual_infeasible_count": "3",
+      "repeat_path_penalty_total": "370.274942",
+      "coverage_mode": "main_integrated"
+    },
+    {
+      "skipped_infeasible_residuals": "6",
+      "status": "success",
+      "residual_candidate_attempt_count": "480",
+      "residual_low_efficiency_filtered_count": "0",
+      "residual_low_efficiency_soft_count": "0",
+      "residual_best_gain_per_path_meter": "2.286069",
+      "residual_min_positive_gain_per_path_meter": "0.084445",
+      "residual_mean_positive_gain_per_path_meter": "1.052935",
+      "residual_min_gain_per_path_meter": "0.030000",
+      "residual_filter_after_target_only": "true",
+      "residual_obstacle_aware_retry_count": "24",
+      "residual_feasible_count": "4",
+      "residual_infeasible_count": "5",
+      "repeat_path_penalty_total": "171.462420"
+    },
+    {
+      "skipped_infeasible_residuals": "7",
+      "status": "success",
+      "residual_candidate_attempt_count": "396",
+      "residual_low_efficiency_filtered_count": "0",
+      "residual_low_efficiency_soft_count": "0",
+      "residual_best_gain_per_path_meter": "1.010979",
+      "residual_min_positive_gain_per_path_meter": "0.057642",
+      "residual_mean_positive_gain_per_path_meter": "0.642538",
+      "residual_min_gain_per_path_meter": "0.030000",
+      "residual_filter_after_target_only": "true",
+      "residual_obstacle_aware_retry_count": "24",
+      "residual_feasible_count": "3",
+      "residual_infeasible_count": "6",
+      "repeat_path_penalty_total": "238.014939"
+    },
+    {
+      "skipped_infeasible_residuals": "6",
+      "status": "success",
+      "residual_candidate_attempt_count": "216",
+      "residual_low_efficiency_filtered_count": "0",
+      "residual_low_efficiency_soft_count": "0",
+      "residual_best_gain_per_path_meter": "0.680456",
+      "residual_min_positive_gain_per_path_meter": "0.282417",
+      "residual_mean_positive_gain_per_path_meter": "0.537925",
+      "residual_min_gain_per_path_meter": "0.030000",
+      "residual_filter_after_target_only": "true",
+      "residual_obstacle_aware_retry_count": "24",
+      "residual_feasible_count": "1",
+      "residual_infeasible_count": "6",
+      "repeat_path_penalty_total": "38.466227"
+    },
+    {
+      "skipped_infeasible_residuals": "5",
+      "status": "success",
+      "residual_candidate_attempt_count": "300",
+      "residual_low_efficiency_filtered_count": "0",
+      "residual_low_efficiency_soft_count": "0",
+      "residual_best_gain_per_path_meter": "0.862227",
+      "residual_min_positive_gain_per_path_meter": "0.046372",
+      "residual_mean_positive_gain_per_path_meter": "0.429233",
+      "residual_min_gain_per_path_meter": "0.030000",
+      "residual_filter_after_target_only": "true",
+      "residual_obstacle_aware_retry_count": "24",
+      "residual_feasible_count": "2",
+      "residual_infeasible_count": "5",
+      "repeat_path_penalty_total": "131.015879"
+    },
+    {
+      "skipped_infeasible_residuals": "6",
+      "status": "no_append",
+      "residual_candidate_attempt_count": "108",
+      "residual_low_efficiency_filtered_count": "0",
+      "residual_low_efficiency_soft_count": "0",
+      "residual_best_gain_per_path_meter": "0.000000",
+      "residual_min_positive_gain_per_path_meter": "0.000000",
+      "residual_mean_positive_gain_per_path_meter": "0.000000",
+      "residual_min_gain_per_path_meter": "0.030000",
+      "residual_filter_after_target_only": "true",
+      "residual_obstacle_aware_retry_count": "24",
+      "residual_feasible_count": "0",
+      "residual_infeasible_count": "6",
+      "repeat_path_penalty_total": "0.000000"
+    },
+    {
+      "skipped_infeasible_residuals": "4",
+      "status": "no_append",
+      "residual_candidate_attempt_count": "96",
+      "residual_low_efficiency_filtered_count": "0",
+      "residual_low_efficiency_soft_count": "0",
+      "residual_best_gain_per_path_meter": "0.000000",
+      "residual_min_positive_gain_per_path_meter": "0.000000",
+      "residual_mean_positive_gain_per_path_meter": "0.000000",
+      "residual_min_gain_per_path_meter": "0.030000",
+      "residual_filter_after_target_only": "true",
+      "residual_obstacle_aware_retry_count": "16",
+      "residual_feasible_count": "0",
+      "residual_infeasible_count": "4",
+      "repeat_path_penalty_total": "0.000000",
+      "coverage_mode": "cover_only"
+    }
+  ],
+  "skipped_region_recovery": {
+    "enabled": true,
+    "recovered_count": 0,
+    "failed_count": 1,
+    "recovered_regions": [],
+    "failure_reasons": {
+      "large_region_3": "kinematic_infeasible,obstacle_collision"
+    },
+    "connector_cache_size": 6
+  },
+  "skipped_region_diagnostics": {
+    "large_region_3": {
+      "assigned_agent": 1,
+      "candidate_pattern_count": 2,
+      "best_pattern_coverage_length": 104.5734302746366,
+      "skip_reason": "missing_candidate_patterns",
+      "connector_failure_reason": "kinematic_infeasible,obstacle_collision",
+      "all_connector_failure_reasons": [
+        "heading_jump,heading_tangent_mismatch,kinematic_infeasible,obstacle_collision",
+        "kinematic_infeasible,obstacle_collision",
+        "missing_candidate_patterns"
       ]
     }
   },
-  "coverage_fraction": 0.5788,
-  "cover_only_coverage_fraction": 0.456,
-  "transit_assisted_coverage_fraction": 0.5788,
-  "free_space_target_coverage": 0.0,
-  "residual_count": 9,
-  "residual_backfill_count": 0,
-  "residual_feasible_count": 0,
-  "residual_infeasible_count": 0,
-  "residual_local_tsp_enabled": true,
-  "residual_local_tsp_status": "not_run",
-  "residual_backfill_diagnostics": [],
-  "skipped_region_recovery": {
-    "enabled": false,
-    "reason": "target_coverage_zero",
-    "recovered_count": 0,
-    "failed_count": 0
-  },
-  "reachable_region_count": 19,
+  "reachable_region_count": 16,
   "region_connection_graph_components": {
     "0": {
-      "assigned_region_count": 33,
-      "visited_region_count": 9,
-      "skipped_region_count": 24,
-      "infeasible_edge_count": 8
-    },
-    "1": {
-      "assigned_region_count": 2,
-      "visited_region_count": 2,
+      "assigned_region_count": 4,
+      "visited_region_count": 4,
       "skipped_region_count": 0,
       "infeasible_edge_count": 0
     },
+    "1": {
+      "assigned_region_count": 5,
+      "visited_region_count": 4,
+      "skipped_region_count": 1,
+      "infeasible_edge_count": 1
+    },
     "2": {
-      "assigned_region_count": 47,
+      "assigned_region_count": 8,
       "visited_region_count": 8,
-      "skipped_region_count": 39,
-      "infeasible_edge_count": 8
+      "skipped_region_count": 0,
+      "infeasible_edge_count": 0
     }
   },
-  "skipped_by_no_incoming_edge": 63,
-  "skipped_by_no_outgoing_edge": 63,
-  "large_map_connector_cache_size": 57,
-  "large_map_reachability_probe_count": 80,
-  "large_map_reachability_probe_success_count": 41,
+  "skipped_by_no_incoming_edge": 1,
+  "skipped_by_no_outgoing_edge": 1,
+  "large_map_connector_cache_size": 42,
+  "large_map_reachability_probe_count": 63,
+  "large_map_reachability_probe_success_count": 13,
   "large_map_dead_end_avoidance_count": 1,
-  "repeat_path_penalty_total": 0.0,
+  "repeat_path_penalty_total": 949.2344058946738,
+  "load_swap_count": 0,
+  "load_swap_candidate_count": 8,
+  "load_swap_reject_reasons": "not_boundary_to_light_agent:8",
+  "load_swap_before_imbalance": 0.6913166811270135,
+  "load_swap_after_imbalance": 0.6913166811270134,
+  "joint_optimizer_status": "no_improvement",
+  "global_joint_objective": 854927.9470495664,
+  "cross_agent_connector_overlap_length": 114.90794821926312,
+  "cross_agent_crossing_count": 5,
+  "joint_mission_makespan": 2496.8911919072325,
+  "joint_total_agent_work_time": 3293.729430919938,
+  "joint_agent_time_imbalance": 1.9405467204280995,
+  "joint_improvement_iteration_count": 0,
+  "joint_candidate_attempt_count": 0,
+  "joint_candidate_accept_count": 0,
+  "joint_reject_reasons": {},
+  "refined_connector_count": 12,
+  "merged_noncover_window_count": 5,
+  "turn_angle_reduction": 2.3290973086826763,
+  "length_reduction": 4.292068650159067,
+  "refinement_rejected_reasons": {
+    "dubins_refinement:not_improved": 186,
+    "bezier_refinement:not_improved": 197,
+    "obstacle_aware_refinement:not_improved": 243,
+    "dubins_refinement:invalid": 63,
+    "bezier_refinement:invalid": 54,
+    "window_dubins_refinement:invalid": 13,
+    "window_bezier_refinement:invalid": 13,
+    "window_obstacle_aware_refinement:not_improved": 7,
+    "obstacle_aware_refinement:invalid": 3
+  },
+  "route_refinement_status": "success",
   "shared_resource_count": 0,
   "shared_resource_conflict_count": 0,
   "spatial_overlap_reuse_count": 0,
@@ -1646,130 +1072,74 @@
   "mapf_conflicts_resolved_after_residual": 0,
   "resource_separation_time": 0.5,
   "count_transit_coverage": true,
-  "enable_short_region_compression": false,
+  "enable_short_region_compression": true,
   "short_region_turn_ratio_threshold": 6.0,
   "main_repeat_path_penalty_enabled": true,
-  "main_repeat_overlap_length": 64.55901708445664,
-  "main_repeat_penalty_total": 774.7082050134796,
+  "main_repeat_overlap_length": 299.14643556075026,
+  "main_repeat_penalty_total": 3589.757226729003,
+  "noncover_length_ratio": 0.45377032185504135,
+  "noncover_repeat_overlap_length": 299.14643556075026,
+  "connector_noncover_repeat_length": 127.52586941997171,
+  "connector_noncover_repeat_penalty": 3060.6208660793213,
+  "connector_length": 398.1350867221924,
+  "connector_turn_angle": 135.76611520843178,
+  "turn_angle_per_coverage_meter": 0.46934318587248125,
   "agent_repeat_overlap": {
-    "0": 22.813323815447205,
-    "1": 39.58692365109231,
-    "2": 2.1587696179171245
+    "0": 52.607354415155974,
+    "1": 56.33381816635743,
+    "2": 190.20526297923684
   },
   "agent_repeat_penalty": {
-    "0": 273.75988578536646,
-    "1": 475.0430838131078,
-    "2": 25.905235415005492
+    "0": 631.2882529818717,
+    "1": 676.0058179962892,
+    "2": 2282.463155750842
   },
   "cross_agent_penalty_enabled": true,
-  "cross_agent_overlap_length": 101.35124523996387,
+  "cross_agent_overlap_length": 215.71795927313897,
   "cross_agent_overlap_by_agent": {
-    "1": 26.77871731955208,
-    "2": 26.938849003934585,
-    "0": 47.63367891647723
+    "1": 97.88075274960272,
+    "2": 22.75019311723343,
+    "0": 95.08701340630266
   },
   "cross_agent_overlap_by_kind": {
-    "transit": 90.71024454721415,
-    "turn": 10.295534735022423,
-    "cover": 0.3454659577272743
+    "turn": 59.863485829895076,
+    "transit": 108.90383448156192,
+    "cover": 46.950638961681825
   },
-  "cross_agent_penalty_total": 1015.5852481460015,
-  "unavoidable_cross_agent_overlap_count": 5,
+  "cross_agent_penalty_total": 2438.883426501482,
+  "unavoidable_cross_agent_overlap_count": 0,
   "coverage_ownership": {
-    "cell_count": 1388,
-    "region_count": 82,
-    "conflict_count": 90,
+    "cell_count": 2032,
+    "region_count": 17,
+    "conflict_count": 31,
     "region_owner": {
-      "composite_region_0": 0,
-      "composite_region_1": 0,
-      "composite_region_63": 0,
-      "composite_region_2": 0,
-      "composite_region_64": 0,
-      "composite_region_3": 0,
-      "composite_region_4": 0,
-      "composite_region_6": 0,
-      "composite_region_66": 0,
-      "composite_region_67": 0,
-      "composite_region_7": 0,
-      "composite_region_8": 0,
-      "composite_region_10": 0,
-      "composite_region_11": 0,
-      "composite_region_12": 0,
-      "composite_region_14": 0,
-      "composite_region_15": 0,
-      "composite_region_16": 0,
-      "composite_region_68": 0,
-      "composite_region_17": 0,
-      "composite_region_70": 0,
-      "composite_region_18": 0,
-      "composite_region_71": 0,
-      "composite_region_74": 0,
-      "composite_region_72": 0,
-      "composite_region_73": 0,
-      "composite_region_19": 0,
-      "composite_region_20": 0,
-      "composite_region_21": 0,
-      "composite_region_22": 0,
-      "composite_region_23": 0,
-      "composite_region_24": 0,
-      "composite_region_69": 0,
-      "composite_region_61": 1,
-      "composite_region_65": 1,
-      "composite_region_25": 2,
-      "composite_region_26": 2,
-      "composite_region_27": 2,
-      "composite_region_28": 2,
-      "composite_region_29": 2,
-      "composite_region_30": 2,
-      "composite_region_76": 2,
-      "composite_region_31": 2,
-      "composite_region_77": 2,
-      "composite_region_78": 2,
-      "composite_region_32": 2,
-      "composite_region_79": 2,
-      "composite_region_33": 2,
-      "composite_region_34": 2,
-      "composite_region_35": 2,
-      "composite_region_36": 2,
-      "composite_region_37": 2,
-      "composite_region_38": 2,
-      "composite_region_39": 2,
-      "composite_region_40": 2,
-      "composite_region_41": 2,
-      "composite_region_42": 2,
-      "composite_region_43": 2,
-      "composite_region_44": 2,
-      "composite_region_45": 2,
-      "composite_region_46": 2,
-      "composite_region_47": 2,
-      "composite_region_48": 2,
-      "composite_region_50": 2,
-      "composite_region_49": 2,
-      "composite_region_80": 2,
-      "composite_region_51": 2,
-      "composite_region_52": 2,
-      "composite_region_82": 2,
-      "composite_region_83": 2,
-      "composite_region_86": 2,
-      "composite_region_53": 2,
-      "composite_region_84": 2,
-      "composite_region_54": 2,
-      "composite_region_81": 2,
-      "composite_region_85": 2,
-      "composite_region_55": 2,
-      "composite_region_56": 2,
-      "composite_region_57": 2,
-      "composite_region_58": 2,
-      "composite_region_60": 2,
-      "composite_region_59": 2
+      "large_region_2": 0,
+      "large_region_12": 0,
+      "large_region_15": 0,
+      "large_region_4": 0,
+      "large_region_9": 1,
+      "large_region_7": 1,
+      "large_region_0": 1,
+      "large_region_3": 1,
+      "large_region_6": 1,
+      "large_region_8": 2,
+      "large_region_16": 2,
+      "large_region_13": 2,
+      "large_region_11": 2,
+      "large_region_10": 2,
+      "large_region_14": 2,
+      "large_region_1": 2,
+      "large_region_5": 2
     }
   },
   "metrics": {
-    "total_length": 715.987725346107,
-    "coverage_length": 345.80659288399994,
-    "transition_length": 370.1811324621071,
-    "total_turn_angle": 174.2629431572259,
-    "turn_count": 28.0,
+    "total_length": 1831.9783796742154,
+    "coverage_length": 1000.6809606979696,
+    "transition_length": 831.2974189762458,
+    "total_turn_angle": 469.66279013592026,
+    "estimated_time": 3484.447472962059,
+    "turn_count": 2666.0,
+    "turn_segment_count": 58.0,
     "invalid_path_length": 0.0,
     "out_of_bounds_segment_count": 0.0,
     "obstacle_collision_segment_count": 0.0,
@@ -1777,106 +1147,57 @@
     "dynamic_infeasible_segment_count": 0.0,
     "nmpc_untrackable_count": 0.0,
     "max_curvature": 1.0,
-    "max_heading_jump": 0.6472442187753513,
-    "max_heading_error": 0.2174026804965008,
-    "max_yaw_rate": 1.0000000000002933,
-    "max_yaw_acceleration": 9.996132223766669,
-    "max_speed": 1.5,
+    "max_heading_jump": 0.7468427504571262,
+    "max_heading_error": 0.3228869859313872,
+    "max_yaw_rate": 1.0000000000030784,
+    "max_yaw_acceleration": 9.998011984700177,
+    "max_speed": 2.0,
     "max_acceleration": 0.0,
-    "max_thrust_required": 1.2000000000000002,
-    "max_yaw_moment_required": 10.896132223766681
+    "max_thrust_required": 1.6,
+    "max_yaw_moment_required": 10.898011984700135
   },
   "performance_summary": {
     "performance_profile": "balanced",
-    "target_coverage_fraction": 0.0,
+    "target_coverage_fraction": 0.99,
     "count_transit_coverage": true,
-    "coverage_ratio": 0.5788,
-    "target_coverage_met": true,
-    "total_length": 715.987725346107,
-    "coverage_length": 345.80659288399994,
-    "transition_length": 370.1811324621071,
-    "coverage_length_ratio": 0.48297838167105134,
-    "transition_length_ratio": 0.5170216183289487,
-    "repeat_overlap_length": 64.55901708445664,
-    "repeat_overlap_ratio": 0.09016777075787011,
-    "repeat_transition_ratio": 0.1743984536841977,
-    "residual_count": 9.0,
-    "residual_area_ratio": 0.4212,
-    "turn_density": 0.039106815674060415,
-    "agent_load_imbalance": 1.777336559602565,
+    "coverage_ratio": 0.9848,
+    "target_coverage_met": false,
+    "total_length": 1831.9783796742154,
+    "coverage_length": 1000.6809606979696,
+    "transition_length": 831.2974189762458,
+    "coverage_length_ratio": 0.5462296781449587,
+    "transition_length_ratio": 0.45377032185504135,
+    "repeat_overlap_length": 299.14643556075026,
+    "repeat_overlap_ratio": 0.16329146614380247,
+    "repeat_transition_ratio": 0.359854883140565,
+    "residual_count": 6.0,
+    "residual_area_ratio": 0.0152,
+    "turn_count": 2666.0,
+    "turn_density": 1.455257348874445,
+    "agent_load_imbalance": 0.5826005432307382,
     "agent_total_lengths": {
-      "0": 130.87028405520056,
-      "1": 504.6505807261726,
-      "2": 80.46686056473393
+      "0": 438.83825235982727,
+      "1": 598.531341892839,
+      "2": 794.6087854215491
     },
+    "agent_work_times": {
+      "0": 387.6475070572902,
+      "1": 522.5577286742994,
+      "2": 2574.242237230469
+    },
+    "mission_makespan": 2574.242237230469,
+    "total_agent_work_time": 3484.447472962059,
+    "agent_time_imbalance": 1.882589489846204,
     "constraint_ok": true,
-    "performance_objective": 1902.9970628216938
+    "performance_objective": 11785.115952674065
   },
+  "target_coverage_status": "incomplete",
+  "cover_only_target_status": "incomplete",
+  "coverage_quality_status": "incomplete",
+  "region_execution_status": "incomplete",
   "coverage_status": "incomplete",
-  "skipped_region_count": 63,
+  "skipped_region_count": 1,
   "skipped_regions": [
-    "composite_region_0",
-    "composite_region_1",
-    "composite_region_10",
-    "composite_region_14",
-    "composite_region_15",
-    "composite_region_16",
-    "composite_region_2",
-    "composite_region_21",
-    "composite_region_22",
-    "composite_region_23",
-    "composite_region_24",
-    "composite_region_25",
-    "composite_region_26",
-    "composite_region_27",
-    "composite_region_29",
-    "composite_region_3",
-    "composite_region_30",
-    "composite_region_31",
-    "composite_region_33",
-    "composite_region_34",
-    "composite_region_35",
-    "composite_region_36",
-    "composite_region_37",
-    "composite_region_38",
-    "composite_region_39",
-    "composite_region_4",
-    "composite_region_40",
-    "composite_region_41",
-    "composite_region_42",
-    "composite_region_43",
-    "composite_region_45",
-    "composite_region_46",
-    "composite_region_47",
-    "composite_region_48",
-    "composite_region_51",
-    "composite_region_52",
-    "composite_region_53",
-    "composite_region_55",
-    "composite_region_56",
-    "composite_region_57",
-    "composite_region_58",
-    "composite_region_59",
-    "composite_region_6",
-    "composite_region_63",
-    "composite_region_64",
-    "composite_region_66",
-    "composite_region_67",
-    "composite_region_68",
-    "composite_region_69",
-    "composite_region_7",
-    "composite_region_72",
-    "composite_region_73",
-    "composite_region_74",
-    "composite_region_76",
-    "composite_region_77",
-    "composite_region_78",
-    "composite_region_79",
-    "composite_region_80",
-    "composite_region_81",
-    "composite_region_82",
-    "composite_region_83",
-    "composite_region_84",
-    "composite_region_85"
+    "large_region_3"
   ]
 }

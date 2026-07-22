@@ -6,7 +6,18 @@ from dataclasses import replace
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
-from ..schema import CoverageFootprint, FleetConfig, MissionConfig, PlannerConfig, PlannerWeights, SafetyMargins
+from ..schema import (
+    AgentPlanningProfile,
+    CoverageFootprint,
+    FleetConfig,
+    MissionConfig,
+    PlannerConfig,
+    PlannerWeights,
+    SafetyMargins,
+    State3DOF,
+    State6DOF,
+    VehicleFootprint,
+)
 from .obstacles import circle_obstacle, ellipse_obstacle, polygon_obstacle, rectangle_obstacle
 from .types import StaticObstacle
 
@@ -22,11 +33,55 @@ def load_map_json(path: str | Path) -> Dict[str, Any]:
     return data
 
 
+def resolve_default_fleet_profile_path(map_json: str | Path) -> Path | None:
+    """Resolve the fleet profile declared by a map, without guessing dimensions.
+
+    Relative profile paths are interpreted beside the map JSON.  Returning
+    ``None`` means that the map has no declared default; callers that require a
+    physical vehicle model must then request one explicitly instead of treating
+    the sensing footprint as the hull.
+    """
+
+    map_path = Path(map_json)
+    data = load_map_json(map_path)
+    raw_profile = data.get("notes", {}).get("default_fleet_profile")
+    if not raw_profile:
+        return None
+    profile_path = Path(str(raw_profile))
+    if not profile_path.is_absolute():
+        profile_path = map_path.parent / profile_path
+    if not profile_path.is_file():
+        raise FileNotFoundError(
+            f"map default fleet profile does not exist: {profile_path}"
+        )
+    return profile_path
+
+
+def validate_fleet_profile_for_map(
+    map_json: str | Path,
+    fleet_profile_json: str | Path,
+) -> Dict[str, Any]:
+    """Validate an optional profile-to-map binding and return its raw data."""
+
+    map_data = load_map_json(map_json)
+    profile_data = load_map_json(fleet_profile_json)
+    expected_map_id = str(map_data.get("map_id") or Path(map_json).stem)
+    declared_map_id = profile_data.get("map_id")
+    if declared_map_id and str(declared_map_id) != expected_map_id:
+        raise ValueError(
+            "fleet profile map_id mismatch: "
+            f"expected {expected_map_id!r}, got {declared_map_id!r}"
+        )
+    return profile_data
+
+
 def load_map_for_planner(
     map_json: str | Path,
     fleet_config: FleetConfig,
     weights: PlannerWeights | None = None,
     safety: SafetyMargins | None = None,
+    agent_profiles: Dict[int, AgentPlanningProfile] | None = None,
+    fleet_profile_id: str = "",
 ) -> Tuple[PlannerConfig, List[StaticObstacle]]:
     """Build a planner config plus static obstacles from a map asset.
 
@@ -48,7 +103,12 @@ def load_map_for_planner(
     motion_data = data.get("motion_constraints", {})
     overlap_ratio = float(notes.get("recommended_overlap_ratio", 0.1))
     d_safe = float(notes.get("recommended_d_safe", 1.0))
-    min_turn_radius = float(motion_data.get("min_turn_radius", fleet_config.min_turn_radius))
+    profile_map = dict(agent_profiles or {})
+    min_turn_radius = (
+        fleet_config.min_turn_radius
+        if profile_map
+        else float(motion_data.get("min_turn_radius", fleet_config.min_turn_radius))
+    )
 
     mission = MissionConfig(
         area_length_x=float(mission_area["length_x"]),
@@ -60,15 +120,129 @@ def load_map_for_planner(
         width_wf=float(footprint_data["width_wf"]),
     )
     fleet = replace(fleet_config, min_turn_radius=min_turn_radius)
+    vehicle_footprint = None
+    if profile_map:
+        vehicle_footprint = VehicleFootprint(
+            length=max(profile.vehicle_length for profile in profile_map.values()),
+            width=max(profile.vehicle_width for profile in profile_map.values()),
+        )
     planner_config = PlannerConfig(
         mission=mission,
         fleet=fleet,
         footprint=footprint,
         weights=weights or PlannerWeights(),
         safety=safety or SafetyMargins(d_safe=d_safe),
+        agent_profiles=profile_map,
+        vehicle_footprint=vehicle_footprint,
+        fleet_profile_id=fleet_profile_id,
     )
+    planner_config.validate_agent_profiles()
     obstacles = [_parse_static_obstacle(item) for item in data.get("static_obstacles", [])]
     return planner_config, obstacles
+
+
+def load_fleet_profile_json(path: str | Path) -> Tuple[FleetConfig, Dict[int, AgentPlanningProfile], str]:
+    """Load an independent heterogeneous fleet description.
+
+    Each agent owns its initial state, coverage footprint, physical hull, and
+    motion limits.  The loader also accepts flat keys to keep hand-authored
+    experiment files compact.
+    """
+
+    profile_path = Path(path)
+    with profile_path.open("r", encoding="utf-8") as file:
+        data = json.load(file)
+    if not isinstance(data, dict):
+        raise ValueError(f"fleet profile JSON must contain an object: {profile_path}")
+    agents = data.get("agents")
+    if not isinstance(agents, list) or not agents:
+        raise ValueError("fleet profile must contain a non-empty agents list")
+
+    profiles: Dict[int, AgentPlanningProfile] = {}
+    states_3dof: List[State3DOF] = []
+    for expected_id, item in enumerate(sorted(agents, key=lambda value: int(value.get("agent_id", 0)))):
+        if not isinstance(item, dict):
+            raise ValueError("each fleet profile agent must be an object")
+        agent_id = int(item.get("agent_id", expected_id))
+        if agent_id != expected_id:
+            raise ValueError("fleet profile agent_id values must be contiguous from zero")
+        initial = item.get("initial_state", {})
+        coverage = item.get("coverage_footprint", {})
+        vehicle = item.get("vehicle_footprint", {})
+        motion = item.get("motion_constraints", {})
+        vehicle_length = vehicle.get("length", item.get("vehicle_length"))
+        vehicle_width = vehicle.get("width", item.get("vehicle_width"))
+        if vehicle_length is None or vehicle_width is None:
+            raise ValueError(
+                f"fleet profile agent {agent_id} must declare physical "
+                "vehicle_footprint length and width; coverage_footprint is a "
+                "sensor model and is never used as a hull fallback"
+            )
+        psi = _heading_radians(initial)
+        state = State3DOF(
+            x=float(initial.get("x", item.get("initial_x", 0.0))),
+            y=float(initial.get("y", item.get("initial_y", 0.0))),
+            psi=psi,
+        )
+        states_3dof.append(state)
+        profiles[agent_id] = AgentPlanningProfile(
+            agent_id=agent_id,
+            coverage_length=float(coverage.get("length_lf", item.get("coverage_length", 4.0))),
+            coverage_width=float(coverage.get("width_wf", item.get("coverage_width", 2.0))),
+            overlap_ratio=float(coverage.get("overlap_ratio", item.get("overlap_ratio", 0.1))),
+            vehicle_length=float(vehicle_length),
+            vehicle_width=float(vehicle_width),
+            min_turn_radius=float(motion.get("min_turn_radius", item.get("min_turn_radius", 2.0))),
+            cruise_speed=float(motion.get("cruise_speed", item.get("cruise_speed", 2.0))),
+            cover_speed=float(motion.get("cover_speed", item.get("cover_speed", 1.2))),
+            turn_speed_max=float(motion.get("turn_speed_max", item.get("turn_speed_max", 1.0))),
+            max_thrust=float(motion.get("max_thrust", item.get("max_thrust", 2.0))),
+            max_yaw_moment=float(motion.get("max_yaw_moment", item.get("max_yaw_moment", 1.0))),
+            max_mission_time=_optional_float(motion.get("max_mission_time", item.get("max_mission_time"))),
+            battery_capacity=_optional_float(motion.get("battery_capacity", item.get("battery_capacity"))),
+            transit_power=float(motion.get("transit_power", item.get("transit_power", 1.0))),
+            cover_power=float(motion.get("cover_power", item.get("cover_power", 1.0))),
+            turn_power=float(motion.get("turn_power", item.get("turn_power", 1.0))),
+            wait_power=float(motion.get("wait_power", item.get("wait_power", 0.0))),
+            turn_time_penalty_per_rad=float(
+                motion.get(
+                    "turn_time_penalty_per_rad",
+                    item.get("turn_time_penalty_per_rad", 0.0),
+                )
+            ),
+            turn_energy_penalty_per_rad=float(
+                motion.get(
+                    "turn_energy_penalty_per_rad",
+                    item.get("turn_energy_penalty_per_rad", 0.0),
+                )
+            ),
+            turn_maneuver_time_penalty=float(
+                motion.get(
+                    "turn_maneuver_time_penalty",
+                    item.get("turn_maneuver_time_penalty", 0.0),
+                )
+            ),
+            turn_maneuver_energy_penalty=float(
+                motion.get(
+                    "turn_maneuver_energy_penalty",
+                    item.get("turn_maneuver_energy_penalty", 0.0),
+                )
+            ),
+        )
+
+    first = profiles[0]
+    fleet = FleetConfig(
+        initial_states_3dof=states_3dof,
+        initial_states_6dof=[State6DOF(x=state.x, y=state.y, psi=state.psi) for state in states_3dof],
+        cruise_speed=first.cruise_speed,
+        cover_speed=first.cover_speed,
+        turn_speed_max=first.turn_speed_max,
+        max_thrust=first.max_thrust,
+        max_yaw_moment=first.max_yaw_moment,
+        min_turn_radius=first.min_turn_radius,
+        num_agents=len(states_3dof),
+    )
+    return fleet, profiles, str(data.get("fleet_profile_id") or profile_path.stem)
 
 
 def build_experiment_output_dir(
@@ -78,13 +252,52 @@ def build_experiment_output_dir(
 ) -> Path:
     data = load_map_json(map_json)
     map_id = str(data.get("map_id") or Path(map_json).stem)
-    footprint = config.footprint
     fleet = config.fleet
     suffix = (
         f"{map_id}_usv{fleet.num_agents or len(fleet.initial_states_3dof)}"
-        f"_footprint{_compact_number(footprint.length_lf)}x{_compact_number(footprint.width_wf)}"
-        f"_rmin{_compact_number(fleet.min_turn_radius)}"
     )
+    if config.agent_profiles:
+        coverage_shapes = {
+            (profile.coverage_length, profile.coverage_width)
+            for profile in config.agent_profiles.values()
+        }
+        hull_shapes = {
+            (profile.vehicle_length, profile.vehicle_width)
+            for profile in config.agent_profiles.values()
+        }
+        turn_radii = {
+            profile.min_turn_radius
+            for profile in config.agent_profiles.values()
+        }
+        if len(coverage_shapes) == 1:
+            length, width = next(iter(coverage_shapes))
+            suffix += (
+                f"_sensor{_compact_number(length)}x{_compact_number(width)}"
+            )
+        else:
+            suffix += "_sensor-heterogeneous"
+        if len(hull_shapes) == 1:
+            length, width = next(iter(hull_shapes))
+            suffix += f"_hull{_compact_number(length)}x{_compact_number(width)}"
+        else:
+            suffix += "_hull-heterogeneous"
+        if len(turn_radii) == 1:
+            suffix += f"_rmin{_compact_number(next(iter(turn_radii)))}"
+        else:
+            suffix += "_rmin-heterogeneous"
+    else:
+        footprint = config.footprint
+        vehicle = config.vehicle_footprint
+        suffix += (
+            f"_sensor{_compact_number(footprint.length_lf)}x{_compact_number(footprint.width_wf)}"
+        )
+        if vehicle is not None:
+            suffix += (
+                f"_hull{_compact_number(vehicle.length)}x{_compact_number(vehicle.width)}"
+            )
+        suffix += f"_rmin{_compact_number(fleet.min_turn_radius)}"
+    if config.fleet_profile_id:
+        suffix += f"_fleet-{_safe_identifier(config.fleet_profile_id)}"
     return Path(outputs_root) / suffix
 
 
@@ -113,8 +326,25 @@ def _point(value: Any) -> Tuple[float, float]:
     return (float(value[0]), float(value[1]))
 
 
+def _heading_radians(initial: Dict[str, Any]) -> float:
+    if "psi_rad" in initial:
+        return float(initial["psi_rad"])
+    if "psi_deg" in initial:
+        return math.radians(float(initial["psi_deg"]))
+    return float(initial.get("psi", 0.0))
+
+
+def _optional_float(value: Any) -> float | None:
+    return None if value is None else float(value)
+
+
 def _compact_number(value: float) -> str:
     number = float(value)
     if abs(number - round(number)) <= 1e-9:
         return str(int(round(number)))
     return f"{number:.3f}".rstrip("0").rstrip(".").replace(".", "p")
+
+
+def _safe_identifier(value: str) -> str:
+    cleaned = "".join(character if character.isalnum() or character in {"-", "_"} else "-" for character in value)
+    return cleaned.strip("-") or "heterogeneous"

@@ -1,0 +1,124 @@
+{
+  "algorithm": "CROWN-MCPP",
+  "map_id": "static_obstacle_map_50x50_simple",
+  "solution_status": "certified_lns_service_bound",
+  "certification_scope": "continuous_responsibility_fixed_modes_time_grid_horizon",
+  "runtime_sec": 1400.2335766404867,
+  "preparation_runtime_sec": 1283.486584792,
+  "solve_runtime_sec": 116.434970731,
+  "materialization_validation_runtime_sec": 0.220880579,
+  "peak_rss_mb": 514.26171875,
+  "fleet_size": 3,
+  "fleet_profile_id": "crown_50x50_usv3",
+  "fleet": {
+    "0": {
+      "initial_pose": [
+        3.0,
+        5.0,
+        0.0
+      ],
+      "coverage_footprint": [
+        4.0,
+        2.0
+      ],
+      "vehicle_footprint": [
+        1.0,
+        0.5
+      ],
+      "min_turn_radius": 0.5
+    },
+    "1": {
+      "initial_pose": [
+        3.0,
+        25.0,
+        0.0
+      ],
+      "coverage_footprint": [
+        4.0,
+        2.0
+      ],
+      "vehicle_footprint": [
+        1.0,
+        0.5
+      ],
+      "min_turn_radius": 0.5
+    },
+    "2": {
+      "initial_pose": [
+        3.0,
+        45.0,
+        0.0
+      ],
+      "coverage_footprint": [
+        4.0,
+        2.0
+      ],
+      "vehicle_footprint": [
+        1.0,
+        0.5
+      ],
+      "min_turn_radius": 0.5
+    }
+  },
+  "fixed_region_count": 41,
+  "mode_count": 315,
+  "makespan": 4797.0,
+  "total_energy": 1370.734871714,
+  "lower_bound": 366.205693332,
+  "upper_bound": 4797.0,
+  "optimality_gap": 0.923659434,
+  "root_lp_lower_bound": null,
+  "service_lower_bound": 366.205693332,
+  "sequential_baseline_makespan": null,
+  "joint_gain_ratio": null,
+  "joint_not_worse_than_sequential_baseline": true,
+  "coverage_fraction": 0.9992,
+  "coverage_target": 0.99,
+  "continuous_conflict_validated": true,
+  "generated_columns": 3,
+  "pricing_iterations": 1,
+  "branch_nodes": 0,
+  "resource_precedence_branches": 0,
+  "route_variable_branches": 0,
+  "conflict_separation_rounds": 0,
+  "anytime_trace": [
+    {
+      "time": 19.853338342159986,
+      "lower_bound": 366.20569333211574,
+      "upper_bound": 4797.0,
+      "gap": 0.9236594343689565,
+      "iteration": 0.0
+    }
+  ],
+  "agents": {
+    "0": {
+      "segment_count": 2656,
+      "metrics": {
+        "total_length": 631.9158609051129,
+        "estimated_time": 1537.0,
+        "total_energy": 500.6421879077909
+      }
+    },
+    "1": {
+      "segment_count": 1902,
+      "metrics": {
+        "total_length": 451.6546705514736,
+        "estimated_time": 4797.0,
+        "total_energy": 357.30530436117755
+      }
+    },
+    "2": {
+      "segment_count": 3980,
+      "metrics": {
+        "total_length": 615.6338065808294,
+        "estimated_time": 3703.0,
+        "total_energy": 512.787379444683
+      }
+    }
+  },
+  "artifacts": {
+    "report": "outputs/crown_map_suite_50/static_obstacle_map_50x50_simple_usv3_footprint4x2_rmin0p5_fleet-crown_50x50_usv3/crown_mcpp/crown_mcpp_report.json"
+  },
+  "solver_first_feasible_sec": 19.853338342159986,
+  "end_to_end_first_feasible_sec": 1303.33992313416
+}

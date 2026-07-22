@@ -1,0 +1,2477 @@
+{
+  "generated_at": "2026-07-02T01:09:41",
+  "map_id": "static_obstacle_map_200x200_mixed_obstacles",
+  "algorithm": "paper_style_region_tsp",
+  "requested_tsp_solver": "deterministic",
+  "effective_tsp_solvers": {
+    "0": "deterministic",
+    "1": "deterministic",
+    "2": "deterministic",
+    "3": "deterministic"
+  },
+  "aco_best_objective": 0.0,
+  "aco_initial_objective": 0.0,
+  "aco_iteration_count": 0,
+  "aco_accepted_3opt_count": 0,
+  "elapsed_sec": 4131.876618899405,
+  "stage_timing_sec": {
+    "obstacle_normalization": 8.9e-05,
+    "free_space_decomposition": 0.222564,
+    "region_coarsen_merge": 7e-06,
+    "coverage_pattern_generation": 394.742248,
+    "build_sweep_paths": 843.090631,
+    "large_convex_region_split_repair": 1176.104393,
+    "region_graph_building": 0.008236,
+    "load_balancing_assignment": 0.001627,
+    "coverage_ownership_map": 0.530822,
+    "agent_0_region_tsp": 48.086069,
+    "agent_1_region_tsp": 497.570976,
+    "agent_2_region_tsp": 385.312628,
+    "agent_3_region_tsp": 101.862845,
+    "skipped_region_recovery": 370.89897,
+    "residual_backfill_cycle_1": 57.970697,
+    "cover_only_residual_backfill_cycle_1": 211.048368
+  },
+  "stage_monitor": {
+    "obstacle_normalization": {
+      "static_obstacle_count": 7,
+      "inflated_obstacle_count": 7
+    },
+    "free_space_decomposition": {
+      "base_region_count": 42,
+      "large_convex_mode_enabled": true,
+      "large_convex_region_count": 42,
+      "composite_mode_enabled": false,
+      "composite_region_count": 0
+    },
+    "region_coarsen_merge": {
+      "coarsened_region_count": 42,
+      "merged_region_count": 42,
+      "composite_region_count": 0,
+      "composite_member_cell_count": 0,
+      "merge_rejected_count": 0,
+      "merge_rejected_by_reason": {}
+    },
+    "coverage_pattern_generation": {
+      "region_count": 42,
+      "raw_pattern_count": 79
+    },
+    "build_sweep_paths": {
+      "feasible_region_count": 40,
+      "infeasible_region_count": 2,
+      "prefiltered_pattern_count": 0,
+      "uturn_cache_hit_count": 0,
+      "uturn_cache_miss_count": 1758,
+      "open_chain_region_count": 0,
+      "open_chain_count": 0,
+      "open_chain_break_count": 0,
+      "open_chain_connected_count": 0
+    },
+    "large_convex_region_split_repair": {
+      "large_convex_split_count": 2,
+      "large_convex_split_repair_depth": 1,
+      "feasible_region_count": 44,
+      "infeasible_region_count": 0
+    },
+    "region_graph_building": {
+      "feasible_region_count": 44,
+      "edge_count": 36
+    },
+    "load_balancing_assignment": {
+      "agent_count": 4,
+      "load_swap_count": 0,
+      "load_swap_candidate_count": 12,
+      "load_swap_before_imbalance": 0.318291,
+      "load_swap_after_imbalance": 0.309099
+    },
+    "coverage_ownership_map": {
+      "owned_region_count": 44
+    },
+    "agent_0_region_tsp": {
+      "assigned_region_count": 11,
+      "final_region_count": 7,
+      "segment_count": 198,
+      "infeasible_edge_count": 20
+    },
+    "agent_1_region_tsp": {
+      "assigned_region_count": 11,
+      "final_region_count": 10,
+      "segment_count": 340,
+      "infeasible_edge_count": 4
+    },
+    "agent_2_region_tsp": {
+      "assigned_region_count": 12,
+      "final_region_count": 11,
+      "segment_count": 345,
+      "infeasible_edge_count": 1
+    },
+    "agent_3_region_tsp": {
+      "assigned_region_count": 10,
+      "final_region_count": 10,
+      "segment_count": 222,
+      "infeasible_edge_count": 0
+    },
+    "skipped_region_recovery": {
+      "recovered_count": 4,
+      "failed_count": 2,
+      "connector_cache_size": 55
+    },
+    "residual_backfill_cycle_1": {
+      "appended_count": 0,
+      "status": "no_append",
+      "residual_feasible_count": "0",
+      "residual_infeasible_count": "12"
+    },
+    "cover_only_residual_backfill_cycle_1": {
+      "appended_count": 0,
+      "status": "no_append",
+      "residual_feasible_count": "0",
+      "residual_infeasible_count": "4"
+    }
+  },
+  "large_map_mode_enabled": true,
+  "prefiltered_pattern_count": 0,
+  "prefiltered_variant_count": 320,
+  "uturn_cache_hit_count": 0,
+  "uturn_cache_miss_count": 3592,
+  "uturn_direct_fail_repair_success_count": 807,
+  "open_chain_region_count": 0,
+  "open_chain_count": 0,
+  "open_chain_break_count": 0,
+  "open_chain_invalid_pass_count": 0,
+  "open_chain_connected_count": 0,
+  "open_chain_skipped_count": 0,
+  "open_chain_recovered_coverage_length": 0.0,
+  "rmin_aware_chain_enabled": false,
+  "turn_stride_distribution": {},
+  "rmin_180_attempt_count": 0,
+  "rmin_180_success_count": 0,
+  "rmin_180_feasible_ratio": 0.0,
+  "single_pass_chain_count": 0,
+  "short_pass_residual_count": 0,
+  "adaptive_retraction_pattern_count": 258,
+  "adaptive_retracted_pass_count": 2210,
+  "adaptive_total_retraction_length": 11003.925250000002,
+  "adaptive_max_retraction_length": 85.190617,
+  "adaptive_retraction_failed_count": 198,
+  "adaptive_retraction_extended_count": 1404,
+  "region_repair_count": 2,
+  "heading_repair_count": 8,
+  "raw_free_cell_count": 42,
+  "large_convex_region_count": 44,
+  "rectangle_region_count": 44,
+  "trapezoid_region_count": 0,
+  "fallback_cell_region_count": 0,
+  "oriented_pattern_count": 0,
+  "axis_aligned_pattern_count": 83,
+  "selected_oriented_pattern_count": 0,
+  "main_tsp_executed_region_count": 38,
+  "recovered_region_count": 4,
+  "residual_only_region_count": 2,
+  "composite_region_enabled": false,
+  "composite_region_count": 0,
+  "composite_member_cell_count": 0,
+  "composite_split_count": 0,
+  "large_convex_split_count": 2,
+  "coarsened_region_count": 42,
+  "merged_region_count": 44,
+  "feasible_sweep_region_count": 44,
+  "merge_rejected_count": 0,
+  "merge_rejected_by_reason": {},
+  "raw_astar_edge_rejected_count": 0,
+  "astar_corridor_conversion_attempt_count": 142,
+  "astar_corridor_conversion_success_count": 121,
+  "astar_corridor_conversion_failure_count": 21,
+  "corridor_conversion_methods": {
+    "motion_lattice_after_astar": 94,
+    "filleted_astar_corridor": 9,
+    "segmented_dubins_lattice": 14
+  },
+  "astar_corridor_conversion_failure_reasons": {
+    "all_conversion_methods_failed": 21
+  },
+  "region_count": 44,
+  "base_region_count": 42,
+  "performance_merge_fallback": false,
+  "feasible_region_count": 44,
+  "infeasible_regions": [],
+  "infeasible_edges": [
+    {
+      "agent_id": 0,
+      "from": [
+        85.556,
+        38.902,
+        -1.571
+      ],
+      "to_region": "large_region_20",
+      "reason": "kinematic_infeasible,obstacle_collision",
+      "segment_sources": [
+        "bezier"
+      ],
+      "segment_connectors": [
+        "astar_corridor_conversion_failed"
+      ],
+      "segment_dynamic_reasons": [
+        "kinematic_infeasible,obstacle_collision"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": false,
+      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+      "max_curvature": 0.15999677846605886,
+      "max_heading_jump": 0.07197945852091792,
+      "max_yaw_rate": 0.3204401925340131,
+      "max_yaw_acceleration": 0.11346547141308673,
+      "max_speed": 2.0,
+      "max_thrust_required": 1.6,
+      "max_yaw_moment_required": 0.35368019629728
+    },
+    {
+      "agent_id": 0,
+      "from": [
+        85.556,
+        38.902,
+        -1.571
+      ],
+      "to_region": "large_region_20",
+      "reason": "kinematic_infeasible,obstacle_collision",
+      "segment_sources": [
+        "dubins_fallback"
+      ],
+      "segment_connectors": [
+        "astar_corridor_conversion_failed"
+      ],
+      "segment_dynamic_reasons": [
+        "kinematic_infeasible,obstacle_collision"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": false,
+      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+      "max_curvature": 0.5,
+      "max_heading_jump": 0.5441891550756437,
+      "max_yaw_rate": 0.5000000000002228,
+      "max_yaw_acceleration": 2.4711749399917493,
+      "max_speed": 0.9877063534546642,
+      "max_thrust_required": 0.7901650827637314,
+      "max_yaw_moment_required": 2.4711749399917493
+    },
+    {
+      "agent_id": 0,
+      "from": [
+        85.556,
+        38.902,
+        -1.571
+      ],
+      "to_region": "large_region_37",
+      "reason": "kinematic_infeasible,obstacle_collision",
+      "segment_sources": [
+        "dubins_fallback"
+      ],
+      "segment_connectors": [
+        "astar_corridor_conversion_failed"
+      ],
+      "segment_dynamic_reasons": [
+        "kinematic_infeasible,obstacle_collision"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": false,
+      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+      "max_curvature": 0.5,
+      "max_heading_jump": 0.31374947804806297,
+      "max_yaw_rate": 0.49999999999999434,
+      "max_yaw_acceleration": 2.491978186620738,
+      "max_speed": 0.9959034300575612,
+      "max_thrust_required": 0.796722744046049,
+      "max_yaw_moment_required": 2.491978186620738
+    },
+    {
+      "agent_id": 0,
+      "from": [
+        85.556,
+        38.902,
+        -1.571
+      ],
+      "to_region": "large_region_37",
+      "reason": "kinematic_infeasible,obstacle_collision",
+      "segment_sources": [
+        "dubins_fallback"
+      ],
+      "segment_connectors": [
+        "astar_corridor_conversion_failed"
+      ],
+      "segment_dynamic_reasons": [
+        "kinematic_infeasible,obstacle_collision"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": false,
+      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+      "max_curvature": 0.5,
+      "max_heading_jump": 0.2623936536324072,
+      "max_yaw_rate": 0.4999999999999306,
+      "max_yaw_acceleration": 0.9527669459192062,
+      "max_speed": 0.9971337000427277,
+      "max_thrust_required": 0.7977069600341822,
+      "max_yaw_moment_required": 1.4027669459191436
+    },
+    {
+      "agent_id": 0,
+      "from": [
+        85.556,
+        38.902,
+        -1.571
+      ],
+      "to_region": "large_region_39",
+      "reason": "kinematic_infeasible,obstacle_collision",
+      "segment_sources": [
+        "dubins_fallback"
+      ],
+      "segment_connectors": [
+        "astar_corridor_conversion_failed"
+      ],
+      "segment_dynamic_reasons": [
+        "kinematic_infeasible,obstacle_collision"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": false,
+      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+      "max_curvature": 0.5,
+      "max_heading_jump": 0.33586140431478295,
+      "max_yaw_rate": 0.5000000000003795,
+      "max_yaw_acceleration": 2.498211989207396,
+      "max_speed": 0.9953065027694016,
+      "max_thrust_required": 0.7962452022155213,
+      "max_yaw_moment_required": 2.498211989207396
+    },
+    {
+      "agent_id": 0,
+      "from": [
+        85.556,
+        38.902,
+        -1.571
+      ],
+      "to_region": "large_region_39",
+      "reason": "kinematic_infeasible,obstacle_collision",
+      "segment_sources": [
+        "bezier"
+      ],
+      "segment_connectors": [
+        "astar_corridor_conversion_failed"
+      ],
+      "segment_dynamic_reasons": [
+        "kinematic_infeasible,obstacle_collision"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": false,
+      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+      "max_curvature": 0.344173872407069,
+      "max_heading_jump": 0.17216179518453956,
+      "max_yaw_rate": 0.5000000000005056,
+      "max_yaw_acceleration": 0.2376402129087943,
+      "max_speed": 1.438799195870952,
+      "max_thrust_required": 1.1510393566967616,
+      "max_yaw_moment_required": 0.6098419031304496
+    },
+    {
+      "agent_id": 0,
+      "from": [
+        85.556,
+        38.902,
+        -1.571
+      ],
+      "to_region": "large_region_36",
+      "reason": "kinematic_infeasible,obstacle_collision",
+      "segment_sources": [
+        "bezier"
+      ],
+      "segment_connectors": [
+        "astar_corridor_conversion_failed"
+      ],
+      "segment_dynamic_reasons": [
+        "kinematic_infeasible,obstacle_collision"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": false,
+      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+      "max_curvature": 0.32838980005206353,
+      "max_heading_jump": 0.16358560071251071,
+      "max_yaw_rate": 0.5000000000003543,
+      "max_yaw_acceleration": 0.259205489801582,
+      "max_speed": 1.5098503447545621,
+      "max_thrust_required": 1.2078802758036498,
+      "max_yaw_moment_required": 0.6329150612103434
+    },
+    {
+      "agent_id": 0,
+      "from": [
+        85.556,
+        38.902,
+        -1.571
+      ],
+      "to_region": "large_region_36",
+      "reason": "kinematic_infeasible,obstacle_collision",
+      "segment_sources": [
+        "bezier"
+      ],
+      "segment_connectors": [
+        "astar_corridor_conversion_failed"
+      ],
+      "segment_dynamic_reasons": [
+        "kinematic_infeasible,obstacle_collision"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": false,
+      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+      "max_curvature": 0.4056956603214285,
+      "max_heading_jump": 0.1882780553379808,
+      "max_yaw_rate": 0.4995780637542827,
+      "max_yaw_acceleration": 0.22083232698362942,
+      "max_speed": 1.2324509451342298,
+      "max_thrust_required": 0.9859607561073839,
+      "max_yaw_moment_required": 0.6061029259149844
+    },
+    {
+      "agent_id": 0,
+      "from": [
+        85.556,
+        38.902,
+        -1.571
+      ],
+      "to_region": "large_region_37",
+      "reason": "kinematic_infeasible,obstacle_collision",
+      "segment_sources": [
+        "dubins_fallback"
+      ],
+      "segment_connectors": [
+        "astar_corridor_conversion_failed"
+      ],
+      "segment_dynamic_reasons": [
+        "kinematic_infeasible,obstacle_collision"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": false,
+      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+      "max_curvature": 0.5,
+      "max_heading_jump": 0.31374947804806297,
+      "max_yaw_rate": 0.49999999999999434,
+      "max_yaw_acceleration": 2.491978186620738,
+      "max_speed": 0.9959034300575612,
+      "max_thrust_required": 0.796722744046049,
+      "max_yaw_moment_required": 2.491978186620738
+    },
+    {
+      "agent_id": 0,
+      "from": [
+        85.556,
+        38.902,
+        -1.571
+      ],
+      "to_region": "large_region_37",
+      "reason": "kinematic_infeasible,obstacle_collision",
+      "segment_sources": [
+        "dubins_fallback"
+      ],
+      "segment_connectors": [
+        "astar_corridor_conversion_failed"
+      ],
+      "segment_dynamic_reasons": [
+        "kinematic_infeasible,obstacle_collision"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": false,
+      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+      "max_curvature": 0.5,
+      "max_heading_jump": 0.2623936536324072,
+      "max_yaw_rate": 0.4999999999999306,
+      "max_yaw_acceleration": 0.9527669459192062,
+      "max_speed": 0.9971337000427277,
+      "max_thrust_required": 0.7977069600341822,
+      "max_yaw_moment_required": 1.4027669459191436
+    },
+    {
+      "agent_id": 0,
+      "from": [
+        85.556,
+        38.902,
+        -1.571
+      ],
+      "to_region": "large_region_39",
+      "reason": "kinematic_infeasible,obstacle_collision",
+      "segment_sources": [
+        "dubins_fallback"
+      ],
+      "segment_connectors": [
+        "astar_corridor_conversion_failed"
+      ],
+      "segment_dynamic_reasons": [
+        "kinematic_infeasible,obstacle_collision"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": false,
+      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+      "max_curvature": 0.5,
+      "max_heading_jump": 0.33586140431478295,
+      "max_yaw_rate": 0.5000000000003795,
+      "max_yaw_acceleration": 2.498211989207396,
+      "max_speed": 0.9953065027694016,
+      "max_thrust_required": 0.7962452022155213,
+      "max_yaw_moment_required": 2.498211989207396
+    },
+    {
+      "agent_id": 0,
+      "from": [
+        85.556,
+        38.902,
+        -1.571
+      ],
+      "to_region": "large_region_39",
+      "reason": "kinematic_infeasible,obstacle_collision",
+      "segment_sources": [
+        "bezier"
+      ],
+      "segment_connectors": [
+        "astar_corridor_conversion_failed"
+      ],
+      "segment_dynamic_reasons": [
+        "kinematic_infeasible,obstacle_collision"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": false,
+      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+      "max_curvature": 0.344173872407069,
+      "max_heading_jump": 0.17216179518453956,
+      "max_yaw_rate": 0.5000000000005056,
+      "max_yaw_acceleration": 0.2376402129087943,
+      "max_speed": 1.438799195870952,
+      "max_thrust_required": 1.1510393566967616,
+      "max_yaw_moment_required": 0.6098419031304496
+    },
+    {
+      "agent_id": 0,
+      "from": [
+        85.556,
+        38.902,
+        -1.571
+      ],
+      "to_region": "large_region_36",
+      "reason": "kinematic_infeasible,obstacle_collision",
+      "segment_sources": [
+        "bezier"
+      ],
+      "segment_connectors": [
+        "astar_corridor_conversion_failed"
+      ],
+      "segment_dynamic_reasons": [
+        "kinematic_infeasible,obstacle_collision"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": false,
+      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+      "max_curvature": 0.32838980005206353,
+      "max_heading_jump": 0.16358560071251071,
+      "max_yaw_rate": 0.5000000000003543,
+      "max_yaw_acceleration": 0.259205489801582,
+      "max_speed": 1.5098503447545621,
+      "max_thrust_required": 1.2078802758036498,
+      "max_yaw_moment_required": 0.6329150612103434
+    },
+    {
+      "agent_id": 0,
+      "from": [
+        85.556,
+        38.902,
+        -1.571
+      ],
+      "to_region": "large_region_36",
+      "reason": "kinematic_infeasible,obstacle_collision",
+      "segment_sources": [
+        "bezier"
+      ],
+      "segment_connectors": [
+        "astar_corridor_conversion_failed"
+      ],
+      "segment_dynamic_reasons": [
+        "kinematic_infeasible,obstacle_collision"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": false,
+      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+      "max_curvature": 0.4056956603214285,
+      "max_heading_jump": 0.1882780553379808,
+      "max_yaw_rate": 0.4995780637542827,
+      "max_yaw_acceleration": 0.22083232698362942,
+      "max_speed": 1.2324509451342298,
+      "max_thrust_required": 0.9859607561073839,
+      "max_yaw_moment_required": 0.6061029259149844
+    },
+    {
+      "agent_id": 0,
+      "from": [
+        85.556,
+        38.902,
+        -1.571
+      ],
+      "to_region": "large_region_39",
+      "reason": "kinematic_infeasible,obstacle_collision",
+      "segment_sources": [
+        "dubins_fallback"
+      ],
+      "segment_connectors": [
+        "astar_corridor_conversion_failed"
+      ],
+      "segment_dynamic_reasons": [
+        "kinematic_infeasible,obstacle_collision"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": false,
+      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+      "max_curvature": 0.5,
+      "max_heading_jump": 0.33586140431478295,
+      "max_yaw_rate": 0.5000000000003795,
+      "max_yaw_acceleration": 2.498211989207396,
+      "max_speed": 0.9953065027694016,
+      "max_thrust_required": 0.7962452022155213,
+      "max_yaw_moment_required": 2.498211989207396
+    },
+    {
+      "agent_id": 0,
+      "from": [
+        85.556,
+        38.902,
+        -1.571
+      ],
+      "to_region": "large_region_39",
+      "reason": "kinematic_infeasible,obstacle_collision",
+      "segment_sources": [
+        "bezier"
+      ],
+      "segment_connectors": [
+        "astar_corridor_conversion_failed"
+      ],
+      "segment_dynamic_reasons": [
+        "kinematic_infeasible,obstacle_collision"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": false,
+      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+      "max_curvature": 0.344173872407069,
+      "max_heading_jump": 0.17216179518453956,
+      "max_yaw_rate": 0.5000000000005056,
+      "max_yaw_acceleration": 0.2376402129087943,
+      "max_speed": 1.438799195870952,
+      "max_thrust_required": 1.1510393566967616,
+      "max_yaw_moment_required": 0.6098419031304496
+    },
+    {
+      "agent_id": 0,
+      "from": [
+        85.556,
+        38.902,
+        -1.571
+      ],
+      "to_region": "large_region_36",
+      "reason": "kinematic_infeasible,obstacle_collision",
+      "segment_sources": [
+        "bezier"
+      ],
+      "segment_connectors": [
+        "astar_corridor_conversion_failed"
+      ],
+      "segment_dynamic_reasons": [
+        "kinematic_infeasible,obstacle_collision"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": false,
+      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+      "max_curvature": 0.32838980005206353,
+      "max_heading_jump": 0.16358560071251071,
+      "max_yaw_rate": 0.5000000000003543,
+      "max_yaw_acceleration": 0.259205489801582,
+      "max_speed": 1.5098503447545621,
+      "max_thrust_required": 1.2078802758036498,
+      "max_yaw_moment_required": 0.6329150612103434
+    },
+    {
+      "agent_id": 0,
+      "from": [
+        85.556,
+        38.902,
+        -1.571
+      ],
+      "to_region": "large_region_36",
+      "reason": "kinematic_infeasible,obstacle_collision",
+      "segment_sources": [
+        "bezier"
+      ],
+      "segment_connectors": [
+        "astar_corridor_conversion_failed"
+      ],
+      "segment_dynamic_reasons": [
+        "kinematic_infeasible,obstacle_collision"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": false,
+      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+      "max_curvature": 0.4056956603214285,
+      "max_heading_jump": 0.1882780553379808,
+      "max_yaw_rate": 0.4995780637542827,
+      "max_yaw_acceleration": 0.22083232698362942,
+      "max_speed": 1.2324509451342298,
+      "max_thrust_required": 0.9859607561073839,
+      "max_yaw_moment_required": 0.6061029259149844
+    },
+    {
+      "agent_id": 0,
+      "from": [
+        85.556,
+        38.902,
+        -1.571
+      ],
+      "to_region": "large_region_36",
+      "reason": "kinematic_infeasible,obstacle_collision",
+      "segment_sources": [
+        "bezier"
+      ],
+      "segment_connectors": [
+        "astar_corridor_conversion_failed"
+      ],
+      "segment_dynamic_reasons": [
+        "kinematic_infeasible,obstacle_collision"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": false,
+      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+      "max_curvature": 0.32838980005206353,
+      "max_heading_jump": 0.16358560071251071,
+      "max_yaw_rate": 0.5000000000003543,
+      "max_yaw_acceleration": 0.259205489801582,
+      "max_speed": 1.5098503447545621,
+      "max_thrust_required": 1.2078802758036498,
+      "max_yaw_moment_required": 0.6329150612103434
+    },
+    {
+      "agent_id": 0,
+      "from": [
+        85.556,
+        38.902,
+        -1.571
+      ],
+      "to_region": "large_region_36",
+      "reason": "kinematic_infeasible,obstacle_collision",
+      "segment_sources": [
+        "bezier"
+      ],
+      "segment_connectors": [
+        "astar_corridor_conversion_failed"
+      ],
+      "segment_dynamic_reasons": [
+        "kinematic_infeasible,obstacle_collision"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": false,
+      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+      "max_curvature": 0.4056956603214285,
+      "max_heading_jump": 0.1882780553379808,
+      "max_yaw_rate": 0.4995780637542827,
+      "max_yaw_acceleration": 0.22083232698362942,
+      "max_speed": 1.2324509451342298,
+      "max_thrust_required": 0.9859607561073839,
+      "max_yaw_moment_required": 0.6061029259149844
+    },
+    {
+      "agent_id": 1,
+      "from": [
+        199.0,
+        86.0,
+        1.571
+      ],
+      "to_region": "large_region_29",
+      "reason": "heading_jump,heading_tangent_mismatch",
+      "segment_sources": [
+        "smoothed_astar_corridor"
+      ],
+      "segment_connectors": [
+        "smoothed_astar_corridor"
+      ],
+      "segment_dynamic_reasons": [
+        "heading_jump,heading_tangent_mismatch"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": true,
+      "astar_corridor_conversion_failure_reason": "",
+      "max_curvature": 0.19529281069737706,
+      "max_heading_jump": 1.940718113920049,
+      "max_yaw_rate": 0.49999999999990663,
+      "max_yaw_acceleration": 0.12749740312353824,
+      "max_speed": 0.17032995733308276,
+      "max_thrust_required": 0.13626396586646622,
+      "max_yaw_moment_required": 0.5774974031234542
+    },
+    {
+      "agent_id": 1,
+      "from": [
+        199.0,
+        86.0,
+        1.571
+      ],
+      "to_region": "large_region_29",
+      "reason": "heading_jump,heading_tangent_mismatch",
+      "segment_sources": [
+        "smoothed_astar_corridor"
+      ],
+      "segment_connectors": [
+        "smoothed_astar_corridor"
+      ],
+      "segment_dynamic_reasons": [
+        "heading_jump,heading_tangent_mismatch"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": true,
+      "astar_corridor_conversion_failure_reason": "",
+      "max_curvature": 0.19556118217128104,
+      "max_heading_jump": 1.889290964866147,
+      "max_yaw_rate": 0.499999999999992,
+      "max_yaw_acceleration": 0.12999333538482225,
+      "max_speed": 0.28211928963519906,
+      "max_thrust_required": 0.22569543170815926,
+      "max_yaw_moment_required": 0.579993335384815
+    },
+    {
+      "agent_id": 1,
+      "from": [
+        199.0,
+        86.0,
+        1.571
+      ],
+      "to_region": "large_region_29",
+      "reason": "heading_jump,heading_tangent_mismatch",
+      "segment_sources": [
+        "smoothed_astar_corridor"
+      ],
+      "segment_connectors": [
+        "smoothed_astar_corridor"
+      ],
+      "segment_dynamic_reasons": [
+        "heading_jump,heading_tangent_mismatch"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": true,
+      "astar_corridor_conversion_failure_reason": "",
+      "max_curvature": 0.2244482660968899,
+      "max_heading_jump": 1.5707963267948966,
+      "max_yaw_rate": 0.49999999999994743,
+      "max_yaw_acceleration": 0.0532868797541129,
+      "max_speed": 0.32059742566534555,
+      "max_thrust_required": 0.25647794053227646,
+      "max_yaw_moment_required": 0.4499999999999527
+    },
+    {
+      "agent_id": 1,
+      "from": [
+        199.0,
+        86.0,
+        1.571
+      ],
+      "to_region": "large_region_29",
+      "reason": "heading_jump,heading_tangent_mismatch",
+      "segment_sources": [
+        "smoothed_astar_corridor"
+      ],
+      "segment_connectors": [
+        "smoothed_astar_corridor"
+      ],
+      "segment_dynamic_reasons": [
+        "heading_jump,heading_tangent_mismatch"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": true,
+      "astar_corridor_conversion_failure_reason": "",
+      "max_curvature": 0.44444900857600983,
+      "max_heading_jump": 2.8576195034476823,
+      "max_yaw_rate": 0.49999999999987366,
+      "max_yaw_acceleration": 0.08779654787948167,
+      "max_speed": 0.1098710291383467,
+      "max_thrust_required": 0.08789682331067737,
+      "max_yaw_moment_required": 0.537796547879368
+    },
+    {
+      "agent_id": 2,
+      "from": [
+        1.999,
+        199.0,
+        3.142
+      ],
+      "to_region": "large_region_40",
+      "reason": "heading_jump,kinematic_infeasible,obstacle_collision",
+      "segment_sources": [
+        "dubins_fallback"
+      ],
+      "segment_connectors": [
+        "astar_corridor_conversion_failed"
+      ],
+      "segment_dynamic_reasons": [
+        "heading_jump,kinematic_infeasible,obstacle_collision"
+      ],
+      "astar_corridor_conversion_attempted": true,
+      "astar_corridor_conversion_success": false,
+      "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+      "max_curvature": 0.5,
+      "max_heading_jump": 1.103499051251088,
+      "max_yaw_rate": 0.49999999999994044,
+      "max_yaw_acceleration": 2.385180834135602,
+      "max_speed": 0.9500288036359942,
+      "max_thrust_required": 0.7600230429087954,
+      "max_yaw_moment_required": 2.385180832536881
+    }
+  ],
+  "tsp_node_count": 44,
+  "coverage_endpoint_count": 1128,
+  "agent_tsp_records": {
+    "0": {
+      "assigned_regions": [
+        "large_region_11",
+        "large_region_12",
+        "large_region_9",
+        "large_region_20",
+        "large_region_5",
+        "large_region_36",
+        "large_region_37",
+        "large_region_39",
+        "large_region_26",
+        "large_region_21",
+        "large_region_38"
+      ],
+      "initial_order": [
+        "large_region_11",
+        "large_region_12",
+        "large_region_9",
+        "large_region_20",
+        "large_region_5",
+        "large_region_36",
+        "large_region_37",
+        "large_region_39",
+        "large_region_26",
+        "large_region_21",
+        "large_region_38"
+      ],
+      "final_order": [
+        "large_region_5",
+        "large_region_11",
+        "large_region_9",
+        "large_region_21",
+        "large_region_12",
+        "large_region_26",
+        "large_region_38"
+      ],
+      "skipped_regions": [
+        "large_region_39"
+      ],
+      "tsp_node_count": 11,
+      "tsp_solver_metadata": {
+        "requested_tsp_solver": "deterministic",
+        "effective_tsp_solver": "deterministic",
+        "tsp_solver_status": "success",
+        "aco_best_objective": null,
+        "aco_initial_objective": null,
+        "aco_iteration_count": 0,
+        "aco_convergence_trace": [],
+        "aco_accepted_3opt_count": 0,
+        "large_map_greedy_tsp": true,
+        "large_map_greedy_final_region_count": 7,
+        "large_map_connector_cache_size": 35,
+        "large_map_reachability_probe_count": 59,
+        "large_map_reachability_probe_success_count": 17,
+        "large_map_dead_end_avoidance_count": 1
+      },
+      "requested_tsp_solver": "deterministic",
+      "effective_tsp_solver": "deterministic",
+      "tsp_solver_status": "success",
+      "aco_best_objective": null,
+      "aco_initial_objective": null,
+      "aco_iteration_count": 0,
+      "aco_convergence_trace": [],
+      "aco_accepted_3opt_count": 0,
+      "candidate_pattern_counts": {
+        "large_region_11": 2,
+        "large_region_12": 2,
+        "large_region_9": 2,
+        "large_region_20": 2,
+        "large_region_5": 2,
+        "large_region_36": 2,
+        "large_region_37": 2,
+        "large_region_39": 2,
+        "large_region_26": 2,
+        "large_region_21": 2,
+        "large_region_38": 1
+      },
+      "candidate_attempt_count": 32,
+      "rejected_candidate_count": 23,
+      "selected_pattern_ids": {
+        "large_region_5": "large_region_5_pattern_y_pocket_0p0_low_to_high_max_to_min",
+        "large_region_11": "large_region_11_pattern_x_pocket_0p0_low_to_high_max_to_min",
+        "large_region_9": "large_region_9_pattern_x_pocket_0p0_high_to_low_min_to_max",
+        "large_region_21": "large_region_21_pattern_y_pocket_0p0_high_to_low_min_to_max",
+        "large_region_12": "large_region_12_pattern_y_pocket_0p0_high_to_low_min_to_max",
+        "large_region_26": "large_region_26_pattern_y_pocket_0p0_high_to_low_min_to_max",
+        "large_region_38": "large_region_38_pattern_y_pocket_0p0_high_to_low_min_to_max"
+      },
+      "skipped_region_reasons": {
+        "large_region_39": "kinematic_infeasible,obstacle_collision"
+      },
+      "connector_failure_reasons": {
+        "large_region_9": "heading_jump",
+        "large_region_39": "kinematic_infeasible,obstacle_collision"
+      },
+      "all_connector_failure_reasons": {
+        "large_region_20": [
+          "heading_jump",
+          "kinematic_infeasible,obstacle_collision",
+          "heading_jump,heading_tangent_mismatch"
+        ],
+        "large_region_36": [
+          "kinematic_infeasible,obstacle_collision",
+          "obstacle_collision",
+          "heading_jump,obstacle_collision",
+          "heading_jump,kinematic_infeasible,obstacle_collision"
+        ],
+        "large_region_37": [
+          "kinematic_infeasible,obstacle_collision",
+          "obstacle_collision",
+          "heading_jump,obstacle_collision",
+          "heading_jump,kinematic_infeasible,obstacle_collision",
+          "heading_jump,heading_tangent_mismatch,kinematic_infeasible,obstacle_collision"
+        ],
+        "large_region_39": [
+          "kinematic_infeasible,obstacle_collision",
+          "obstacle_collision",
+          "heading_jump,obstacle_collision"
+        ],
+        "large_region_9": [
+          "heading_jump",
+          "heading_jump,heading_tangent_mismatch"
+        ]
+      },
+      "main_repeat_overlap_length": 310.90487665723947,
+      "main_repeat_penalty_total": 9264.60400377375,
+      "connector_noncover_repeat_length": 205.42880193159908,
+      "connector_noncover_repeat_penalty": 4930.291246358378,
+      "connector_length": 576.4869632882355,
+      "connector_turn_angle": 91.33753677739915,
+      "cross_agent_overlap_length": 0.0,
+      "cross_agent_penalty_total": 0.0,
+      "unavoidable_cross_agent_overlap_count": 0,
+      "coverage_endpoint_count": 256,
+      "infeasible_edges": [
+        {
+          "agent_id": 0,
+          "from": [
+            85.556,
+            38.902,
+            -1.571
+          ],
+          "to_region": "large_region_20",
+          "reason": "kinematic_infeasible,obstacle_collision",
+          "segment_sources": [
+            "bezier"
+          ],
+          "segment_connectors": [
+            "astar_corridor_conversion_failed"
+          ],
+          "segment_dynamic_reasons": [
+            "kinematic_infeasible,obstacle_collision"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": false,
+          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+          "max_curvature": 0.15999677846605886,
+          "max_heading_jump": 0.07197945852091792,
+          "max_yaw_rate": 0.3204401925340131,
+          "max_yaw_acceleration": 0.11346547141308673,
+          "max_speed": 2.0,
+          "max_thrust_required": 1.6,
+          "max_yaw_moment_required": 0.35368019629728
+        },
+        {
+          "agent_id": 0,
+          "from": [
+            85.556,
+            38.902,
+            -1.571
+          ],
+          "to_region": "large_region_20",
+          "reason": "kinematic_infeasible,obstacle_collision",
+          "segment_sources": [
+            "dubins_fallback"
+          ],
+          "segment_connectors": [
+            "astar_corridor_conversion_failed"
+          ],
+          "segment_dynamic_reasons": [
+            "kinematic_infeasible,obstacle_collision"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": false,
+          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+          "max_curvature": 0.5,
+          "max_heading_jump": 0.5441891550756437,
+          "max_yaw_rate": 0.5000000000002228,
+          "max_yaw_acceleration": 2.4711749399917493,
+          "max_speed": 0.9877063534546642,
+          "max_thrust_required": 0.7901650827637314,
+          "max_yaw_moment_required": 2.4711749399917493
+        },
+        {
+          "agent_id": 0,
+          "from": [
+            85.556,
+            38.902,
+            -1.571
+          ],
+          "to_region": "large_region_37",
+          "reason": "kinematic_infeasible,obstacle_collision",
+          "segment_sources": [
+            "dubins_fallback"
+          ],
+          "segment_connectors": [
+            "astar_corridor_conversion_failed"
+          ],
+          "segment_dynamic_reasons": [
+            "kinematic_infeasible,obstacle_collision"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": false,
+          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+          "max_curvature": 0.5,
+          "max_heading_jump": 0.31374947804806297,
+          "max_yaw_rate": 0.49999999999999434,
+          "max_yaw_acceleration": 2.491978186620738,
+          "max_speed": 0.9959034300575612,
+          "max_thrust_required": 0.796722744046049,
+          "max_yaw_moment_required": 2.491978186620738
+        },
+        {
+          "agent_id": 0,
+          "from": [
+            85.556,
+            38.902,
+            -1.571
+          ],
+          "to_region": "large_region_37",
+          "reason": "kinematic_infeasible,obstacle_collision",
+          "segment_sources": [
+            "dubins_fallback"
+          ],
+          "segment_connectors": [
+            "astar_corridor_conversion_failed"
+          ],
+          "segment_dynamic_reasons": [
+            "kinematic_infeasible,obstacle_collision"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": false,
+          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+          "max_curvature": 0.5,
+          "max_heading_jump": 0.2623936536324072,
+          "max_yaw_rate": 0.4999999999999306,
+          "max_yaw_acceleration": 0.9527669459192062,
+          "max_speed": 0.9971337000427277,
+          "max_thrust_required": 0.7977069600341822,
+          "max_yaw_moment_required": 1.4027669459191436
+        },
+        {
+          "agent_id": 0,
+          "from": [
+            85.556,
+            38.902,
+            -1.571
+          ],
+          "to_region": "large_region_39",
+          "reason": "kinematic_infeasible,obstacle_collision",
+          "segment_sources": [
+            "dubins_fallback"
+          ],
+          "segment_connectors": [
+            "astar_corridor_conversion_failed"
+          ],
+          "segment_dynamic_reasons": [
+            "kinematic_infeasible,obstacle_collision"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": false,
+          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+          "max_curvature": 0.5,
+          "max_heading_jump": 0.33586140431478295,
+          "max_yaw_rate": 0.5000000000003795,
+          "max_yaw_acceleration": 2.498211989207396,
+          "max_speed": 0.9953065027694016,
+          "max_thrust_required": 0.7962452022155213,
+          "max_yaw_moment_required": 2.498211989207396
+        },
+        {
+          "agent_id": 0,
+          "from": [
+            85.556,
+            38.902,
+            -1.571
+          ],
+          "to_region": "large_region_39",
+          "reason": "kinematic_infeasible,obstacle_collision",
+          "segment_sources": [
+            "bezier"
+          ],
+          "segment_connectors": [
+            "astar_corridor_conversion_failed"
+          ],
+          "segment_dynamic_reasons": [
+            "kinematic_infeasible,obstacle_collision"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": false,
+          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+          "max_curvature": 0.344173872407069,
+          "max_heading_jump": 0.17216179518453956,
+          "max_yaw_rate": 0.5000000000005056,
+          "max_yaw_acceleration": 0.2376402129087943,
+          "max_speed": 1.438799195870952,
+          "max_thrust_required": 1.1510393566967616,
+          "max_yaw_moment_required": 0.6098419031304496
+        },
+        {
+          "agent_id": 0,
+          "from": [
+            85.556,
+            38.902,
+            -1.571
+          ],
+          "to_region": "large_region_36",
+          "reason": "kinematic_infeasible,obstacle_collision",
+          "segment_sources": [
+            "bezier"
+          ],
+          "segment_connectors": [
+            "astar_corridor_conversion_failed"
+          ],
+          "segment_dynamic_reasons": [
+            "kinematic_infeasible,obstacle_collision"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": false,
+          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+          "max_curvature": 0.32838980005206353,
+          "max_heading_jump": 0.16358560071251071,
+          "max_yaw_rate": 0.5000000000003543,
+          "max_yaw_acceleration": 0.259205489801582,
+          "max_speed": 1.5098503447545621,
+          "max_thrust_required": 1.2078802758036498,
+          "max_yaw_moment_required": 0.6329150612103434
+        },
+        {
+          "agent_id": 0,
+          "from": [
+            85.556,
+            38.902,
+            -1.571
+          ],
+          "to_region": "large_region_36",
+          "reason": "kinematic_infeasible,obstacle_collision",
+          "segment_sources": [
+            "bezier"
+          ],
+          "segment_connectors": [
+            "astar_corridor_conversion_failed"
+          ],
+          "segment_dynamic_reasons": [
+            "kinematic_infeasible,obstacle_collision"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": false,
+          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+          "max_curvature": 0.4056956603214285,
+          "max_heading_jump": 0.1882780553379808,
+          "max_yaw_rate": 0.4995780637542827,
+          "max_yaw_acceleration": 0.22083232698362942,
+          "max_speed": 1.2324509451342298,
+          "max_thrust_required": 0.9859607561073839,
+          "max_yaw_moment_required": 0.6061029259149844
+        },
+        {
+          "agent_id": 0,
+          "from": [
+            85.556,
+            38.902,
+            -1.571
+          ],
+          "to_region": "large_region_37",
+          "reason": "kinematic_infeasible,obstacle_collision",
+          "segment_sources": [
+            "dubins_fallback"
+          ],
+          "segment_connectors": [
+            "astar_corridor_conversion_failed"
+          ],
+          "segment_dynamic_reasons": [
+            "kinematic_infeasible,obstacle_collision"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": false,
+          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+          "max_curvature": 0.5,
+          "max_heading_jump": 0.31374947804806297,
+          "max_yaw_rate": 0.49999999999999434,
+          "max_yaw_acceleration": 2.491978186620738,
+          "max_speed": 0.9959034300575612,
+          "max_thrust_required": 0.796722744046049,
+          "max_yaw_moment_required": 2.491978186620738
+        },
+        {
+          "agent_id": 0,
+          "from": [
+            85.556,
+            38.902,
+            -1.571
+          ],
+          "to_region": "large_region_37",
+          "reason": "kinematic_infeasible,obstacle_collision",
+          "segment_sources": [
+            "dubins_fallback"
+          ],
+          "segment_connectors": [
+            "astar_corridor_conversion_failed"
+          ],
+          "segment_dynamic_reasons": [
+            "kinematic_infeasible,obstacle_collision"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": false,
+          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+          "max_curvature": 0.5,
+          "max_heading_jump": 0.2623936536324072,
+          "max_yaw_rate": 0.4999999999999306,
+          "max_yaw_acceleration": 0.9527669459192062,
+          "max_speed": 0.9971337000427277,
+          "max_thrust_required": 0.7977069600341822,
+          "max_yaw_moment_required": 1.4027669459191436
+        },
+        {
+          "agent_id": 0,
+          "from": [
+            85.556,
+            38.902,
+            -1.571
+          ],
+          "to_region": "large_region_39",
+          "reason": "kinematic_infeasible,obstacle_collision",
+          "segment_sources": [
+            "dubins_fallback"
+          ],
+          "segment_connectors": [
+            "astar_corridor_conversion_failed"
+          ],
+          "segment_dynamic_reasons": [
+            "kinematic_infeasible,obstacle_collision"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": false,
+          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+          "max_curvature": 0.5,
+          "max_heading_jump": 0.33586140431478295,
+          "max_yaw_rate": 0.5000000000003795,
+          "max_yaw_acceleration": 2.498211989207396,
+          "max_speed": 0.9953065027694016,
+          "max_thrust_required": 0.7962452022155213,
+          "max_yaw_moment_required": 2.498211989207396
+        },
+        {
+          "agent_id": 0,
+          "from": [
+            85.556,
+            38.902,
+            -1.571
+          ],
+          "to_region": "large_region_39",
+          "reason": "kinematic_infeasible,obstacle_collision",
+          "segment_sources": [
+            "bezier"
+          ],
+          "segment_connectors": [
+            "astar_corridor_conversion_failed"
+          ],
+          "segment_dynamic_reasons": [
+            "kinematic_infeasible,obstacle_collision"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": false,
+          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+          "max_curvature": 0.344173872407069,
+          "max_heading_jump": 0.17216179518453956,
+          "max_yaw_rate": 0.5000000000005056,
+          "max_yaw_acceleration": 0.2376402129087943,
+          "max_speed": 1.438799195870952,
+          "max_thrust_required": 1.1510393566967616,
+          "max_yaw_moment_required": 0.6098419031304496
+        },
+        {
+          "agent_id": 0,
+          "from": [
+            85.556,
+            38.902,
+            -1.571
+          ],
+          "to_region": "large_region_36",
+          "reason": "kinematic_infeasible,obstacle_collision",
+          "segment_sources": [
+            "bezier"
+          ],
+          "segment_connectors": [
+            "astar_corridor_conversion_failed"
+          ],
+          "segment_dynamic_reasons": [
+            "kinematic_infeasible,obstacle_collision"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": false,
+          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+          "max_curvature": 0.32838980005206353,
+          "max_heading_jump": 0.16358560071251071,
+          "max_yaw_rate": 0.5000000000003543,
+          "max_yaw_acceleration": 0.259205489801582,
+          "max_speed": 1.5098503447545621,
+          "max_thrust_required": 1.2078802758036498,
+          "max_yaw_moment_required": 0.6329150612103434
+        },
+        {
+          "agent_id": 0,
+          "from": [
+            85.556,
+            38.902,
+            -1.571
+          ],
+          "to_region": "large_region_36",
+          "reason": "kinematic_infeasible,obstacle_collision",
+          "segment_sources": [
+            "bezier"
+          ],
+          "segment_connectors": [
+            "astar_corridor_conversion_failed"
+          ],
+          "segment_dynamic_reasons": [
+            "kinematic_infeasible,obstacle_collision"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": false,
+          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+          "max_curvature": 0.4056956603214285,
+          "max_heading_jump": 0.1882780553379808,
+          "max_yaw_rate": 0.4995780637542827,
+          "max_yaw_acceleration": 0.22083232698362942,
+          "max_speed": 1.2324509451342298,
+          "max_thrust_required": 0.9859607561073839,
+          "max_yaw_moment_required": 0.6061029259149844
+        },
+        {
+          "agent_id": 0,
+          "from": [
+            85.556,
+            38.902,
+            -1.571
+          ],
+          "to_region": "large_region_39",
+          "reason": "kinematic_infeasible,obstacle_collision",
+          "segment_sources": [
+            "dubins_fallback"
+          ],
+          "segment_connectors": [
+            "astar_corridor_conversion_failed"
+          ],
+          "segment_dynamic_reasons": [
+            "kinematic_infeasible,obstacle_collision"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": false,
+          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+          "max_curvature": 0.5,
+          "max_heading_jump": 0.33586140431478295,
+          "max_yaw_rate": 0.5000000000003795,
+          "max_yaw_acceleration": 2.498211989207396,
+          "max_speed": 0.9953065027694016,
+          "max_thrust_required": 0.7962452022155213,
+          "max_yaw_moment_required": 2.498211989207396
+        },
+        {
+          "agent_id": 0,
+          "from": [
+            85.556,
+            38.902,
+            -1.571
+          ],
+          "to_region": "large_region_39",
+          "reason": "kinematic_infeasible,obstacle_collision",
+          "segment_sources": [
+            "bezier"
+          ],
+          "segment_connectors": [
+            "astar_corridor_conversion_failed"
+          ],
+          "segment_dynamic_reasons": [
+            "kinematic_infeasible,obstacle_collision"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": false,
+          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+          "max_curvature": 0.344173872407069,
+          "max_heading_jump": 0.17216179518453956,
+          "max_yaw_rate": 0.5000000000005056,
+          "max_yaw_acceleration": 0.2376402129087943,
+          "max_speed": 1.438799195870952,
+          "max_thrust_required": 1.1510393566967616,
+          "max_yaw_moment_required": 0.6098419031304496
+        },
+        {
+          "agent_id": 0,
+          "from": [
+            85.556,
+            38.902,
+            -1.571
+          ],
+          "to_region": "large_region_36",
+          "reason": "kinematic_infeasible,obstacle_collision",
+          "segment_sources": [
+            "bezier"
+          ],
+          "segment_connectors": [
+            "astar_corridor_conversion_failed"
+          ],
+          "segment_dynamic_reasons": [
+            "kinematic_infeasible,obstacle_collision"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": false,
+          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+          "max_curvature": 0.32838980005206353,
+          "max_heading_jump": 0.16358560071251071,
+          "max_yaw_rate": 0.5000000000003543,
+          "max_yaw_acceleration": 0.259205489801582,
+          "max_speed": 1.5098503447545621,
+          "max_thrust_required": 1.2078802758036498,
+          "max_yaw_moment_required": 0.6329150612103434
+        },
+        {
+          "agent_id": 0,
+          "from": [
+            85.556,
+            38.902,
+            -1.571
+          ],
+          "to_region": "large_region_36",
+          "reason": "kinematic_infeasible,obstacle_collision",
+          "segment_sources": [
+            "bezier"
+          ],
+          "segment_connectors": [
+            "astar_corridor_conversion_failed"
+          ],
+          "segment_dynamic_reasons": [
+            "kinematic_infeasible,obstacle_collision"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": false,
+          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+          "max_curvature": 0.4056956603214285,
+          "max_heading_jump": 0.1882780553379808,
+          "max_yaw_rate": 0.4995780637542827,
+          "max_yaw_acceleration": 0.22083232698362942,
+          "max_speed": 1.2324509451342298,
+          "max_thrust_required": 0.9859607561073839,
+          "max_yaw_moment_required": 0.6061029259149844
+        },
+        {
+          "agent_id": 0,
+          "from": [
+            85.556,
+            38.902,
+            -1.571
+          ],
+          "to_region": "large_region_36",
+          "reason": "kinematic_infeasible,obstacle_collision",
+          "segment_sources": [
+            "bezier"
+          ],
+          "segment_connectors": [
+            "astar_corridor_conversion_failed"
+          ],
+          "segment_dynamic_reasons": [
+            "kinematic_infeasible,obstacle_collision"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": false,
+          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+          "max_curvature": 0.32838980005206353,
+          "max_heading_jump": 0.16358560071251071,
+          "max_yaw_rate": 0.5000000000003543,
+          "max_yaw_acceleration": 0.259205489801582,
+          "max_speed": 1.5098503447545621,
+          "max_thrust_required": 1.2078802758036498,
+          "max_yaw_moment_required": 0.6329150612103434
+        },
+        {
+          "agent_id": 0,
+          "from": [
+            85.556,
+            38.902,
+            -1.571
+          ],
+          "to_region": "large_region_36",
+          "reason": "kinematic_infeasible,obstacle_collision",
+          "segment_sources": [
+            "bezier"
+          ],
+          "segment_connectors": [
+            "astar_corridor_conversion_failed"
+          ],
+          "segment_dynamic_reasons": [
+            "kinematic_infeasible,obstacle_collision"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": false,
+          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+          "max_curvature": 0.4056956603214285,
+          "max_heading_jump": 0.1882780553379808,
+          "max_yaw_rate": 0.4995780637542827,
+          "max_yaw_acceleration": 0.22083232698362942,
+          "max_speed": 1.2324509451342298,
+          "max_thrust_required": 0.9859607561073839,
+          "max_yaw_moment_required": 0.6061029259149844
+        }
+      ]
+    },
+    "1": {
+      "assigned_regions": [
+        "large_region_0",
+        "large_region_8",
+        "large_region_7",
+        "large_region_33",
+        "large_region_29",
+        "large_region_15",
+        "large_region_13",
+        "large_region_6",
+        "large_region_24",
+        "large_region_23",
+        "large_region_19",
+        "large_region_36",
+        "large_region_37"
+      ],
+      "initial_order": [
+        "large_region_0",
+        "large_region_8",
+        "large_region_7",
+        "large_region_33",
+        "large_region_29",
+        "large_region_15",
+        "large_region_13",
+        "large_region_6",
+        "large_region_24",
+        "large_region_23",
+        "large_region_19"
+      ],
+      "final_order": [
+        "large_region_0",
+        "large_region_6",
+        "large_region_7",
+        "large_region_13",
+        "large_region_8",
+        "large_region_19",
+        "large_region_15",
+        "large_region_33",
+        "large_region_24",
+        "large_region_23",
+        "large_region_36",
+        "large_region_37"
+      ],
+      "skipped_regions": [],
+      "tsp_node_count": 11,
+      "tsp_solver_metadata": {
+        "requested_tsp_solver": "deterministic",
+        "effective_tsp_solver": "deterministic",
+        "tsp_solver_status": "success",
+        "aco_best_objective": null,
+        "aco_initial_objective": null,
+        "aco_iteration_count": 0,
+        "aco_convergence_trace": [],
+        "aco_accepted_3opt_count": 0,
+        "large_map_greedy_tsp": true,
+        "large_map_greedy_final_region_count": 10,
+        "large_map_connector_cache_size": 52,
+        "large_map_reachability_probe_count": 74,
+        "large_map_reachability_probe_success_count": 15,
+        "large_map_dead_end_avoidance_count": 3
+      },
+      "requested_tsp_solver": "deterministic",
+      "effective_tsp_solver": "deterministic",
+      "tsp_solver_status": "success",
+      "aco_best_objective": null,
+      "aco_initial_objective": null,
+      "aco_iteration_count": 0,
+      "aco_convergence_trace": [],
+      "aco_accepted_3opt_count": 0,
+      "candidate_pattern_counts": {
+        "large_region_0": 2,
+        "large_region_8": 2,
+        "large_region_7": 2,
+        "large_region_33": 4,
+        "large_region_29": 4,
+        "large_region_15": 3,
+        "large_region_13": 2,
+        "large_region_6": 4,
+        "large_region_24": 2,
+        "large_region_23": 2,
+        "large_region_19": 2
+      },
+      "candidate_attempt_count": 27,
+      "rejected_candidate_count": 12,
+      "selected_pattern_ids": {
+        "large_region_0": "large_region_0_pattern_y_pocket_0p0_low_to_high_max_to_min",
+        "large_region_6": "large_region_6_pattern_x_pocket_0p0_high_to_low_max_to_min",
+        "large_region_7": "large_region_7_pattern_x_pocket_0p0_high_to_low_max_to_min",
+        "large_region_13": "large_region_13_pattern_x_pocket_0p0_low_to_high_min_to_max",
+        "large_region_8": "large_region_8_pattern_y_pocket_0p0_high_to_low_min_to_max",
+        "large_region_19": "large_region_19_pattern_x_pocket_0p0_high_to_low_min_to_max",
+        "large_region_15": "large_region_15_pattern_x_pocket_0p0_low_to_high_max_to_min",
+        "large_region_33": "large_region_33_pattern_y_pocket_0p0_high_to_low_max_to_min",
+        "large_region_24": "large_region_24_pattern_y_pocket_0p0_high_to_low_min_to_max",
+        "large_region_23": "large_region_23_pattern_y_pocket_0p0_low_to_high_max_to_min",
+        "large_region_36": "large_region_36_pattern_y_pocket_0p0_high_to_low_min_to_max",
+        "large_region_37": "large_region_37_pattern_y_pocket_0p0_low_to_high_min_to_max"
+      },
+      "skipped_region_reasons": {},
+      "connector_failure_reasons": {
+        "large_region_8": "heading_jump",
+        "large_region_15": "kinematic_infeasible,obstacle_collision"
+      },
+      "all_connector_failure_reasons": {
+        "large_region_15": [
+          "heading_jump",
+          "kinematic_infeasible,obstacle_collision"
+        ],
+        "large_region_29": [
+          "heading_jump,heading_tangent_mismatch",
+          "heading_jump,kinematic_infeasible,obstacle_collision",
+          "kinematic_infeasible,obstacle_collision"
+        ],
+        "large_region_8": [
+          "heading_jump"
+        ]
+      },
+      "main_repeat_overlap_length": 746.401454275318,
+      "main_repeat_penalty_total": 20942.020948607635,
+      "connector_noncover_repeat_length": 350.5686080586805,
+      "connector_noncover_repeat_penalty": 8413.646593408334,
+      "connector_length": 946.5149013750225,
+      "connector_turn_angle": 129.34983636791043,
+      "cross_agent_overlap_length": 0.0,
+      "cross_agent_penalty_total": 0.0,
+      "unavoidable_cross_agent_overlap_count": 0,
+      "coverage_endpoint_count": 306,
+      "infeasible_edges": [
+        {
+          "agent_id": 1,
+          "from": [
+            199.0,
+            86.0,
+            1.571
+          ],
+          "to_region": "large_region_29",
+          "reason": "heading_jump,heading_tangent_mismatch",
+          "segment_sources": [
+            "smoothed_astar_corridor"
+          ],
+          "segment_connectors": [
+            "smoothed_astar_corridor"
+          ],
+          "segment_dynamic_reasons": [
+            "heading_jump,heading_tangent_mismatch"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": true,
+          "astar_corridor_conversion_failure_reason": "",
+          "max_curvature": 0.19529281069737706,
+          "max_heading_jump": 1.940718113920049,
+          "max_yaw_rate": 0.49999999999990663,
+          "max_yaw_acceleration": 0.12749740312353824,
+          "max_speed": 0.17032995733308276,
+          "max_thrust_required": 0.13626396586646622,
+          "max_yaw_moment_required": 0.5774974031234542
+        },
+        {
+          "agent_id": 1,
+          "from": [
+            199.0,
+            86.0,
+            1.571
+          ],
+          "to_region": "large_region_29",
+          "reason": "heading_jump,heading_tangent_mismatch",
+          "segment_sources": [
+            "smoothed_astar_corridor"
+          ],
+          "segment_connectors": [
+            "smoothed_astar_corridor"
+          ],
+          "segment_dynamic_reasons": [
+            "heading_jump,heading_tangent_mismatch"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": true,
+          "astar_corridor_conversion_failure_reason": "",
+          "max_curvature": 0.19556118217128104,
+          "max_heading_jump": 1.889290964866147,
+          "max_yaw_rate": 0.499999999999992,
+          "max_yaw_acceleration": 0.12999333538482225,
+          "max_speed": 0.28211928963519906,
+          "max_thrust_required": 0.22569543170815926,
+          "max_yaw_moment_required": 0.579993335384815
+        },
+        {
+          "agent_id": 1,
+          "from": [
+            199.0,
+            86.0,
+            1.571
+          ],
+          "to_region": "large_region_29",
+          "reason": "heading_jump,heading_tangent_mismatch",
+          "segment_sources": [
+            "smoothed_astar_corridor"
+          ],
+          "segment_connectors": [
+            "smoothed_astar_corridor"
+          ],
+          "segment_dynamic_reasons": [
+            "heading_jump,heading_tangent_mismatch"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": true,
+          "astar_corridor_conversion_failure_reason": "",
+          "max_curvature": 0.2244482660968899,
+          "max_heading_jump": 1.5707963267948966,
+          "max_yaw_rate": 0.49999999999994743,
+          "max_yaw_acceleration": 0.0532868797541129,
+          "max_speed": 0.32059742566534555,
+          "max_thrust_required": 0.25647794053227646,
+          "max_yaw_moment_required": 0.4499999999999527
+        },
+        {
+          "agent_id": 1,
+          "from": [
+            199.0,
+            86.0,
+            1.571
+          ],
+          "to_region": "large_region_29",
+          "reason": "heading_jump,heading_tangent_mismatch",
+          "segment_sources": [
+            "smoothed_astar_corridor"
+          ],
+          "segment_connectors": [
+            "smoothed_astar_corridor"
+          ],
+          "segment_dynamic_reasons": [
+            "heading_jump,heading_tangent_mismatch"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": true,
+          "astar_corridor_conversion_failure_reason": "",
+          "max_curvature": 0.44444900857600983,
+          "max_heading_jump": 2.8576195034476823,
+          "max_yaw_rate": 0.49999999999987366,
+          "max_yaw_acceleration": 0.08779654787948167,
+          "max_speed": 0.1098710291383467,
+          "max_thrust_required": 0.08789682331067737,
+          "max_yaw_moment_required": 0.537796547879368
+        }
+      ]
+    },
+    "2": {
+      "assigned_regions": [
+        "large_region_25",
+        "large_region_31",
+        "large_region_32",
+        "large_region_41_split_0",
+        "large_region_41_split_1",
+        "large_region_2_split_0",
+        "large_region_1",
+        "large_region_40",
+        "large_region_22",
+        "large_region_16",
+        "large_region_18",
+        "large_region_4"
+      ],
+      "initial_order": [
+        "large_region_25",
+        "large_region_31",
+        "large_region_32",
+        "large_region_41_split_0",
+        "large_region_41_split_1",
+        "large_region_2_split_0",
+        "large_region_1",
+        "large_region_40",
+        "large_region_22",
+        "large_region_16",
+        "large_region_18",
+        "large_region_4"
+      ],
+      "final_order": [
+        "large_region_2_split_0",
+        "large_region_1",
+        "large_region_16",
+        "large_region_18",
+        "large_region_22",
+        "large_region_41_split_0",
+        "large_region_32",
+        "large_region_31",
+        "large_region_41_split_1",
+        "large_region_25",
+        "large_region_4"
+      ],
+      "skipped_regions": [
+        "large_region_40"
+      ],
+      "tsp_node_count": 12,
+      "tsp_solver_metadata": {
+        "requested_tsp_solver": "deterministic",
+        "effective_tsp_solver": "deterministic",
+        "tsp_solver_status": "success",
+        "aco_best_objective": null,
+        "aco_initial_objective": null,
+        "aco_iteration_count": 0,
+        "aco_convergence_trace": [],
+        "aco_accepted_3opt_count": 0,
+        "large_map_greedy_tsp": true,
+        "large_map_greedy_final_region_count": 11,
+        "large_map_connector_cache_size": 60,
+        "large_map_reachability_probe_count": 131,
+        "large_map_reachability_probe_success_count": 12,
+        "large_map_dead_end_avoidance_count": 6
+      },
+      "requested_tsp_solver": "deterministic",
+      "effective_tsp_solver": "deterministic",
+      "tsp_solver_status": "success",
+      "aco_best_objective": null,
+      "aco_initial_objective": null,
+      "aco_iteration_count": 0,
+      "aco_convergence_trace": [],
+      "aco_accepted_3opt_count": 0,
+      "candidate_pattern_counts": {
+        "large_region_25": 2,
+        "large_region_31": 2,
+        "large_region_32": 2,
+        "large_region_41_split_0": 2,
+        "large_region_41_split_1": 2,
+        "large_region_2_split_0": 2,
+        "large_region_1": 2,
+        "large_region_40": 1,
+        "large_region_22": 2,
+        "large_region_16": 2,
+        "large_region_18": 2,
+        "large_region_4": 2
+      },
+      "candidate_attempt_count": 33,
+      "rejected_candidate_count": 12,
+      "selected_pattern_ids": {
+        "large_region_2_split_0": "large_region_2_split_0_pattern_y_pocket_0p0_low_to_high_max_to_min",
+        "large_region_1": "large_region_1_pattern_y_pocket_0p0_high_to_low_max_to_min",
+        "large_region_16": "large_region_16_pattern_x_pocket_0p0_high_to_low_max_to_min",
+        "large_region_18": "large_region_18_pattern_x_pocket_0p0_high_to_low_max_to_min",
+        "large_region_22": "large_region_22_pattern_x_pocket_0p0_high_to_low_min_to_max",
+        "large_region_41_split_0": "large_region_41_split_0_pattern_x_pocket_0p0_low_to_high_max_to_min",
+        "large_region_32": "large_region_32_pattern_x_pocket_0p0_high_to_low_max_to_min",
+        "large_region_31": "large_region_31_pattern_x_pocket_0p0_high_to_low_max_to_min",
+        "large_region_41_split_1": "large_region_41_split_1_pattern_x_pocket_0p0_low_to_high_min_to_max",
+        "large_region_25": "large_region_25_pattern_y_pocket_0p0_low_to_high_max_to_min",
+        "large_region_4": "large_region_4_pattern_x_pocket_0p0_low_to_high_max_to_min"
+      },
+      "skipped_region_reasons": {
+        "large_region_40": "heading_jump,kinematic_infeasible,obstacle_collision"
+      },
+      "connector_failure_reasons": {
+        "large_region_1": "heading_jump,heading_tangent_mismatch",
+        "large_region_4": "heading_jump,heading_tangent_mismatch",
+        "large_region_40": "heading_jump,heading_tangent_mismatch"
+      },
+      "all_connector_failure_reasons": {
+        "large_region_1": [
+          "heading_jump,heading_tangent_mismatch"
+        ],
+        "large_region_4": [
+          "heading_jump",
+          "heading_jump,heading_tangent_mismatch",
+          "heading_jump,kinematic_infeasible,obstacle_collision"
+        ],
+        "large_region_40": [
+          "heading_jump,heading_tangent_mismatch",
+          "heading_jump,kinematic_infeasible,obstacle_collision",
+          "heading_jump,obstacle_collision",
+          "obstacle_collision",
+          "kinematic_infeasible,obstacle_collision"
+        ]
+      },
+      "main_repeat_overlap_length": 423.9439860259964,
+      "main_repeat_penalty_total": 13894.080011623913,
+      "connector_noncover_repeat_length": 214.67005225867166,
+      "connector_noncover_repeat_penalty": 5152.081254208119,
+      "connector_length": 667.4173647764172,
+      "connector_turn_angle": 92.18865783694899,
+      "cross_agent_overlap_length": 0.0,
+      "cross_agent_penalty_total": 0.0,
+      "unavoidable_cross_agent_overlap_count": 0,
+      "coverage_endpoint_count": 346,
+      "infeasible_edges": [
+        {
+          "agent_id": 2,
+          "from": [
+            1.999,
+            199.0,
+            3.142
+          ],
+          "to_region": "large_region_40",
+          "reason": "heading_jump,kinematic_infeasible,obstacle_collision",
+          "segment_sources": [
+            "dubins_fallback"
+          ],
+          "segment_connectors": [
+            "astar_corridor_conversion_failed"
+          ],
+          "segment_dynamic_reasons": [
+            "heading_jump,kinematic_infeasible,obstacle_collision"
+          ],
+          "astar_corridor_conversion_attempted": true,
+          "astar_corridor_conversion_success": false,
+          "astar_corridor_conversion_failure_reason": "all_conversion_methods_failed",
+          "max_curvature": 0.5,
+          "max_heading_jump": 1.103499051251088,
+          "max_yaw_rate": 0.49999999999994044,
+          "max_yaw_acceleration": 2.385180834135602,
+          "max_speed": 0.9500288036359942,
+          "max_thrust_required": 0.7600230429087954,
+          "max_yaw_moment_required": 2.385180832536881
+        }
+      ]
+    },
+    "3": {
+      "assigned_regions": [
+        "large_region_30",
+        "large_region_17",
+        "large_region_3",
+        "large_region_35",
+        "large_region_2_split_1",
+        "large_region_10",
+        "large_region_34",
+        "large_region_27",
+        "large_region_28",
+        "large_region_14",
+        "large_region_20",
+        "large_region_29"
+      ],
+      "initial_order": [
+        "large_region_30",
+        "large_region_17",
+        "large_region_3",
+        "large_region_35",
+        "large_region_2_split_1",
+        "large_region_10",
+        "large_region_34",
+        "large_region_27",
+        "large_region_28",
+        "large_region_14"
+      ],
+      "final_order": [
+        "large_region_3",
+        "large_region_2_split_1",
+        "large_region_10",
+        "large_region_14",
+        "large_region_30",
+        "large_region_35",
+        "large_region_17",
+        "large_region_27",
+        "large_region_28",
+        "large_region_34",
+        "large_region_20",
+        "large_region_29"
+      ],
+      "skipped_regions": [],
+      "tsp_node_count": 10,
+      "tsp_solver_metadata": {
+        "requested_tsp_solver": "deterministic",
+        "effective_tsp_solver": "deterministic",
+        "tsp_solver_status": "success",
+        "aco_best_objective": null,
+        "aco_initial_objective": null,
+        "aco_iteration_count": 0,
+        "aco_convergence_trace": [],
+        "aco_accepted_3opt_count": 0,
+        "large_map_greedy_tsp": true,
+        "large_map_greedy_final_region_count": 10,
+        "large_map_connector_cache_size": 29,
+        "large_map_reachability_probe_count": 57,
+        "large_map_reachability_probe_success_count": 17,
+        "large_map_dead_end_avoidance_count": 2
+      },
+      "requested_tsp_solver": "deterministic",
+      "effective_tsp_solver": "deterministic",
+      "tsp_solver_status": "success",
+      "aco_best_objective": null,
+      "aco_initial_objective": null,
+      "aco_iteration_count": 0,
+      "aco_convergence_trace": [],
+      "aco_accepted_3opt_count": 0,
+      "candidate_pattern_counts": {
+        "large_region_30": 4,
+        "large_region_17": 4,
+        "large_region_3": 2,
+        "large_region_35": 2,
+        "large_region_2_split_1": 2,
+        "large_region_10": 1,
+        "large_region_34": 4,
+        "large_region_27": 2,
+        "large_region_28": 2,
+        "large_region_14": 2
+      },
+      "candidate_attempt_count": 16,
+      "rejected_candidate_count": 2,
+      "selected_pattern_ids": {
+        "large_region_3": "large_region_3_pattern_x_pocket_0p0_high_to_low_min_to_max",
+        "large_region_2_split_1": "large_region_2_split_1_pattern_x_pocket_0p0_low_to_high_max_to_min",
+        "large_region_10": "large_region_10_pattern_y_pocket_0p0_high_to_low_min_to_max",
+        "large_region_14": "large_region_14_pattern_x_pocket_0p0_low_to_high_max_to_min",
+        "large_region_30": "large_region_30_pattern_x_pocket_0p0_high_to_low_min_to_max",
+        "large_region_35": "large_region_35_pattern_y_pocket_0p0_high_to_low_min_to_max",
+        "large_region_17": "large_region_17_pattern_y_pocket_0p0_low_to_high_min_to_max",
+        "large_region_27": "large_region_27_pattern_x_pocket_0p0_low_to_high_max_to_min",
+        "large_region_28": "large_region_28_pattern_x_pocket_0p0_low_to_high_max_to_min",
+        "large_region_34": "large_region_34_pattern_x_pocket_0p0_high_to_low_min_to_max",
+        "large_region_20": "large_region_20_pattern_x_pocket_0p0_low_to_high_max_to_min",
+        "large_region_29": "large_region_29_pattern_y_pocket_0p0_high_to_low_max_to_min"
+      },
+      "skipped_region_reasons": {},
+      "connector_failure_reasons": {
+        "large_region_17": "heading_jump,heading_tangent_mismatch"
+      },
+      "all_connector_failure_reasons": {
+        "large_region_17": [
+          "heading_jump",
+          "heading_jump,heading_tangent_mismatch"
+        ]
+      },
+      "main_repeat_overlap_length": 348.6122433822468,
+      "main_repeat_penalty_total": 10352.057236173923,
+      "connector_noncover_repeat_length": 149.07379854839303,
+      "connector_noncover_repeat_penalty": 3577.7711651614322,
+      "connector_length": 601.5070924138876,
+      "connector_turn_angle": 111.38927876477966,
+      "cross_agent_overlap_length": 0.0,
+      "cross_agent_penalty_total": 0.0,
+      "unavoidable_cross_agent_overlap_count": 0,
+      "coverage_endpoint_count": 220,
+      "infeasible_edges": []
+    }
+  },
+  "coverage_fraction": 0.9771,
+  "cover_only_coverage_fraction": 0.93855,
+  "cover_only_target_fraction": 0.99,
+  "cover_only_coverage_gap": 0.051449999999999996,
+  "transit_assisted_coverage_fraction": 0.9771,
+  "free_space_target_coverage": 0.99,
+  "residual_count": 86,
+  "residual_backfill_count": 0,
+  "cover_only_residual_backfill_count": 0,
+  "residual_feasible_count": 0,
+  "residual_infeasible_count": 12,
+  "residual_low_efficiency_filtered_count": 0,
+  "residual_low_efficiency_soft_count": 0,
+  "residual_best_gain_per_path_meter": 0.0,
+  "residual_min_positive_gain_per_path_meter": 0.0,
+  "residual_gain_per_meter_summary": {
+    "cycle_count": 2,
+    "best": 0.0,
+    "min_positive": 0.0,
+    "mean_positive": 0.0,
+    "threshold": 0.03,
+    "filtered_count": 0,
+    "soft_count": 0
+  },
+  "residual_min_gain_per_path_meter": 0.03,
+  "residual_filter_after_target_only": true,
+  "residual_local_tsp_enabled": true,
+  "residual_local_tsp_status": "no_append",
+  "residual_backfill_diagnostics": [
+    {
+      "skipped_infeasible_residuals": "12",
+      "status": "no_append",
+      "residual_candidate_attempt_count": "384",
+      "residual_low_efficiency_filtered_count": "0",
+      "residual_low_efficiency_soft_count": "0",
+      "residual_best_gain_per_path_meter": "0.000000",
+      "residual_min_positive_gain_per_path_meter": "0.000000",
+      "residual_mean_positive_gain_per_path_meter": "0.000000",
+      "residual_min_gain_per_path_meter": "0.030000",
+      "residual_filter_after_target_only": "true",
+      "residual_obstacle_aware_retry_count": "24",
+      "residual_feasible_count": "0",
+      "residual_infeasible_count": "12",
+      "repeat_path_penalty_total": "0.000000"
+    },
+    {
+      "skipped_infeasible_residuals": "4",
+      "status": "no_append",
+      "residual_candidate_attempt_count": "128",
+      "residual_low_efficiency_filtered_count": "0",
+      "residual_low_efficiency_soft_count": "0",
+      "residual_best_gain_per_path_meter": "0.000000",
+      "residual_min_positive_gain_per_path_meter": "0.000000",
+      "residual_mean_positive_gain_per_path_meter": "0.000000",
+      "residual_min_gain_per_path_meter": "0.030000",
+      "residual_filter_after_target_only": "true",
+      "residual_obstacle_aware_retry_count": "16",
+      "residual_feasible_count": "0",
+      "residual_infeasible_count": "4",
+      "repeat_path_penalty_total": "0.000000",
+      "coverage_mode": "cover_only"
+    }
+  ],
+  "skipped_region_recovery": {
+    "enabled": true,
+    "recovered_count": 4,
+    "failed_count": 2,
+    "recovered_regions": [
+      "large_region_20",
+      "large_region_29",
+      "large_region_36",
+      "large_region_37"
+    ],
+    "failure_reasons": {
+      "large_region_40": "heading_jump,obstacle_collision",
+      "large_region_39": "obstacle_collision"
+    },
+    "connector_cache_size": 55
+  },
+  "skipped_region_diagnostics": {
+    "large_region_39": {
+      "assigned_agent": 0,
+      "candidate_pattern_count": 2,
+      "best_pattern_coverage_length": 11.378189805854518,
+      "skip_reason": "kinematic_infeasible,obstacle_collision",
+      "connector_failure_reason": "kinematic_infeasible,obstacle_collision",
+      "all_connector_failure_reasons": [
+        "heading_jump,obstacle_collision",
+        "kinematic_infeasible,obstacle_collision",
+        "obstacle_collision"
+      ]
+    },
+    "large_region_40": {
+      "assigned_agent": 2,
+      "candidate_pattern_count": 1,
+      "best_pattern_coverage_length": 12.927383013999986,
+      "skip_reason": "heading_jump,kinematic_infeasible,obstacle_collision",
+      "connector_failure_reason": "heading_jump,heading_tangent_mismatch",
+      "all_connector_failure_reasons": [
+        "heading_jump,heading_tangent_mismatch",
+        "heading_jump,kinematic_infeasible,obstacle_collision",
+        "heading_jump,obstacle_collision",
+        "kinematic_infeasible,obstacle_collision",
+        "obstacle_collision"
+      ]
+    }
+  },
+  "reachable_region_count": 42,
+  "region_connection_graph_components": {
+    "0": {
+      "assigned_region_count": 11,
+      "visited_region_count": 7,
+      "skipped_region_count": 1,
+      "infeasible_edge_count": 20
+    },
+    "1": {
+      "assigned_region_count": 13,
+      "visited_region_count": 12,
+      "skipped_region_count": 0,
+      "infeasible_edge_count": 4
+    },
+    "2": {
+      "assigned_region_count": 12,
+      "visited_region_count": 11,
+      "skipped_region_count": 1,
+      "infeasible_edge_count": 1
+    },
+    "3": {
+      "assigned_region_count": 12,
+      "visited_region_count": 12,
+      "skipped_region_count": 0,
+      "infeasible_edge_count": 0
+    }
+  },
+  "skipped_by_no_incoming_edge": 2,
+  "skipped_by_no_outgoing_edge": 2,
+  "large_map_connector_cache_size": 176,
+  "large_map_reachability_probe_count": 321,
+  "large_map_reachability_probe_success_count": 61,
+  "large_map_dead_end_avoidance_count": 12,
+  "repeat_path_penalty_total": 0.0,
+  "load_swap_count": 0,
+  "load_swap_candidate_count": 12,
+  "load_swap_reject_reasons": "not_boundary_to_light_agent:8,source_disconnect:4",
+  "load_swap_before_imbalance": 0.31829068818559914,
+  "load_swap_after_imbalance": 0.30909895782155655,
+  "shared_resource_count": 0,
+  "shared_resource_conflict_count": 0,
+  "spatial_overlap_reuse_count": 0,
+  "true_time_conflict_count": 0,
+  "mapf_conflicts_resolved_after_residual": 0,
+  "resource_separation_time": 0.5,
+  "count_transit_coverage": true,
+  "enable_short_region_compression": true,
+  "short_region_turn_ratio_threshold": 6.0,
+  "main_repeat_path_penalty_enabled": true,
+  "main_repeat_overlap_length": 3487.3432764510126,
+  "main_repeat_penalty_total": 41848.11931741214,
+  "noncover_length_ratio": 0.3958552131578195,
+  "noncover_repeat_overlap_length": 3487.3432764510126,
+  "connector_noncover_repeat_length": 919.7412607973444,
+  "connector_noncover_repeat_penalty": 22073.790259136265,
+  "connector_length": 2791.926321853563,
+  "connector_turn_angle": 424.2653097470382,
+  "turn_angle_per_coverage_meter": 0.2472470321287058,
+  "agent_repeat_overlap": {
+    "0": 592.9381161350188,
+    "1": 1257.9588396248184,
+    "2": 950.7328946040859,
+    "3": 685.7134260870891
+  },
+  "agent_repeat_penalty": {
+    "0": 7115.257393620229,
+    "1": 15095.50607549781,
+    "2": 11408.79473524903,
+    "3": 8228.561113045067
+  },
+  "cross_agent_penalty_enabled": true,
+  "cross_agent_overlap_length": 3300.414361238124,
+  "cross_agent_overlap_by_agent": {
+    "1": 987.3655476000756,
+    "0": 1012.7889408418829,
+    "2": 719.485323012338,
+    "3": 580.7745497837954
+  },
+  "cross_agent_overlap_by_kind": {
+    "turn": 2150.737064081117,
+    "transit": 822.186425360618,
+    "cover": 327.4908717963596
+  },
+  "cross_agent_penalty_total": 34969.088843158985,
+  "unavoidable_cross_agent_overlap_count": 0,
+  "coverage_ownership": {
+    "cell_count": 32351,
+    "region_count": 44,
+    "conflict_count": 111,
+    "region_owner": {
+      "large_region_11": 0,
+      "large_region_12": 0,
+      "large_region_9": 0,
+      "large_region_20": 0,
+      "large_region_5": 0,
+      "large_region_36": 0,
+      "large_region_37": 0,
+      "large_region_39": 0,
+      "large_region_26": 0,
+      "large_region_21": 0,
+      "large_region_38": 0,
+      "large_region_0": 1,
+      "large_region_8": 1,
+      "large_region_7": 1,
+      "large_region_33": 1,
+      "large_region_29": 1,
+      "large_region_15": 1,
+      "large_region_13": 1,
+      "large_region_6": 1,
+      "large_region_24": 1,
+      "large_region_23": 1,
+      "large_region_19": 1,
+      "large_region_25": 2,
+      "large_region_31": 2,
+      "large_region_32": 2,
+      "large_region_41_split_0": 2,
+      "large_region_41_split_1": 2,
+      "large_region_2_split_0": 2,
+      "large_region_1": 2,
+      "large_region_40": 2,
+      "large_region_22": 2,
+      "large_region_16": 2,
+      "large_region_18": 2,
+      "large_region_4": 2,
+      "large_region_30": 3,
+      "large_region_17": 3,
+      "large_region_3": 3,
+      "large_region_35": 3,
+      "large_region_2_split_1": 3,
+      "large_region_10": 3,
+      "large_region_34": 3,
+      "large_region_27": 3,
+      "large_region_28": 3,
+      "large_region_14": 3
+    }
+  },
+  "metrics": {
+    "total_length": 25702.78296696185,
+    "coverage_length": 15528.202336826005,
+    "transition_length": 10174.580630135857,
+    "total_turn_angle": 3839.301942074264,
+    "turn_count": 534.0,
+    "invalid_path_length": 0.0,
+    "out_of_bounds_segment_count": 0.0,
+    "obstacle_collision_segment_count": 0.0,
+    "kinematic_infeasible_segment_count": 0.0,
+    "dynamic_infeasible_segment_count": 0.0,
+    "nmpc_untrackable_count": 0.0,
+    "max_curvature": 0.5,
+    "max_heading_jump": 0.7731922389142953,
+    "max_heading_error": 0.3920216847917932,
+    "max_yaw_rate": 0.5000000000023306,
+    "max_yaw_acceleration": 4.9987526607803074,
+    "max_speed": 2.0,
+    "max_acceleration": 0.0,
+    "max_thrust_required": 1.6,
+    "max_yaw_moment_required": 5.448640400250015
+  },
+  "performance_summary": {
+    "performance_profile": "balanced",
+    "target_coverage_fraction": 0.99,
+    "count_transit_coverage": true,
+    "coverage_ratio": 0.9771,
+    "target_coverage_met": false,
+    "total_length": 25702.78296696185,
+    "coverage_length": 15528.202336826005,
+    "transition_length": 10174.580630135857,
+    "coverage_length_ratio": 0.6041447868421809,
+    "transition_length_ratio": 0.3958552131578195,
+    "repeat_overlap_length": 3487.3432764510126,
+    "repeat_overlap_ratio": 0.1356795986229824,
+    "repeat_transition_ratio": 0.3427505666545047,
+    "residual_count": 86.0,
+    "residual_area_ratio": 0.0229,
+    "turn_density": 0.02077596035753791,
+    "agent_load_imbalance": 0.5826286053769728,
+    "agent_total_lengths": {
+      "0": 4434.183620933719,
+      "1": 8177.977769520718,
+      "2": 6848.899567430209,
+      "3": 6241.722009077205
+    },
+    "constraint_ok": true,
+    "performance_objective": 77727.77291450986
+  },
+  "target_coverage_status": "incomplete",
+  "cover_only_target_status": "incomplete",
+  "coverage_quality_status": "incomplete",
+  "region_execution_status": "incomplete",
+  "coverage_status": "incomplete",
+  "skipped_region_count": 2,
+  "skipped_regions": [
+    "large_region_39",
+    "large_region_40"
+  ]
+}

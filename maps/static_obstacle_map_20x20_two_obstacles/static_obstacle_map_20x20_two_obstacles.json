@@ -37,6 +37,7 @@
     "contains_paths": false,
     "recommended_usv_count": 2,
     "recommended_overlap_ratio": 0.2,
-    "recommended_d_safe": 0.5
+    "recommended_d_safe": 0.5,
+    "default_fleet_profile": "crown_fleet_profile.json"
   }
 }

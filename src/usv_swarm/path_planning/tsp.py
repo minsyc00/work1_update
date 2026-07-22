@@ -26,6 +26,35 @@ def solve_single_usv_tsp_cpp(
     requested_solver = validate_tsp_solver(path_config.tsp_solver)
     start_pose = config.fleet.initial_states_3dof[agent_id].pose()
     if not region_ids:
+        if experiment_record is not None:
+            empty_metrics = _metrics_dict(0.0, 0.0, 0.0, 0.0)
+            experiment_record.update(
+                {
+                    "agent_id": agent_id,
+                    "assigned_regions": [],
+                    "initial_order": [],
+                    "initial_metrics": empty_metrics,
+                    "two_opt_improvements": [],
+                    "two_opt_rejected_count": 0,
+                    "three_opt_improvements": [],
+                    "planned_final_order": [],
+                    "final_order": [],
+                    "skipped_regions": [],
+                    "final_metrics": empty_metrics,
+                    "pattern_selection": [],
+                    "connection_summary": _connection_summary([]),
+                    "tsp_solver_metadata": {
+                        "requested_tsp_solver": requested_solver,
+                        "effective_tsp_solver": requested_solver,
+                        "tsp_solver_status": "empty_assignment",
+                        "aco_best_objective": None,
+                        "aco_initial_objective": None,
+                        "aco_iteration_count": 0,
+                        "aco_convergence_trace": [],
+                        "aco_accepted_3opt_count": 0,
+                    },
+                }
+            )
         return SingleUsvTourPlan(agent_id=agent_id, region_order=[], selected_patterns={})
     fallback_solver_metadata: Dict[str, Any] | None = None
     if requested_solver != "deterministic":
@@ -665,6 +694,35 @@ def _build_region_segments_atomic(
             current_time = _segment_end_time(turn)
             next_serial += 1
     return region_segments
+
+
+def build_region_service_segments(
+    agent_id: int,
+    pattern: RegionCoveragePattern,
+    config: PlannerConfig,
+    path_config: PathPlanningConfig,
+    obstacle_field=None,
+) -> List:
+    """Build only a forced pattern's in-cell service trajectory.
+
+    CROWN-MCPP uses this public wrapper when constructing a mode library.  The
+    incoming depot/mode connector is modeled as a separate graph edge, so the
+    current pose is exactly the pattern entry and the zero-length transit is
+    discarded by ``_build_region_segments_atomic``.
+    """
+
+    segments = _build_region_segments_atomic(
+        agent_id=agent_id,
+        region_id=pattern.region_id,
+        pattern=pattern,
+        current_pose=pattern.entry_pose,
+        current_time=0.0,
+        serial=0,
+        config=config,
+        path_config=path_config,
+        obstacle_field=obstacle_field,
+    )
+    return list(segments or [])
 
 
 def _legacy_unused_linear_assembly_marker() -> None:

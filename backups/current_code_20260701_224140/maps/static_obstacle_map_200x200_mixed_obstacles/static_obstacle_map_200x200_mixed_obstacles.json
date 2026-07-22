@@ -1,0 +1,166 @@
+{
+  "map_id": "static_obstacle_map_200x200_mixed_obstacles",
+  "description": "200m x 200m static-obstacle map with mixed obstacle shapes. Contains only mission boundary and static obstacles, with no USV initial states and no paths.",
+  "units": "m",
+  "mission_area": {
+    "type": "rectangle",
+    "origin": [0.0, 0.0],
+    "length_x": 200.0,
+    "length_y": 200.0
+  },
+  "coverage_footprint": {
+    "length_lf": 4.0,
+    "width_wf": 2.0
+  },
+  "motion_constraints": {
+    "model": "3-DOF",
+    "min_turn_radius": 2.0
+  },
+  "static_obstacles": [
+    {
+      "obstacle_id": "rect_platform_sw_01",
+      "type": "rectangle",
+      "center": [32.0, 34.0],
+      "size": [16.0, 12.0],
+      "yaw_deg": 0.0
+    },
+    {
+      "obstacle_id": "rotated_dock_sw_01",
+      "type": "rectangle",
+      "center": [70.0, 38.0],
+      "size": [30.0, 5.0],
+      "yaw_deg": -25.0
+    },
+    {
+      "obstacle_id": "ellipse_reef_s_01",
+      "type": "ellipse",
+      "center": [116.0, 36.0],
+      "radii": [13.0, 5.0],
+      "yaw_deg": 18.0
+    },
+    {
+      "obstacle_id": "circle_reef_s_01",
+      "type": "circle",
+      "center": [148.0, 48.0],
+      "radius": 6.0
+    },
+    {
+      "obstacle_id": "circle_buoy_s_02",
+      "type": "circle",
+      "center": [168.0, 30.0],
+      "radius": 3.5
+    },
+    {
+      "obstacle_id": "l_shape_island_w_01",
+      "type": "polygon",
+      "vertices": [
+        [24.0, 88.0],
+        [56.0, 88.0],
+        [56.0, 102.0],
+        [42.0, 102.0],
+        [42.0, 130.0],
+        [24.0, 130.0]
+      ]
+    },
+    {
+      "obstacle_id": "u_shape_island_c_01",
+      "type": "polygon",
+      "vertices": [
+        [82.0, 82.0],
+        [124.0, 82.0],
+        [124.0, 96.0],
+        [100.0, 96.0],
+        [100.0, 118.0],
+        [124.0, 118.0],
+        [124.0, 132.0],
+        [82.0, 132.0],
+        [82.0, 118.0],
+        [90.0, 118.0],
+        [90.0, 96.0],
+        [82.0, 96.0]
+      ]
+    },
+    {
+      "obstacle_id": "rotated_barrier_e_01",
+      "type": "rectangle",
+      "center": [158.0, 102.0],
+      "size": [36.0, 6.0],
+      "yaw_deg": 32.0
+    },
+    {
+      "obstacle_id": "triangle_shoal_e_01",
+      "type": "polygon",
+      "vertices": [
+        [174.0, 124.0],
+        [194.0, 134.0],
+        [180.0, 150.0]
+      ]
+    },
+    {
+      "obstacle_id": "ellipse_reef_n_01",
+      "type": "ellipse",
+      "center": [54.0, 162.0],
+      "radii": [18.0, 7.0],
+      "yaw_deg": -12.0
+    },
+    {
+      "obstacle_id": "trapezoid_island_n_01",
+      "type": "polygon",
+      "vertices": [
+        [96.0, 152.0],
+        [132.0, 146.0],
+        [142.0, 170.0],
+        [104.0, 180.0]
+      ]
+    },
+    {
+      "obstacle_id": "irregular_island_ne_01",
+      "type": "polygon",
+      "vertices": [
+        [154.0, 156.0],
+        [170.0, 150.0],
+        [186.0, 160.0],
+        [182.0, 178.0],
+        [162.0, 184.0],
+        [148.0, 172.0]
+      ]
+    },
+    {
+      "obstacle_id": "rock_circle_01",
+      "type": "circle",
+      "center": [38.0, 72.0],
+      "radius": 3.0
+    },
+    {
+      "obstacle_id": "rock_circle_02",
+      "type": "circle",
+      "center": [52.0, 68.0],
+      "radius": 2.5
+    },
+    {
+      "obstacle_id": "rock_ellipse_03",
+      "type": "ellipse",
+      "center": [138.0, 74.0],
+      "radii": [5.0, 2.5],
+      "yaw_deg": 45.0
+    },
+    {
+      "obstacle_id": "rock_polygon_04",
+      "type": "polygon",
+      "vertices": [
+        [66.0, 134.0],
+        [74.0, 130.0],
+        [82.0, 138.0],
+        [78.0, 148.0],
+        [68.0, 146.0]
+      ]
+    }
+  ],
+  "notes": {
+    "contains_usv_initial_states": false,
+    "contains_paths": false,
+    "recommended_usv_count": 5,
+    "recommended_overlap_ratio": 0.2,
+    "recommended_d_safe": 1.0
+  }
+}

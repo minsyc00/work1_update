@@ -153,9 +153,16 @@ def advance_pose_along_mode(pose: Pose2D, mode: str, segment_length: float, turn
     raise ValueError(f"unsupported mode: {mode}")
 
 
-def sample_dubins_path(path: DubinsPath, step_size: float = 0.25) -> Tuple[List[Tuple[float, float]], List[float], float]:
+def sample_dubins_path(
+    path: DubinsPath,
+    step_size: float = 0.25,
+    *,
+    max_heading_step: float | None = None,
+) -> Tuple[List[Tuple[float, float]], List[float], float]:
     if step_size <= 0.0:
         raise ValueError("step_size must be positive")
+    if max_heading_step is not None and max_heading_step <= 0.0:
+        raise ValueError("max_heading_step must be positive when provided")
     pose = path.start
     points: List[Tuple[float, float]] = [(pose.x, pose.y)]
     headings: List[float] = [pose.psi]
@@ -164,7 +171,19 @@ def sample_dubins_path(path: DubinsPath, step_size: float = 0.25) -> Tuple[List[
     for mode, segment_length in zip(path.modes, path.segment_lengths):
         remaining = float(segment_length)
         while remaining > 1e-9:
-            ds = min(step_size, remaining)
+            mode_step = step_size
+            if mode in ("L", "R") and max_heading_step is not None:
+                # A distance-only sample count is unsafe on a long Dubins
+                # path containing a short, tight arc: the whole arc may be
+                # represented by one large heading jump and then be rejected
+                # by the dynamics validator even though the analytic path is
+                # curvature feasible.  Bound the angular discretization on
+                # turns without needlessly oversampling long straight legs.
+                mode_step = min(
+                    mode_step,
+                    path.turn_radius * max_heading_step,
+                )
+            ds = min(mode_step, remaining)
             pose = advance_pose_along_mode(pose, mode, ds, path.turn_radius)
             points.append((pose.x, pose.y))
             headings.append(pose.psi)

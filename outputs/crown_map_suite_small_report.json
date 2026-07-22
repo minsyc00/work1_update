@@ -1,0 +1,144 @@
+{
+  "suite": "CROWN bundled-map end-to-end regression",
+  "runtime_sec": 749.0810607969761,
+  "map_count": 3,
+  "repeat_count": 1,
+  "passed": 1,
+  "failed": 2,
+  "results": [
+    {
+      "map": "static_obstacle_map_15x15_rect_triangle_small",
+      "returncode": 0,
+      "wall_runtime_sec": 86.78766664303839,
+      "stderr_tail": "",
+      "status": "passed",
+      "report": {
+        "algorithm": "CROWN-MCPP",
+        "map_id": "static_obstacle_map_15x15_rect_triangle_small",
+        "solution_status": "certified_lns_service_bound",
+        "certification_scope": "continuous_responsibility_fixed_modes_time_grid_horizon",
+        "runtime_sec": 86.42640880122781,
+        "preparation_runtime_sec": 14.873733312,
+        "solve_runtime_sec": 71.429692043,
+        "materialization_validation_runtime_sec": 0.034404937,
+        "peak_rss_mb": 491.0390625,
+        "fleet_size": 2,
+        "fleet_profile_id": "crown_15x15_usv2",
+        "fleet": {
+          "0": {
+            "initial_pose": [
+              2.25,
+              2.25,
+              0.0
+            ],
+            "coverage_footprint": [
+              4.0,
+              2.0
+            ],
+            "vehicle_footprint": [
+              1.0,
+              0.5
+            ],
+            "min_turn_radius": 0.5
+          },
+          "1": {
+            "initial_pose": [
+              2.25,
+              12.0,
+              0.0
+            ],
+            "coverage_footprint": [
+              4.0,
+              2.0
+            ],
+            "vehicle_footprint": [
+              1.0,
+              0.5
+            ],
+            "min_turn_radius": 0.5
+          }
+        },
+        "fixed_region_count": 8,
+        "mode_count": 62,
+        "makespan": 540.0,
+        "total_energy": 134.647922627,
+        "lower_bound": 46.859415971,
+        "upper_bound": 540.0,
+        "optimality_gap": 0.913223304,
+        "root_lp_lower_bound": null,
+        "service_lower_bound": 46.859415971,
+        "sequential_baseline_makespan": 549.0,
+        "joint_gain_ratio": 1.0166666666666666,
+        "joint_not_worse_than_sequential_baseline": true,
+        "coverage_fraction": 1.0,
+        "coverage_target": 0.99,
+        "continuous_conflict_validated": true,
+        "generated_columns": 4,
+        "pricing_iterations": 2,
+        "branch_nodes": 0,
+        "resource_precedence_branches": 0,
+        "route_variable_branches": 0,
+        "conflict_separation_rounds": 0,
+        "anytime_trace": [
+          {
+            "time": 0.0013291966170072556,
+            "lower_bound": 46.85941597079316,
+            "upper_bound": 549.0,
+            "gap": 0.9146458725486463,
+            "iteration": 0.0
+          },
+          {
+            "time": 26.37987455353141,
+            "lower_bound": 46.85941597079316,
+            "upper_bound": 540.0,
+            "gap": 0.9132233037577904,
+            "iteration": 1.0
+          }
+        ],
+        "agents": {
+          "0": {
+            "segment_count": 994,
+            "metrics": {
+              "total_length": 86.07974571556186,
+              "estimated_time": 504.0,
+              "total_energy": 69.4921147690551
+            }
+          },
+          "1": {
+            "segment_count": 941,
+            "metrics": {
+              "total_length": 85.50270998426844,
+              "estimated_time": 540.0,
+              "total_energy": 65.15580785804963
+            }
+          }
+        },
+        "artifacts": {
+          "report": "outputs/crown_map_suite_small/repeat_00/static_obstacle_map_15x15_rect_triangle_small_usv2_footprint4x2_rmin0p5_fleet-crown_15x15_usv2/crown_mcpp/crown_mcpp_report.json"
+        },
+        "solver_first_feasible_sec": 0.0013291966170072556,
+        "end_to_end_first_feasible_sec": 14.875062508617008,
+        "fleet_profile": "/home/myc/code/work1_update/work1_update/maps/static_obstacle_map_15x15_rect_triangle_small/crown_fleet_profile.json"
+      },
+      "repeat": 0
+    },
+    {
+      "map": "static_obstacle_map_20x20_two_obstacles",
+      "returncode": 1,
+      "wall_runtime_sec": 157.54958915524185,
+      "stderr_tail": "Traceback (most recent call last):\n  File \"/home/myc/code/work1_update/work1_update/examples/run_crown_mcpp_experiment.py\", line 270, in <module>\n    main()\n    ~~~~^^\n  File \"/home/myc/code/work1_update/work1_update/examples/run_crown_mcpp_experiment.py\", line 257, in main\n    _, report = run_crown_mcpp_experiment(\n                ~~~~~~~~~~~~~~~~~~~~~~~~~^\n        config,\n        ^^^^^^^\n    ...<4 lines>...\n        render=not args.no_render,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/home/myc/code/work1_update/work1_update/src/usv_swarm/path_planning/crown/full_experiment.py\", line 32, in run_crown_mcpp_experiment\n    plan = run_crown_mcpp_pipeline(\n        config,\n    ...<2 lines>...\n        paper_references,\n    )\n  File \"/home/myc/code/work1_update/work1_update/src/usv_swarm/path_planning/crown/pipeline.py\", line 468, in run_crown_mcpp_pipeline\n    solution = solve_prepared_crown_problem(problem)\n  File \"/home/myc/code/work1_update/work1_update/src/usv_swarm/path_planning/crown/pipeline.py\", line 441, in solve_prepared_crown_problem\n    return solve_crown_lns(\n        problem.graphs,\n    ...<2 lines>...\n        initial_routes=baseline,\n    )\n  File \"/home/myc/code/work1_update/work1_update/src/usv_swarm/path_planning/crown/lns.py\", line 899, in solve_crown_lns\n    raise ValueError(\"CROWN-LNS could not construct an initial conflict-free solution\")\nValueError: CROWN-LNS could not construct an initial conflict-free solution\n",
+      "status": "failed",
+      "stdout_tail": "",
+      "repeat": 0
+    },
+    {
+      "map": "static_obstacle_map_50x50_simple",
+      "returncode": 1,
+      "wall_runtime_sec": 504.74342610128224,
+      "stderr_tail": "Traceback (most recent call last):\n  File \"/home/myc/code/work1_update/work1_update/examples/run_crown_mcpp_experiment.py\", line 270, in <module>\n    main()\n    ~~~~^^\n  File \"/home/myc/code/work1_update/work1_update/examples/run_crown_mcpp_experiment.py\", line 257, in main\n    _, report = run_crown_mcpp_experiment(\n                ~~~~~~~~~~~~~~~~~~~~~~~~~^\n        config,\n        ^^^^^^^\n    ...<4 lines>...\n        render=not args.no_render,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/home/myc/code/work1_update/work1_update/src/usv_swarm/path_planning/crown/full_experiment.py\", line 32, in run_crown_mcpp_experiment\n    plan = run_crown_mcpp_pipeline(\n        config,\n    ...<2 lines>...\n        paper_references,\n    )\n  File \"/home/myc/code/work1_update/work1_update/src/usv_swarm/path_planning/crown/pipeline.py\", line 461, in run_crown_mcpp_pipeline\n    problem = prepare_crown_problem(\n        config,\n    ...<2 lines>...\n        current_field=current_field,\n    )\n  File \"/home/myc/code/work1_update/work1_update/src/usv_swarm/path_planning/crown/pipeline.py\", line 386, in prepare_crown_problem\n    raise ValueError(\n    ...<2 lines>...\n    )\nValueError: fixed responsibility units without any feasible agent mode: crown_cell_2:crown-band:1,crown_cell_6:crown-band:0,crown_cell_11,crown_cell_12,crown_cell_13,crown_cell_14,crown_cell_15,crown_cell_16,crown_cell_18,crown_cell_19,crown_cell_24,crown_cell_25,crown_cell_26,crown_cell_27,crown_cell_28,crown_cell_29,crown_cell_30,crown_cell_31,crown_cell_32,crown_cell_34,crown_cell_35,crown_cell_36,crown_cell_38,crown_cell_39,crown_cell_40,crown_cell_41,crown_cell_43,crown_cell_44,crown_cell_46,crown_cell_47,crown_cell_48,crown_cell_49,crown_cell_50,crown_cell_51,crown_cell_54\n",
+      "status": "failed",
+      "stdout_tail": "",
+      "repeat": 0
+    }
+  ]
+}

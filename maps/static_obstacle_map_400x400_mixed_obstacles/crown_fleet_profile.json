@@ -1,0 +1,56 @@
+{
+  "fleet_profile_id": "crown_400x400_usv5",
+  "map_id": "static_obstacle_map_400x400_mixed_obstacles",
+  "planning_defaults": {
+    "engine": "certified_lns",
+    "return_to_start": false,
+    "time_step": 4.0,
+    "resource_grid_size": 4.0,
+    "lns_time_budget_sec": 60.0,
+    "baseline_time_budget_sec": 60.0,
+    "include_sequential_baseline": false,
+    "lns_iterations": 300,
+    "root_exact_pricing": false,
+    "connector_max_expansions": 1500,
+    "connector_grid_resolution": 4.0,
+    "mode_limit_per_region_agent": 2,
+    "max_candidate_axes": 2
+  },
+  "agents": [
+    {
+      "agent_id": 0,
+      "initial_state": {"x": 8.0, "y": 40.0, "psi_deg": 0.0},
+      "coverage_footprint": {"length_lf": 32.0, "width_wf": 16.0, "overlap_ratio": 0.2},
+      "vehicle_footprint": {"length": 1.0, "width": 0.5},
+      "motion_constraints": {"min_turn_radius": 0.5, "cruise_speed": 3.0, "cover_speed": 1.6, "turn_speed_max": 1.2, "max_thrust": 4.0, "max_yaw_moment": 2.0, "max_mission_time": 250000.0, "transit_power": 1.0, "cover_power": 1.0, "turn_power": 8.0, "wait_power": 0.1, "turn_time_penalty_per_rad": 0.0, "turn_energy_penalty_per_rad": 20.0, "turn_maneuver_time_penalty": 0.0, "turn_maneuver_energy_penalty": 100.0}
+    },
+    {
+      "agent_id": 1,
+      "initial_state": {"x": 8.0, "y": 120.0, "psi_deg": 0.0},
+      "coverage_footprint": {"length_lf": 32.0, "width_wf": 16.0, "overlap_ratio": 0.2},
+      "vehicle_footprint": {"length": 1.0, "width": 0.5},
+      "motion_constraints": {"min_turn_radius": 0.5, "cruise_speed": 3.0, "cover_speed": 1.6, "turn_speed_max": 1.2, "max_thrust": 4.0, "max_yaw_moment": 2.0, "max_mission_time": 250000.0, "transit_power": 1.0, "cover_power": 1.0, "turn_power": 8.0, "wait_power": 0.1, "turn_time_penalty_per_rad": 0.0, "turn_energy_penalty_per_rad": 20.0, "turn_maneuver_time_penalty": 0.0, "turn_maneuver_energy_penalty": 100.0}
+    },
+    {
+      "agent_id": 2,
+      "initial_state": {"x": 8.0, "y": 200.0, "psi_deg": 0.0},
+      "coverage_footprint": {"length_lf": 32.0, "width_wf": 16.0, "overlap_ratio": 0.2},
+      "vehicle_footprint": {"length": 1.0, "width": 0.5},
+      "motion_constraints": {"min_turn_radius": 0.5, "cruise_speed": 3.0, "cover_speed": 1.6, "turn_speed_max": 1.2, "max_thrust": 4.0, "max_yaw_moment": 2.0, "max_mission_time": 250000.0, "transit_power": 1.0, "cover_power": 1.0, "turn_power": 8.0, "wait_power": 0.1, "turn_time_penalty_per_rad": 0.0, "turn_energy_penalty_per_rad": 20.0, "turn_maneuver_time_penalty": 0.0, "turn_maneuver_energy_penalty": 100.0}
+    },
+    {
+      "agent_id": 3,
+      "initial_state": {"x": 8.0, "y": 280.0, "psi_deg": 0.0},
+      "coverage_footprint": {"length_lf": 32.0, "width_wf": 16.0, "overlap_ratio": 0.2},
+      "vehicle_footprint": {"length": 1.0, "width": 0.5},
+      "motion_constraints": {"min_turn_radius": 0.5, "cruise_speed": 3.0, "cover_speed": 1.6, "turn_speed_max": 1.2, "max_thrust": 4.0, "max_yaw_moment": 2.0, "max_mission_time": 250000.0, "transit_power": 1.0, "cover_power": 1.0, "turn_power": 8.0, "wait_power": 0.1, "turn_time_penalty_per_rad": 0.0, "turn_energy_penalty_per_rad": 20.0, "turn_maneuver_time_penalty": 0.0, "turn_maneuver_energy_penalty": 100.0}
+    },
+    {
+      "agent_id": 4,
+      "initial_state": {"x": 8.0, "y": 360.0, "psi_deg": 0.0},
+      "coverage_footprint": {"length_lf": 32.0, "width_wf": 16.0, "overlap_ratio": 0.2},
+      "vehicle_footprint": {"length": 1.0, "width": 0.5},
+      "motion_constraints": {"min_turn_radius": 0.5, "cruise_speed": 3.0, "cover_speed": 1.6, "turn_speed_max": 1.2, "max_thrust": 4.0, "max_yaw_moment": 2.0, "max_mission_time": 250000.0, "transit_power": 1.0, "cover_power": 1.0, "turn_power": 8.0, "wait_power": 0.1, "turn_time_penalty_per_rad": 0.0, "turn_energy_penalty_per_rad": 20.0, "turn_maneuver_time_penalty": 0.0, "turn_maneuver_energy_penalty": 100.0}
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "fleet_profile_id": "heterogeneous_200x200_demo",
+  "agents": [
+    {
+      "agent_id": 0,
+      "initial_state": {"x": 6.0, "y": 22.0, "psi_deg": 0.0},
+      "coverage_footprint": {"length_lf": 8.0, "width_wf": 6.0, "overlap_ratio": 0.2},
+      "vehicle_footprint": {"length": 4.5, "width": 1.8},
+      "motion_constraints": {
+        "min_turn_radius": 5.0,
+        "cruise_speed": 3.0,
+        "cover_speed": 1.6,
+        "turn_speed_max": 1.2,
+        "max_thrust": 5.0,
+        "max_yaw_moment": 2.0,
+        "max_mission_time": 20000.0
+      }
+    },
+    {
+      "agent_id": 1,
+      "initial_state": {"x": 6.0, "y": 72.0, "psi_deg": 0.0},
+      "coverage_footprint": {"length_lf": 6.0, "width_wf": 4.0, "overlap_ratio": 0.2},
+      "vehicle_footprint": {"length": 3.6, "width": 1.5},
+      "motion_constraints": {
+        "min_turn_radius": 2.5,
+        "cruise_speed": 2.8,
+        "cover_speed": 1.4,
+        "turn_speed_max": 1.1,
+        "max_thrust": 4.0,
+        "max_yaw_moment": 1.8,
+        "max_mission_time": 20000.0
+      }
+    },
+    {
+      "agent_id": 2,
+      "initial_state": {"x": 6.0, "y": 128.0, "psi_deg": 0.0},
+      "coverage_footprint": {"length_lf": 5.0, "width_wf": 3.0, "overlap_ratio": 0.15},
+      "vehicle_footprint": {"length": 3.0, "width": 1.2},
+      "motion_constraints": {
+        "min_turn_radius": 1.5,
+        "cruise_speed": 2.5,
+        "cover_speed": 1.2,
+        "turn_speed_max": 1.0,
+        "max_thrust": 3.5,
+        "max_yaw_moment": 1.6,
+        "max_mission_time": 20000.0
+      }
+    },
+    {
+      "agent_id": 3,
+      "initial_state": {"x": 6.0, "y": 178.0, "psi_deg": 0.0},
+      "coverage_footprint": {"length_lf": 7.0, "width_wf": 5.0, "overlap_ratio": 0.2},
+      "vehicle_footprint": {"length": 4.0, "width": 1.6},
+      "motion_constraints": {
+        "min_turn_radius": 3.5,
+        "cruise_speed": 3.0,
+        "cover_speed": 1.5,
+        "turn_speed_max": 1.15,
+        "max_thrust": 4.5,
+        "max_yaw_moment": 1.9,
+        "max_mission_time": 20000.0
+      }
+    }
+  ]
+}

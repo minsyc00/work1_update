@@ -1,0 +1,83 @@
+{
+  "algorithm": "CROWN-MCPP",
+  "map_id": "static_obstacle_map_10x10_rect_obstacle",
+  "solution_status": "certified_lns_service_bound",
+  "certification_scope": "continuous_responsibility_fixed_modes_time_grid_horizon",
+  "runtime_sec": 33.444331435486674,
+  "preparation_runtime_sec": 0.877286291,
+  "solve_runtime_sec": 32.504472112,
+  "materialization_validation_runtime_sec": 0.007056231,
+  "peak_rss_mb": 339.71875,
+  "fleet_size": 1,
+  "fleet_profile_id": "crown_10x10_usv1",
+  "fleet": {
+    "0": {
+      "initial_pose": [
+        1.5,
+        1.5,
+        0.0
+      ],
+      "coverage_footprint": [
+        4.0,
+        2.0
+      ],
+      "vehicle_footprint": [
+        1.0,
+        0.5
+      ],
+      "min_turn_radius": 0.5
+    }
+  },
+  "fixed_region_count": 4,
+  "mode_count": 16,
+  "makespan": 179.0,
+  "total_energy": 44.901339869,
+  "lower_bound": 31.116518641,
+  "upper_bound": 179.0,
+  "optimality_gap": 0.8261647,
+  "root_lp_lower_bound": null,
+  "service_lower_bound": 31.116518641,
+  "sequential_baseline_makespan": 185.0,
+  "joint_gain_ratio": 1.0335195530726258,
+  "joint_not_worse_than_sequential_baseline": true,
+  "coverage_fraction": 1.0,
+  "coverage_target": 0.99,
+  "continuous_conflict_validated": true,
+  "generated_columns": 4,
+  "pricing_iterations": 6,
+  "branch_nodes": 0,
+  "resource_precedence_branches": 0,
+  "route_variable_branches": 0,
+  "conflict_separation_rounds": 0,
+  "anytime_trace": [
+    {
+      "time": 0.0005208197981119156,
+      "lower_bound": 31.11651864051292,
+      "upper_bound": 185.0,
+      "gap": 0.8318026019431735,
+      "iteration": 0.0
+    },
+    {
+      "time": 15.116793127730489,
+      "lower_bound": 31.11651864051292,
+      "upper_bound": 179.0,
+      "gap": 0.8261647003323301,
+      "iteration": 1.0
+    }
+  ],
+  "agents": {
+    "0": {
+      "segment_count": 324,
+      "metrics": {
+        "total_length": 55.91686710947297,
+        "estimated_time": 179.0,
+        "total_energy": 44.901339869383
+      }
+    }
+  },
+  "artifacts": {
+    "report": "outputs/crown_map_suite_small_latest/repeat_00/static_obstacle_map_10x10_rect_obstacle_usv1_sensor4x2_hull1x0p5_rmin0p5_fleet-crown_10x10_usv1/crown_mcpp/crown_mcpp_report.json"
+  },
+  "solver_first_feasible_sec": 0.0005208197981119156,
+  "end_to_end_first_feasible_sec": 0.8778071107981119
+}

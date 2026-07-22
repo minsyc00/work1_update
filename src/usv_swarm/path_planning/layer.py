@@ -5,6 +5,7 @@ from typing import List, Optional, Sequence
 from ..planning import plan_global_coverage
 from ..schema import DynamicObstacleTrack, PlannerConfig, PlanningResult
 from .adapters.runtime_adapter import build_request_from_planning_result
+from .algorithms.crown_mcpp_planner import CrownMcppPlanner
 from .algorithms.paper_fusion_planner import PaperFusionPlanner
 from .registry import PathPlannerRegistry
 from .types import MultiAgentPathPlan, PaperReference, PathPlanningConfig, PathPlanningRequest, StaticObstacle
@@ -14,6 +15,7 @@ class PathPlanningLayer:
     def __init__(self, default_algorithm: str = "paper_fusion_planner") -> None:
         self.registry = PathPlannerRegistry()
         self.registry.register("paper_fusion_planner", PaperFusionPlanner)
+        self.registry.register("crown_mcpp", CrownMcppPlanner)
         self.default_algorithm = default_algorithm
 
     def available_algorithms(self) -> List[str]:

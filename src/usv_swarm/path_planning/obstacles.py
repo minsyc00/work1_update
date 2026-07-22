@@ -3,6 +3,10 @@ from __future__ import annotations
 import math
 from typing import Iterable, List, Sequence, Tuple
 
+from shapely import make_valid
+from shapely.geometry import GeometryCollection, LineString, Point as ShapelyPoint, Polygon
+from shapely.ops import unary_union
+
 from ..geometry import rotated_rectangle_mask
 from ..schema import PlannerConfig, Pose2D
 from .types import ObstacleField, PathPlanningConfig, StaticObstacle
@@ -24,7 +28,8 @@ def normalize_obstacle_field(
     # checks, so the inflation radius should use the lateral footprint half width
     # instead of the longitudinal half length.  Using max(lf, wf)/2 over-inflates
     # narrow obstacles and removes valid free water on larger maps.
-    footprint_margin = config.footprint.width_wf / 2.0
+    vehicle = config.vehicle_footprint
+    footprint_margin = (vehicle.width if vehicle is not None else config.footprint.width_wf) / 2.0
     inflation = safety_margin + footprint_margin
     normalized = [_normalized_obstacle(obstacle, 0.0, path_config) for obstacle in static_obstacles or []]
     inflated = [_normalized_obstacle(obstacle, inflation, path_config) for obstacle in static_obstacles or []]
@@ -68,18 +73,41 @@ def obstacle_bounds(obstacle: StaticObstacle) -> Bounds:
 
 
 def point_in_any_obstacle(point: Point, field: ObstacleField, inflated: bool = True) -> bool:
-    obstacles = field.inflated_obstacles if inflated else field.obstacles
-    return any(point_in_polygon(point, obstacle.polygon) for obstacle in obstacles)
+    return bool(_obstacle_union(field, inflated).covers(ShapelyPoint(point)))
 
 
 def segment_collides_with_obstacles(start: Point, end: Point, field: ObstacleField, inflated: bool = True) -> bool:
-    obstacles = field.inflated_obstacles if inflated else field.obstacles
-    return any(segment_intersects_polygon(start, end, obstacle.polygon) for obstacle in obstacles)
+    return bool(
+        _obstacle_union(field, inflated).intersects(LineString((start, end)))
+    )
 
 
 def polygon_collides_with_obstacles(polygon: Sequence[Point], field: ObstacleField, inflated: bool = True) -> bool:
+    if len(polygon) < 3:
+        return False
+    return bool(
+        _obstacle_union(field, inflated).intersects(
+            make_valid(Polygon(polygon))
+        )
+    )
+
+
+def _obstacle_union(field: ObstacleField, inflated: bool):
+    """Cache obstacle geometry for high-volume footprint predicates."""
+
+    attribute = "_shapely_inflated_union" if inflated else "_shapely_union"
+    cached = getattr(field, attribute, None)
+    if cached is not None:
+        return cached
     obstacles = field.inflated_obstacles if inflated else field.obstacles
-    return any(polygons_intersect(polygon, obstacle.polygon) for obstacle in obstacles)
+    geometries = [
+        make_valid(Polygon(obstacle.polygon))
+        for obstacle in obstacles
+        if len(obstacle.polygon) >= 3
+    ]
+    result = unary_union(geometries) if geometries else GeometryCollection()
+    setattr(field, attribute, result)
+    return result
 
 
 def pose_footprint_collides(
@@ -136,8 +164,30 @@ def polyline_out_of_mission_bounds(points: Sequence[Point], config: PlannerConfi
 
 def path_segment_spec_out_of_bounds(segment, config: PlannerConfig, margin: float = 0.0) -> bool:
     waypoints = getattr(segment, "waypoints", [])
+    if config.active_agent_id is not None and config.vehicle_footprint is not None:
+        vehicle = config.vehicle_footprint
+        for waypoint in waypoints:
+            polygon = rotated_rectangle_polygon(
+                waypoint.x,
+                waypoint.y,
+                waypoint.psi,
+                vehicle.length,
+                vehicle.width,
+            )
+            if any(not point_in_mission_bounds(point, config, margin=margin) for point in polygon):
+                return True
     points = [(waypoint.x, waypoint.y) for waypoint in waypoints]
     return polyline_out_of_mission_bounds(points, config, margin=margin)
+
+
+def pose_footprint_out_of_mission_bounds(pose: Pose2D, config: PlannerConfig, margin: float = 0.0) -> bool:
+    vehicle = config.vehicle_footprint
+    if vehicle is None:
+        return not point_in_mission_bounds((pose.x, pose.y), config, margin=margin)
+    return any(
+        not point_in_mission_bounds(point, config, margin=margin)
+        for point in rotated_rectangle_polygon(pose.x, pose.y, pose.psi, vehicle.length, vehicle.width)
+    )
 
 
 def path_segment_invalid_reasons(

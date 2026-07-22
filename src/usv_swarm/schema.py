@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
@@ -135,6 +135,135 @@ class CoverageFootprint:
     eta_cov: float = 0.7
 
 
+@dataclass(frozen=True)
+class VehicleFootprint:
+    """Physical hull envelope used for collision and boundary validation."""
+
+    length: float
+    width: float
+
+    def __post_init__(self) -> None:
+        if self.length <= 0.0 or self.width <= 0.0:
+            raise ValueError("vehicle footprint dimensions must be positive")
+
+
+@dataclass(frozen=True)
+class AgentPlanningProfile:
+    """Coverage, geometry, and motion capabilities for one USV."""
+
+    agent_id: int
+    coverage_length: float
+    coverage_width: float
+    overlap_ratio: float
+    vehicle_length: float
+    vehicle_width: float
+    min_turn_radius: float
+    cruise_speed: float
+    cover_speed: float
+    turn_speed_max: float
+    max_thrust: float
+    max_yaw_moment: float
+    max_mission_time: Optional[float] = None
+    battery_capacity: Optional[float] = None
+    transit_power: float = 1.0
+    cover_power: float = 1.0
+    turn_power: float = 1.0
+    wait_power: float = 0.0
+    # Operational surcharge for heading changes.  These terms model the
+    # acceleration/deceleration, steering and settling cost that is not
+    # represented by constant-speed path length alone.  Per-radian costs are
+    # sampling-invariant and also penalize curved transit connectors.
+    turn_time_penalty_per_rad: float = 0.0
+    turn_energy_penalty_per_rad: float = 0.0
+    turn_maneuver_time_penalty: float = 0.0
+    turn_maneuver_energy_penalty: float = 0.0
+
+    def __post_init__(self) -> None:
+        positive = {
+            "coverage_length": self.coverage_length,
+            "coverage_width": self.coverage_width,
+            "vehicle_length": self.vehicle_length,
+            "vehicle_width": self.vehicle_width,
+            "min_turn_radius": self.min_turn_radius,
+            "cruise_speed": self.cruise_speed,
+            "cover_speed": self.cover_speed,
+            "turn_speed_max": self.turn_speed_max,
+            "max_thrust": self.max_thrust,
+            "max_yaw_moment": self.max_yaw_moment,
+            "transit_power": self.transit_power,
+            "cover_power": self.cover_power,
+            "turn_power": self.turn_power,
+        }
+        invalid = [name for name, value in positive.items() if float(value) <= 0.0]
+        if invalid:
+            raise ValueError(f"agent profile values must be positive: {','.join(invalid)}")
+        if not 0.0 <= float(self.overlap_ratio) < 1.0:
+            raise ValueError("agent overlap_ratio must be in [0, 1)")
+        if self.max_mission_time is not None and self.max_mission_time <= 0.0:
+            raise ValueError("agent max_mission_time must be positive when provided")
+        if self.battery_capacity is not None and self.battery_capacity <= 0.0:
+            raise ValueError("agent battery_capacity must be positive when provided")
+        non_negative = {
+            "wait_power": self.wait_power,
+            "turn_time_penalty_per_rad": self.turn_time_penalty_per_rad,
+            "turn_energy_penalty_per_rad": self.turn_energy_penalty_per_rad,
+            "turn_maneuver_time_penalty": self.turn_maneuver_time_penalty,
+            "turn_maneuver_energy_penalty": self.turn_maneuver_energy_penalty,
+        }
+        invalid_non_negative = [
+            name for name, value in non_negative.items() if float(value) < 0.0
+        ]
+        if invalid_non_negative:
+            raise ValueError(
+                "agent profile values must be non-negative: "
+                + ",".join(invalid_non_negative)
+            )
+
+    @property
+    def effective_strip_spacing(self) -> float:
+        return self.coverage_width * (1.0 - self.overlap_ratio)
+
+    @property
+    def yaw_rate_limit(self) -> float:
+        return self.turn_speed_max / self.min_turn_radius
+
+    @property
+    def fingerprint(self) -> str:
+        values = (
+            self.coverage_length,
+            self.coverage_width,
+            self.overlap_ratio,
+            self.vehicle_length,
+            self.vehicle_width,
+            self.min_turn_radius,
+            self.cruise_speed,
+            self.cover_speed,
+            self.turn_speed_max,
+            self.max_thrust,
+            self.max_yaw_moment,
+            self.battery_capacity if self.battery_capacity is not None else -1.0,
+            self.transit_power,
+            self.cover_power,
+            self.turn_power,
+            self.wait_power,
+            self.turn_time_penalty_per_rad,
+            self.turn_energy_penalty_per_rad,
+            self.turn_maneuver_time_penalty,
+            self.turn_maneuver_energy_penalty,
+        )
+        return ":".join(f"{value:.6g}" for value in values)
+
+    def coverage_footprint(self, eta_cov: float = 0.7) -> CoverageFootprint:
+        return CoverageFootprint(
+            length_lf=self.coverage_length,
+            width_wf=self.coverage_width,
+            eta_cov=eta_cov,
+        )
+
+    def vehicle_footprint(self) -> VehicleFootprint:
+        return VehicleFootprint(length=self.vehicle_length, width=self.vehicle_width)
+
+
 @dataclass
 class PlannerWeights:
     lambda1: float = 1.0
@@ -163,6 +292,59 @@ class PlannerConfig:
     footprint: CoverageFootprint
     weights: PlannerWeights
     safety: SafetyMargins
+    agent_profiles: Dict[int, AgentPlanningProfile] = field(default_factory=dict)
+    vehicle_footprint: Optional[VehicleFootprint] = None
+    active_agent_id: Optional[int] = None
+    fleet_profile_id: str = ""
+
+    def profile_for_agent(self, agent_id: int) -> AgentPlanningProfile:
+        if agent_id in self.agent_profiles:
+            return self.agent_profiles[agent_id]
+        vehicle = self.vehicle_footprint or VehicleFootprint(
+            length=self.footprint.length_lf,
+            width=self.footprint.width_wf,
+        )
+        return AgentPlanningProfile(
+            agent_id=agent_id,
+            coverage_length=self.footprint.length_lf,
+            coverage_width=self.footprint.width_wf,
+            overlap_ratio=self.mission.overlap_ratio,
+            vehicle_length=vehicle.length,
+            vehicle_width=vehicle.width,
+            min_turn_radius=self.fleet.min_turn_radius,
+            cruise_speed=self.fleet.cruise_speed,
+            cover_speed=self.fleet.cover_speed,
+            turn_speed_max=self.fleet.turn_speed_max,
+            max_thrust=self.fleet.max_thrust,
+            max_yaw_moment=self.fleet.max_yaw_moment,
+        )
+
+    def for_agent(self, agent_id: int) -> "PlannerConfig":
+        """Return a planner view resolved to one agent's capabilities."""
+
+        profile = self.profile_for_agent(agent_id)
+        return replace(
+            self,
+            mission=replace(self.mission, overlap_ratio=profile.overlap_ratio),
+            fleet=replace(
+                self.fleet,
+                cruise_speed=profile.cruise_speed,
+                cover_speed=profile.cover_speed,
+                turn_speed_max=profile.turn_speed_max,
+                max_thrust=profile.max_thrust,
+                max_yaw_moment=profile.max_yaw_moment,
+                min_turn_radius=profile.min_turn_radius,
+            ),
+            footprint=profile.coverage_footprint(self.footprint.eta_cov),
+            vehicle_footprint=profile.vehicle_footprint(),
+            active_agent_id=agent_id,
+        )
+
+    def validate_agent_profiles(self) -> None:
+        agent_count = self.fleet.num_agents or len(self.fleet.initial_states_3dof)
+        unknown = sorted(set(self.agent_profiles) - set(range(agent_count)))
+        if unknown:
+            raise ValueError(f"agent profile ids outside fleet range: {unknown}")
 
 
 @dataclass(frozen=True)

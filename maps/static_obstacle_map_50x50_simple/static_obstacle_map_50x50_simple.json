@@ -57,6 +57,7 @@
     "excluded_obstacles": ["circle", "rock_cluster"],
     "recommended_usv_count": 3,
     "recommended_overlap_ratio": 0.2,
-    "recommended_d_safe": 1.0
+    "recommended_d_safe": 1.0,
+    "default_fleet_profile": "crown_fleet_profile.json"
   }
 }
